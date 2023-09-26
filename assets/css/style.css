@@ -1,0 +1,15 @@
+.card-img-top {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.logo {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  color: #008080;
+  font-size: 40px;
+  border-bottom: 8px solid #008080;
+  text-shadow: 2px 2px 2px rgb(8, 8, 66);
+}

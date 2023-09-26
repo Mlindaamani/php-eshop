@@ -1,0 +1,37 @@
+td,
+tr {
+  border: 1px solid rgba(128, 128, 128, 0.096);
+}
+
+tr th {
+  background-color: rgba(59, 59, 151, 0.801);
+}
+
+tr input {
+  background-color: rgba(67, 70, 70, 0.226);
+  outline: none;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  color: #120720;
+  border: none;
+}
+
+body {
+  background-color: rgba(128, 128, 128, 0.164);
+}
+tr td {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.alert {
+  text-align: center;
+  font-size: 24px;
+}
+
+tr img {
+  margin-top: 40px;
+}
+
+
