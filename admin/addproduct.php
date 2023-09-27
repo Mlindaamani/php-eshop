@@ -51,7 +51,9 @@ $con = dbconnect() ?>
             style='cursor:pointer' name='product_category' size="3">
             <?php $result = mysqli_query($con, 'SELECT * FROM categories');
             while ($data = mysqli_fetch_assoc($result)) { ?>
-              <option value='<?= $data['id'] ?>' class='p-3 text-light custom-select' size='5'><?= $data['category_name'] ?></option>
+              <option value='<?= $data['id'] ?>' class='p-3 text-light custom-select' size='5'>
+                <?= $data['category_name'] ?>
+              </option>
             <?php } ?>
           </select>
         </div>
