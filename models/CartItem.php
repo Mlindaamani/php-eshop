@@ -144,8 +144,3 @@ class CartItem {
     $stmt->execute([$cartId, $product_id, $quantity, $price, $total_price, $product_image, $product_name, $user_id]);
   }
 }
-
-
-// $cartItems = new CartItem(new Database);
-// $productInfo = $cartItems->getCartItemProductInfoById(16);
-// echo $productInfo['id'];

@@ -11,9 +11,8 @@ if (isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-  $phone_number = $_POST['phone'];
 
-  if (empty($first_name) || empty($last_name) || empty($email) || empty($password) || empty($phone_number)) {
+  if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
     header('Location: ../signup.php?emptyFields');
     exit;
   }
@@ -29,9 +28,9 @@ if (isset($_POST['submit'])) {
       first_name,
       last_name,
       email,
-      phone_number,
       password) 
-      VALUES('$first_name','$last_name','$email', '$phone_number', '$hashed_password')";
+
+      VALUES('$first_name','$last_name','$email', '$hashed_password')";
     $result = mysqli_query(databaseConnection(), $sql);
 
     if ($result) {

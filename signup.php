@@ -43,13 +43,6 @@
       </div>
 
       <div class="mb-3">
-        <div class="form-floating">
-          <input type="text" name="phone" id="phonenumber" class="form-control" placeholder="N">
-          <label for="phonenumber" class="form-label">Enter Phone number</label>
-        </div>
-      </div>
-
-      <div class="mb-3">
         <button type="submit" class="btn btn-primary w-100 mb-2" name="submit">Sign up</button>
         <p class="mt-2">Already have an account? <a href="login.php">Login</a></p>
       </div>
