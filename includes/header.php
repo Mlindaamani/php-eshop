@@ -1,12 +1,13 @@
 <?php
 @session_start();
+error_reporting(0);
 $baseUrl = 'http://localhost:8000';
 $con = dbconnect();
 $userId = $_SESSION['user_id'];
 
 function is_logged_in()
 {
-  return isset($_SESSION['user_id']);
+  return isset($userId);
 }
 
 
