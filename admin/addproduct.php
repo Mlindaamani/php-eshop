@@ -65,6 +65,8 @@ $con = dbconnect() ?>
   </div>
 </div>
 <?php '../includes/footer.php' ?>
+
+
 <?php
 if (isset($_POST['submit'])) {
 
@@ -81,8 +83,11 @@ if (isset($_POST['submit'])) {
   $product_temp_name = $_FILES['product_image']['tmp_name'];
 
   $product_category = $_POST['product_category'];
+
+
   //Obtain the full path of the image directory.
   $admin_image_dir_path = realpath(__DIR__) . '/uploads/images/';
+
 
   $sql_results = mysqli_query($con, "SELECT image_url, product_name FROM products WHERE product_name=' $product_name' OR image_url = '$product_image'");
 
@@ -95,13 +100,12 @@ if (isset($_POST['submit'])) {
   } else {
     move_uploaded_file($product_temp_name, $admin_image_dir_path . $product_image);
 
-    $sql = "INSERT INTO `products`(
-      category_id,
+    $sql = "INSERT INTO products(
       product_name,
       description,
       price, stock_quantity,
       image_url)
-      VALUES('$product_category', '$product_name', '$product_description', $product_price, $stock_quantity,  '$product_image')";
+      VALUES('$product_name', '$product_description', $product_price, $stock_quantity,  '$product_image')";
     $result = mysqli_query($con, $sql);
 
     if ($result) {
