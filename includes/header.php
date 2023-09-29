@@ -1,9 +1,17 @@
 <?php
 @session_start();
+
+//Disable error reporting capabilities for unset user_id.
 error_reporting(0);
+
 $baseUrl = 'http://localhost:8000';
+
+//Acces the database connection.
 $con = dbconnect();
+
+//Get the stored session data in this case user_id
 $userId = $_SESSION['user_id'];
+
 
 function is_logged_in()
 {

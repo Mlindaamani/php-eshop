@@ -1,5 +1,5 @@
 <?php include('includes/header.php') ?>
-<div class="container d-flex justify-content-center align-items-center" style="width: 100%; height:90vh">
+<div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
   <form action="actions/signup.act.php" method="post" class="border shadow p-3 rounded w-50">
     <div class="mb-3">
       <h5 class="text-center p-3">SIGN UP</h5>
