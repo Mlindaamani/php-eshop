@@ -1,12 +1,15 @@
 <?php
-// include 'db.php';
 class CartItem {
   private $db;
+
+
 
   public function __construct($db)
   {
     $this->db = $db;
   }
+
+
 
   function addToCart($cartId, $productId, $quantity, $user_id)
   {
@@ -23,9 +26,7 @@ class CartItem {
         $newProductQuantity = $existingCartItemsProductInfo['quantity'] + $quantity;
 
         $newProductTotalPrice = $existingCartItemsProductInfo['price'] * $newProductQuantity;
-        //Call the update function.
-        // $this->updateCartQuantityAndTotalQuantity($newProductQuantity, $newProductTotalPrice, $productId);
-        //Decrease the stock quantity for that productId
+
         $productObject->decreaseStockQuantity($productId, $quantity);
         exit();
 
@@ -58,7 +59,6 @@ class CartItem {
     $stmt = $this->db->con->prepare("UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$quanity, $product_id, $user_id]);
   }
-
 
 
   //UPDATE_PRODUCT_QUANTITY_AND_TOTAL_PRICE:
@@ -133,7 +133,6 @@ class CartItem {
     $stmt = $this->db->con->prepare("DELETE FROM cart_items");
     $stmt->execute();
   }
-
 
 
 

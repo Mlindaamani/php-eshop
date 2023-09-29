@@ -1,6 +1,18 @@
 <?php
+// Include header contents
 include('includes/header.php');
+
+//Include Prosuct class
+include 'models/Product.php';
+
+//Include database class.
+include 'models/db.php';
+
+//Create new instance of Produc class.
+$product = new Product(new Database);
 ?>
+
+<!-- Display a successfully message when a customer signs up -->
 <?php if (isset($_GET['success'])) { ?>
   <div class="alert alert-success alert-dismissible show text-center fw-bold container mt-3" role="alert">
     You have successfully signed up! Now you can explore more in Ebot!
@@ -8,12 +20,17 @@ include('includes/header.php');
   </div>
 <?php } ?>
 
+
+<!-- Display a successfully message when the product is added in the database -->
 <?php if (isset($_GET['newitem'])) { ?>
   <div class="alert alert-success alert-dismissible show text-center fw-bold container mt-3" role="alert">
     Added To Cart!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>
 <?php } ?>
+
+
+<!-- Create a sidebar for the product listing UI-->
 <!-- <div class="container-fluid bg-secondary-subtle mt-5">
   <div class='row'>
     <div class='col-md-2 bg-dark-subtle p-0 text-center rounded'>
@@ -74,24 +91,23 @@ include('includes/header.php');
 <!-- Product Listing Section -->
 <div class='col-md-12 rounded'>
   <div class="d-flex flex-wrap">
-    <?php $res = mysqli_query($con, "SELECT * FROM products ORDER BY RAND()");
-    while ($row = mysqli_fetch_assoc($res)) { ?>
+    <?php foreach ($product->getAllProducts() as $product) { ?>
       <div class='col-md-3'>
         <div class='card m-3'>
-          <img src='admin/uploads/images/<?= $row['image_url'] ?>' class='card-img-top' />
+          <img src='admin/uploads/images/<?= $product['image_url'] ?>' class='card-img-top' />
           <div class='card-body' style='width: 18rem;'>
             <h5 class='card-title'>
-              <?= $row['product_name'] ?>
+              <?= $product['product_name'] ?>
             </h5>
             <p class='card-text'>
-              <?= $row['description'] ?>
+              <?= $product['description'] ?>
             </p>
             <p class='text-end fw-bold'>
               $
-              <?= $row['price'] ?>
+              <?= $product['price'] ?>
             </p>
             <form action="cart/add_to_cart.php" method="post">
-              <input type="hidden" name="id" value="<?= $row['id'] ?>" />
+              <input type="hidden" name="id" value="<?= $product['id'] ?>" />
               <input type="submit" class='btn btn-primary' value="ADD TO CART" name="add_to_cart" />
             </form>
           </div>
