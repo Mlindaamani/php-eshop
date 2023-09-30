@@ -1,6 +1,5 @@
 <?php $baseUrl = 'http://localhost:8000'; ?>
 
-
 <div class='border bg-dark-subtle mt-md-3 p-0 text-center rounded m-2 mb-5'>
   <ul class='navbar-nav me-auto'>
     <li class='nav-item '>

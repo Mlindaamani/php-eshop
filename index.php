@@ -6,7 +6,7 @@ include('includes/header.php');
 include 'models/Product.php';
 
 //Include database class.
-include 'models/db.php';
+include 'models/Database.php';
 
 //Create new instance of Produc class.
 $product = new Product(new Database);

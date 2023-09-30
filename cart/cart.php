@@ -7,7 +7,7 @@
 include '../includes/header.php';
 
 //Include Database class contents.
-include '../models/db.php';
+include '../models/Database.php';
 
 //Include the contents of CartsItems class and instantiate the CartItem class.
 include '../models/CartItem.php';

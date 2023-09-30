@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Include the classes needed for the adding to cart functionality.
-include '../models/db.php';
+include '../models/Database.php';
 include '../models/CartItem.php';
 include '../models/Product.php';
 include '../models/Cart.php';
