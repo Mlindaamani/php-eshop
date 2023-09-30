@@ -1,20 +1,38 @@
+<!-- Include header contents -->
 <?php include('includes/header.php') ?>
+
+<!-- Display error if the records are not fouund for the user trying logging in -->
+<?php if (isset($_GET['norecord'])) { ?>
+  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+    No records found for entered user. Kindly signup/login again!
+    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+  </div>
+<?php } ?>
+
+
+<!-- Display the message if the user records already exist in the database -->
+<?php if (isset($_GET['datapresent'])) { ?>
+  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+    Entered records Already exit!
+    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+  </div>
+<?php } ?>
+
+
+<!-- Display the error message if the form fields are empty -->
+<?php if (isset($_GET['emptyfield'])) { ?>
+  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+    Kindly fill in all the required fields to proceed!
+    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+  </div>
+<?php } ?>
+
+<!-- Signed up form -->
 <div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
   <form action="actions/signup.act.php" method="post" class="border shadow p-3 rounded w-50">
     <div class="mb-3">
       <h5 class="text-center p-3">SIGN UP</h5>
-      <?php if (isset($_GET['msg'])) { ?>
-        <div class="alert alert-danger alert-dismissible show" role="alert">
-          Entered records Already exit!
-          <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-        </div>
-      <?php } ?>
-      <?php if (isset($_GET['emptyFields'])) { ?>
-        <div class="alert alert-danger alert-dismissible show" role="alert">
-          Kindly fill in the required fields to proceed!
-          <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-        </div>
-      <?php } ?>
+
       <div class="mb-3">
         <div class="form-floating">
           <input type="text" name="firstname" id="firstname" class="form-control" placeholder="F">
@@ -47,5 +65,7 @@
         <p class="mt-2">Already have an account? <a href="login.php">Login</a></p>
       </div>
   </form>
+
+  <!-- Include the footer contents -->
   <?php include 'includes/footer.php' ?>
 </div>
