@@ -35,7 +35,6 @@ if (isset($_POST['add_to_cart'], $_SESSION['user_id'])) {
   exit;
 
 } else {
-
   //Redirect the user to the login page if they are not logged in and trying to add product in the cart.
   header("Location: ../login.php?login");
 }

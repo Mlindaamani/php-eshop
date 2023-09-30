@@ -3,7 +3,6 @@ session_start();
 //Get database connection object
 include 'db_connection.php';
 
-
 //Check if the submit button is clicked
 if (isset($_POST['submit'])) {
 
