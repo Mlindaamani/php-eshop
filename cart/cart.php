@@ -59,6 +59,7 @@ $userId = $_SESSION['user_id'];
               <?= $product['price'] ?>
             </td>
 
+            <!--  Form to handle the product_quantity and product_id-->
             <form action="" method="post">
               <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
 
@@ -84,9 +85,10 @@ $userId = $_SESSION['user_id'];
           </tr>
         <?php }
 
-    } else {
-      echo '<div class="alert alert-success alert-dismissible  show" role="alert">Your Ebot Cart is empty!</div>';
-    } ?>
+    // Display message when the cart is empty.
+  } else {
+    echo '<div class="alert alert-success alert-dismissible  show" role="alert">Your Ebot Cart is empty!</div>';
+  } ?>
     </tbody>
   </table>
 
@@ -103,16 +105,3 @@ $userId = $_SESSION['user_id'];
     </div>
   <?php } ?>
 </div>
-
-<?php
-if (isset($_POST['update'])) {
-  $updatedProductQuantity = $_POST['product_quantity'];
-  $product_id = $_POST['product_id'];
-  $CartItem->updateProductQuantity($updatedProductQuantity, $product_id, $userId);
-}
-
-if (isset($_POST['remove'])) {
-  $productId = $_POST['product_id'];
-  $CartItem->removeCartItem($productId);
-}
-?>

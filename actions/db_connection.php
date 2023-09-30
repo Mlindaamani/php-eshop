@@ -1,4 +1,5 @@
 < <?php
+// Creates and returns a connection object(mysqli_object)
 function databaseConnection()
 {
   $server_name = 'localhost';
