@@ -1,7 +1,9 @@
 <?php
-
 // Start session if not started.
 @session_start();
+
+//Disable unnessary error reporting
+error_reporting(0);
 
 //Include the header contents.
 include '../includes/header.php';
@@ -15,12 +17,21 @@ include '../models/CartItem.php';
 //Create Cartitem objects(instances)
 $CartItem = new CartItem(new Database);
 
+
 //Retrieve user_id from the session data.
 $userId = $_SESSION['user_id'];
 ?>
 
 <!-- Shopping cart haeader -->
 <div class="container mt-3 bg-secondary-subtle p-4 col-md-8 border shadow">
+  <!-- Display the Clear cart button. This button will be invisible when the cartItem is empty -->
+  <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
+    <form action="updatecart.php" method="post">
+      <button type="submit" class="btn btn-danger float-end fw-bold  border shadow" name="deleteCart">Clear Cart</button>
+    </form>
+  <?php } ?>
+
+
   <h4 class="fw-bold text-center mb-3">Shopping Cart</h4>
   <table class="table table-responsive  border shadow">
 
@@ -60,11 +71,11 @@ $userId = $_SESSION['user_id'];
             </td>
 
             <!--  Form to handle the product_quantity and product_id-->
-            <form action="" method="post">
+            <form action="updatecart.php" method="post">
               <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
-
+              <input type="hidden" name="cartItemId" value="<?= $product['id'] ?>" />
               <td style="text-align:center" class="custom">
-                <input type="number" min="1" value="<?= $product['quantity'] ?>" class=" my-5 ms-5 "
+                <input type="number" min="1" max="20" value="<?= $product['quantity'] ?>" class=" my-5 ms-5 p-2"
                   name="product_quantity" />
               </td>
 
@@ -93,7 +104,6 @@ $userId = $_SESSION['user_id'];
     </tbody>
   </table>
 
-
   <!-- Remove bottom buttons when the cart is empty! -->
   <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
 
@@ -105,7 +115,6 @@ $userId = $_SESSION['user_id'];
       <button class="btn btn-primary fw-bold  border shadow">Subtotal: $
         <?= $CartItem->subTotal($userId) ?>
       </button>
-
       <a href="cart.php" class="btn btn-success float-end fw-bold  border shadow">Proceed to Checkout</a>
     </div>
   <?php } ?>

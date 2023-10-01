@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
   }
 
   // Query the database for a email and firstname.
-  $sql_query = "SELECT email, first_name FROM users WHERE email = '$email' OR first_name ='$first_name'";
+  $sql_query = "SELECT email, first_name FROM users WHERE email = '$email' AND first_name ='$first_name'";
 
   //Get user user data as an associative array.
   $userdata = mysqli_query(databaseConnection(), $sql_query);

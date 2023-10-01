@@ -9,16 +9,19 @@ include '../access.php';
 access('admin'); ?>
 
 
-<div class="row">
+<div class="row mt-3">
   <?php if (isset($_GET['admin'])) { ?>
     <div class="alert alert-success alert-dismissible container text-center mt-2 fade show" role="alert">
       Welcome Back!
       <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
     </div>
   <?php } ?>
-  <div class="col-md-2">
+
+  <!--Sidepanel -->
+  <div class="col-md-2 border shadow mt-3">
     <?php include '../includes/sidepanel.php'; ?>
   </div>
-  <div class="col-md-10"></div>
+
+  <!-- 10 columns layout -->
+  <div class="col-md-10 mt-3 border shadow" style="height:100%"></div>
 </div>
-<?php include '../includes/footer.php' ?>

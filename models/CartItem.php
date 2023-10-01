@@ -11,13 +11,24 @@ class CartItem {
 
 
 
+  public function addProductsToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
+  {
+    $stmt = $this->db->con->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, user_id, product_id, cart_id) 
+
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $stmt->execute([$product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id]);
+  }
+
+
+
   function addToCart($cartId, $productId, $quantity, $user_id)
   {
     $productObject = new Product($this->db);
     //Get Product info from the ProductClass for a $productId.
     $productIdInfo = $productObject->getProductInfoById($productId);
     //Get existing productInfo for a product with $productId.
-    $existingCartItemsProductInfo = $this->getCartItemProductInfoById($productId);
+    $existingCartItemsProductInfo = $this->getCartItemProductInfoById($productId, $user_id);
 
     if ($existingCartItemsProductInfo['product_id'] === $productId) {
 
@@ -64,7 +75,7 @@ class CartItem {
   //UPDATE_PRODUCT_QUANTITY_AND_TOTAL_PRICE:
   function updateCartItemTotalPrice($total_price, $product_id, $user_id)
   {
-    $stmt = $this->db->con->prepare("UPDATE cart_items SET  total_prie = ? WHERE product_id = ? AND user_id = ?");
+    $stmt = $this->db->con->prepare("UPDATE cart_items SET  total_price = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$total_price, $product_id, $user_id]);
   }
 
@@ -73,7 +84,7 @@ class CartItem {
   //IS_PRODUCT_PRESENT():
   public function isProductPresentInCartItems($product_id)
   {
-    $stmt = $this->db->con->prepare("SELECT product_id FROM cart_item WHERE product_id = ?");
+    $stmt = $this->db->con->prepare("SELECT product_id FROM cart_items WHERE product_id = ?");
     $stmt->execute([$product_id]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     return isset($product);
@@ -81,10 +92,10 @@ class CartItem {
 
 
   //GET_CART_ITEMS_INFO_BY_ID:
-  function getCartItemProductInfoById($product_id)
+  function getCartItemProductInfoById($product_id, $user_id)
   {
-    $stmt = $this->db->con->prepare("SELECT * FROM cart_items WHERE product_id = ?");
-    $stmt->execute([$product_id]);
+    $stmt = $this->db->con->prepare("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?");
+    $stmt->execute([$product_id, $user_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
@@ -110,10 +121,10 @@ class CartItem {
 
 
   //DELETE_INDIVIDUAL_CART_ITEM:
-  function removeCartItem($product_id)
+  function removeCartItem($cartItemId, $productId)
   {
-    $stmt = $this->db->con->prepare("DELETE FROM cart_items WHERE id = ?");
-    $stmt->execute([$product_id]);
+    $stmt = $this->db->con->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
+    $stmt->execute([$cartItemId, $productId]);
   }
 
 

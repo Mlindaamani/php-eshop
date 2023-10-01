@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
     </div>
 
     <!-- Display as 10 columns layout similar to admin-panel page -->
-    <div class='col-md-10 border shadow mt-3'>
+    <div class='col-md-10 border shadow mt-3' style="height:100%">
         <!-- Display the successful message when category is added -->
         <?php if (isset($_GET['cat'])) { ?>
             <div class="alert alert-success alert-dismissible fade show border shadow mt-2" role="alert">

@@ -27,7 +27,7 @@ if (isset($_POST['remove'])) {
     </div>
 
     <!-- Form for displaying categories -->
-    <div class='col-md-10 border shadow mt-3'>
+    <div class='col-md-10 border shadow mt-3' style="height:100%">
 
         <!-- Display the message when the category is deleted -->
         <?php if (isset($_GET['catdeleted'])) { ?>
