@@ -44,9 +44,6 @@ $existingProductTotalPrice = $existingProductInfo['total_price'];
 
 
 
-
-
-
 if (isset($_POST['add_to_cart'], $_SESSION['user_id'])) {
 
   //Create a new cart if the user is logged in and the check_out id false.

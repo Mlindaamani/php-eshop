@@ -1,7 +1,10 @@
 <?php
-class CartItem {
-  private $db;
 
+// CartItem Model
+class CartItem {
+
+
+  private $db;
 
 
   public function __construct($db)
