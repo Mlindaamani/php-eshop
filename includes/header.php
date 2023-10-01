@@ -1,41 +1,46 @@
 <?php
+//Start session inorder to use the superglobal session.
 @session_start();
 
-//Disable error reporting capabilities for unset user_id.
-error_reporting(0);
 
+//Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
 
-//Acces the database connection.
-$con = dbconnect();
 
-//Get the stored session data in this case user_id
-$userId = $_SESSION['user_id'];
-
-
+// Checks whether the user is logged in. Rerurn True on success and false on failure.
 function is_logged_in()
 {
-  return isset($userId);
+  return isset($_SESSION['user_id']);
 }
 
 
+//CONDTIONAL RENDERING.
+// DisplY the logout button if the user is currently logged in.
 function display_logout()
 {
   global $baseUrl;
+
   if (is_logged_in()) {
     echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none'
   href=$baseUrl/logout.php>Logout</a>";
   }
 }
 
+
+// Disply the login button-link if the user is currently not logged in
 function display_login()
 {
   global $baseUrl;
+
   if (!is_logged_in()) {
     echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none'
-  href=$baseUrl/login.php>Login</a>";
+    href=$baseUrl/login.php>Login</a>";
   }
 }
+
+
+
+// Disply the signup  button-link if the user is currently not logged in
 function display_signup()
 {
   global $baseUrl;
@@ -45,6 +50,8 @@ function display_signup()
   }
 }
 
+
+//Obtain the connection to the database. Return a connection object
 function dbconnect()
 {
   $server_name = 'localhost';
@@ -57,6 +64,10 @@ function dbconnect()
   }
   return $con;
 }
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang='en'>

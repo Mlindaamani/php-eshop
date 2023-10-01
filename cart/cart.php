@@ -20,9 +20,9 @@ $userId = $_SESSION['user_id'];
 ?>
 
 <!-- Shopping cart haeader -->
-<div class="container mt-3 bg-secondary-subtle p-4">
+<div class="container mt-3 bg-secondary-subtle p-4 col-md-8 border shadow">
   <h4 class="fw-bold text-center mb-3">Shopping Cart</h4>
-  <table class="table table-responsive">
+  <table class="table table-responsive  border shadow">
 
     <!-- Display the table header if products exits in the table -->
     <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
@@ -76,9 +76,10 @@ $userId = $_SESSION['user_id'];
               <!-- Update and Remove buttons -->
               <td>
                 <button type="submit"
-                  class="btn btn-link btn-primary text-light fw-bold text-decoration-none my-5 ms-5 bg-primary"
+                  class="btn btn-link btn-primary text-light fw-bold text-decoration-none my-5 ms-5 bg-primary  border shadow"
                   name="update">UPDATE</button>
-                <button type="submit" class="btn btn-link text-decoration-none text-light fw-bold bg-danger" name="remove">
+                <button type="submit" class="btn btn-link text-decoration-none text-light fw-bold bg-danger  border shadow"
+                  name="remove">
                   REMOVE</button>
             </form>
             </td>
@@ -87,7 +88,7 @@ $userId = $_SESSION['user_id'];
 
     // Display message when the cart is empty.
   } else {
-    echo '<div class="alert alert-success alert-dismissible  show" role="alert">Your Ebot Cart is empty!</div>';
+    echo '<div class="alert alert-success alert-dismissible  border shadow" role="alert">Your Ebot Cart is empty!</div>';
   } ?>
     </tbody>
   </table>
@@ -95,13 +96,17 @@ $userId = $_SESSION['user_id'];
 
   <!-- Remove bottom buttons when the cart is empty! -->
   <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
-    <div class="text-center">
-      <a href="../index.php" class="btn bg-primary fw-bold float-start text-light">Continue Shopping</a>
+
+    <div class="text-center  border shadow p-2">
+
+      <a href="../index.php" class="btn bg-primary fw-bold float-start text-light  border shadow">Continue Shopping</a>
+
       <!-- Display subtotal -->
-      <a class="btn btn-primary fw-bold">Subtotal: $
+      <button class="btn btn-primary fw-bold  border shadow">Subtotal: $
         <?= $CartItem->subTotal($userId) ?>
-      </a>
-      <a href="check_out.php" class="btn btn-success float-end fw-bold">Proceed to Checkout</a>
+      </button>
+
+      <a href="cart.php" class="btn btn-success float-end fw-bold  border shadow">Proceed to Checkout</a>
     </div>
   <?php } ?>
 </div>

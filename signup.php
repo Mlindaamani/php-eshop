@@ -3,7 +3,7 @@
 
 <!-- Display error if the records are not fouund for the user trying logging in -->
 <?php if (isset($_GET['norecord'])) { ?>
-  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+  <div class="alert alert-danger alert-dismissible  container mt-2 fade show" role="alert">
     No records found for entered user. Kindly signup/login again!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>
@@ -12,7 +12,7 @@
 
 <!-- Display the message if the user records already exist in the database -->
 <?php if (isset($_GET['datapresent'])) { ?>
-  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+  <div class="alert alert-danger alert-dismissible  container mt-2 fade show" role="alert">
     Entered records Already exit!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>
@@ -21,7 +21,7 @@
 
 <!-- Display the error message if the form fields are empty -->
 <?php if (isset($_GET['emptyfield'])) { ?>
-  <div class="alert alert-danger alert-dismissible  container mt-2" role="alert">
+  <div class="alert alert-danger alert-dismissible  container mt-2 fade show" role="alert">
     Kindly fill in all the required fields to proceed!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>

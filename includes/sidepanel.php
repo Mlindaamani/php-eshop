@@ -1,7 +1,8 @@
+<!-- Sideber contents -->
 <?php $baseUrl = 'http://localhost:8000'; ?>
 
-<div class='border bg-dark-subtle mt-md-3 p-0 text-center rounded m-2 mb-5'>
-  <ul class='navbar-nav me-auto'>
+<div class='border bg-dark-subtle mt-md-3 p-0 text-center rounded m-2 mb-5 border shadow'>
+  <ul class='navbar-nav me-auto border shadow'>
     <li class='nav-item '>
       <h5 class='text-primary bg-info rounded-top text-light bg-primary'>MANAGE PRODUCTS</h5>
     </li>

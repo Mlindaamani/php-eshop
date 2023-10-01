@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
     //Select user info with the provide email.
     $result = mysqli_query(databaseConnection(), "SELECT * FROM users WHERE email = '$enteredEmail'");
 
+
     // Check whether the user is present in the database.
     if (mysqli_num_rows($result) == 1) {
 

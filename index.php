@@ -14,7 +14,7 @@ $product = new Product(new Database);
 
 <!-- Display a successfully message when a customer signs up -->
 <?php if (isset($_GET['success'])) { ?>
-  <div class="alert alert-success alert-dismissible show text-center fw-bold container mt-2" role="alert">
+  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
     You have successfully signed up! Now you can explore more in Ebot!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>
@@ -23,7 +23,7 @@ $product = new Product(new Database);
 
 <!-- Display a successfully message when the product is added in the database -->
 <?php if (isset($_GET['newitem'])) { ?>
-  <div class="alert alert-success alert-dismissible show text-center fw-bold container mt-2" role="alert">
+  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
     Added To Cart!
     <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
   </div>

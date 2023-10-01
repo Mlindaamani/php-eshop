@@ -1,71 +1,69 @@
-<?php include('../includes/header.php');
-$con = dbconnect() ?>
-<div class='row'>
-  <!-- Sidebar -->
-  <div class='col-md-2'>
-    <?php include '../includes/sidepanel.php'; ?>
+<!--  Include header contents  -->
+<?php include('../includes/header.php') ?>
+
+<!-- Include the sidebar -->
+<div class='row mt-3 gx-2'>
+  <div class='col-md-2 border shadow mt-3'>
+    <?php include '../includes/sidepanel.php' ?>
   </div>
 
-  <div class='col-md-10'>
-    <div class='container d-flex justify-content-center align-items-center mt-3 mb-3'>
+  <!-- Include the 10 colums to display the forms-->
+  <div class='col-md-10 border shadow mt-3'>
+    <!-- Display the error message whem the product is already Present -->
+    <?php if (isset($_GET['emptyProductField'])) { ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Kindly fil all the fields
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php } ?>
+
+
+    <!-- Display the succes message when the product is added Successfully-->
+    <?php if (isset($_GET['prod'])) { ?>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Product inserted Successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><button>
+      </div>
+    <?php } ?>
+
+
+    <div class='container d-flex justify-content-center align-items-center mb-3 w-75 h-80 mt-3 '>
+      <!-- Product addition form -->
       <form action='' method='post' class='border shadow p-3 rounded w-50' enctype='multipart/form-data'>
         <div class='mb-3'>
           <h5 class='text-center p-3'>Add Products</h5>
 
-          <?php if (isset($_GET['added'])) { ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              Product inserted Successfully!
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><button>
-            </div>
-          <?php } ?>
-
-          <?php if (isset($_GET['prod'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              Product Already Present!
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          <?php } ?>
-
           <label class='form-label'>Enter product name</label>
-          <input type='text' name='product_name' class='form-control' required>
+          <input type='text' name='product_name' class='form-control'>
         </div>
+
         <div class='mb-3'>
           <label for='lastname' class='form-label'>Enter Product Description</label>
-          <input type='text' name='pro_description' class='form-control' required>
+          <input type='text' name='pro_description' class='form-control'>
         </div>
+
+
         <div class='mb-3'>
           <label class='form-label'>Enter Product Price</label>
-          <input type='number' name='product_price' class='form-control' step='0.01' required>
+          <input type='number' name='product_price' class='form-control' step='0.01'>
         </div>
+
         <div class='mb-3'>
           <label class='form-label'>Enter Stock Quantity</label>
-          <input type='number' name='stock_quantity' class='form-control' required>
+          <input type='number' name='stock_quantity' class='form-control'>
         </div>
+
         <div class='mb-3'>
           <label class='form-label'>Enter Product Image</label>
           <input type='file' name='product_image' class='form-control'>
-        </div>
 
-        <div class='mb-3'>
-          <select name='category_id' class='form-select mb-3 custom-select p-4 bg-primary' required
-            style='cursor:pointer' name='product_category' size="3">
-            <?php $result = mysqli_query($con, 'SELECT * FROM categories');
-            while ($data = mysqli_fetch_assoc($result)) { ?>
-              <option value='<?= $data['id'] ?>' class='p-3 text-light custom-select' size='5'>
-                <?= $data['category_name'] ?>
-              </option>
-            <?php } ?>
-          </select>
-        </div>
-        <div class='mb-3'>
-          <button type='submit' class='btn btn-primary w-100 mb-2' name='submit'>Add</button>
-        </div>
+          <div class='mb-3 mt-3'>
+            <button type='submit' class='btn btn-primary w-100 mb-2 border shadow' name='submit'>Add</button>
+          </div>
       </form>
     </div>
   </div>
 </div>
-<?php '../includes/footer.php' ?>
-
 
 <?php
 if (isset($_POST['submit'])) {
@@ -82,8 +80,10 @@ if (isset($_POST['submit'])) {
 
   $product_temp_name = $_FILES['product_image']['tmp_name'];
 
-  $product_category = $_POST['product_category'];
-
+  if (empty($product_name) || empty($product_description) || empty($product_price) || empty($stock_quantity)) {
+    header('Location: addproduct.php?emptyProductField');
+    exit;
+  }
 
   //Obtain the full path of the image directory.
   $admin_image_dir_path = realpath(__DIR__) . '/uploads/images/';
@@ -94,23 +94,29 @@ if (isset($_POST['submit'])) {
   $number_rows = mysqli_num_rows($sql_results);
 
   if ($number_rows > 0) {
-    header('Location: addproduct.php?prod=not_added');
+    header('Location: addproduct.php?prod');
     exit();
 
   } else {
+
+    // Move the aploaded image url into the images folder in aploads
     move_uploaded_file($product_temp_name, $admin_image_dir_path . $product_image);
 
+    // Construct a query for adding the product to the database.
     $sql = "INSERT INTO products(
       product_name,
       description,
       price, stock_quantity,
       image_url)
       VALUES('$product_name', '$product_description', $product_price, $stock_quantity,  '$product_image')";
-    $result = mysqli_query($con, $sql);
+
+    // Excuted the sql statement
+    $result = mysqli_query(dbconnect(), $sql);
 
     if ($result) {
-      header('Location: addproduct.php?added= added');
+      header('Location: addproduct.php?added');
       exit();
     }
   }
 }
+?>
