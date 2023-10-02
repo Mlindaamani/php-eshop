@@ -1,5 +1,5 @@
 <?php
-// include 'db.php';
+// include 'Database.php';
 class Cart {
 
   private $db;
@@ -15,6 +15,7 @@ class Cart {
     // If no active cart create new cart.
     if (!$this->isCartActive($userId)) {
       $this->insertCartInfo($userId);
+
     }
   }
 
@@ -30,14 +31,15 @@ class Cart {
 
   function insertCartInfo($userId)
   {
-    $stmt = $this->db->con->prepare("INSERT INTO carts (user_id, checked_out) VALUES (?, 0)");
-    $stmt->execute([$userId]);
+    $stmt = $this->db->con->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$userId, 0, 0.00, 0]);
   }
+
 
   function getCartId($userId)
   {
-    $stmt = $this->db->con->prepare("SELECT id FROM carts WHERE user_id = ? AND checked_out = 0");
-    $stmt->execute([$userId]);
+    $stmt = $this->db->con->prepare("SELECT id FROM carts WHERE user_id = ? AND checked_out = ?");
+    $stmt->execute([$userId, 0]);
     $cart = $stmt->fetch(PDO::FETCH_ASSOC);
     return $cart['id'];
   }
@@ -58,7 +60,6 @@ class Cart {
   {
     $stmt = $this->db->con->prepare("UPDATE carts SET checked_out = 1 WHERE id = ?");
     $stmt->execute([$cartId]);
+    return "Checked out successfully";
   }
-
 }
-// $cart = new Cart(new Database);

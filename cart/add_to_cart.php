@@ -25,24 +25,26 @@ $productId = $_POST['id'];
 $cartId = $cart->getCartId($userId);
 
 
-//Product info for a product ID from the products listings
-$productInfo = $product->getProductInfoById($productId);
-$productName = $productInfo['product_name'];
-$productImage = $productInfo['image_url'];
-$productPrice = $productInfo['price'];
-$productStockQuantity = $productInfo['stock_quantity'];
+// //Product info for a product ID from the products listings
+// $productInfo = $product->getProductInfoById($productId);
+// $productName = $productInfo['product_name'];
+// $productImage = $productInfo['image_url'];
+// $productPrice = $productInfo['price'];
+// $productStockQuantity = $productInfo['stock_quantity'];
 
 
 //Existing productinfo for a product ID. Remember the existing product_id in this case is equal to the incommig productId.
-$existingProductInfo = $cartItem->getCartItemProductInfoById($productId, $userId);
-$existingCartId = $existingProductInfo['cart_id'];
-$existingProductId = $existingProductInfo['product_id'];
-$existingPrice = $existingProductInfo['price'];
-$existingUserId = $existingProductInfo['user_id'];
-$existingProductQuantity = $existingProductInfo['quantity'];
-$existingProductTotalPrice = $existingProductInfo['total_price'];
+// $existingProductInfo = $cartItem->getCartItemProductInfoById(2, 2);
+// print_r($existingProductInfo);
+// exit;
+// $existingCartId = $existingProductInfo['cart_id'];
+// $existingProductId = $existingProductInfo['product_id'];
+// $existingPrice = $existingProductInfo['price'];
+// $existingUserId = $existingProductInfo['user_id'];
+// $existingProductQuantity = $existingProductInfo['quantity'];
+// $existingProductTotalPrice = $existingProductInfo['total_price'];
 
-
+// $cartItem->addProductsToCart($productName, 1, $productImage, $productPrice, $productPrice, $userId, $productId, $cartId);
 
 if (isset($_POST['add_to_cart'], $_SESSION['user_id'])) {
 

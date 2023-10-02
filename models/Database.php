@@ -1,11 +1,12 @@
 <?php
-class Database
-{
+class Database {
   public $con;
   private $host = "localhost";
   private $username = "root";
   private $password = "";
   private $database = "ebotdb";
+
+
   public function __construct()
   {
     try {

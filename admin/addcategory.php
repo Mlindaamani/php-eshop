@@ -1,6 +1,6 @@
 <?php
 include('../includes/header.php');
-$con = dbconnect();
+
 if (isset($_POST['submit'])) {
     $category = $_POST['category'];
 
@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
         exit();
 
     } else {
-        $result = mysqli_query($con, "INSERT INTO categories(category_name) VALUES('$category')");
+        $result = mysqli_query(dbconnect(), "INSERT INTO categories(category_name) VALUES('$category')");
         if ($result) {
             header('location: addcategory.php?cat');
             exit();
@@ -26,6 +26,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 
 <div class='row mt-3'>
     <!-- Sidebar -->
