@@ -77,4 +77,5 @@ if (isset($_POST['remove'])) {
         </div>
     </div>
 </div>
-<?php include '../includes/footer.php' ?>
+<!-- Include the footer contents in the login page. -->
+<?php include '../includes/script.php' ?>

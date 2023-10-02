@@ -14,19 +14,19 @@ $product = new Product(new Database);
 
 <!-- Display a successfully message when a customer signs up -->
 <?php if (isset($_GET['success'])) { ?>
-    <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
-      You have successfully signed up! Now you can explore more in Ebot!
-      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div>
+  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
+    You have successfully signed up! Now you can explore more in Ebot!
+    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+  </div>
 <?php } ?>
 
 
 <!-- Display a successfully message when the product is added in the database -->
 <?php if (isset($_GET['newitem'])) { ?>
-    <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
-      Added To Cart!
-      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div>
+  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
+    Added To Cart!
+    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+  </div>
 <?php } ?>
 
 
@@ -46,43 +46,43 @@ $product = new Product(new Database);
     <div class='col-md-10 rounded border shadow mt-5'>
       <div class="d-flex flex-wrap">
         <?php foreach ($product->getAllProducts() as $product) { ?>
-            <!-- Loop through this column for all the product provided by getAllProducts() -->
-            <div class='col-md-3'>
-              <!-- Product Card Start-->
-              <div class='card m-3 border shadow w-80 h-80'>
-                <!-- Product Image -->
-                <img src='admin/uploads/images/<?= $product['image_url'] ?>' class='card-img-top border shadow' />
-                <!-- Cart Body -->
-                <div class='card-body'>
+          <!-- Loop through this column for all the product provided by getAllProducts() -->
+          <div class='col-md-3'>
+            <!-- Product Card Start-->
+            <div class='card m-3 border shadow w-80 h-80'>
+              <!-- Product Image -->
+              <img src='admin/uploads/images/<?= $product['image_url'] ?>' class='card-img-top border shadow' />
+              <!-- Cart Body -->
+              <div class='card-body'>
 
-                  <!-- Product Name -->
-                  <h5 class='card-title'>
-                    <?= $product['product_name'] ?>
-                  </h5>
+                <!-- Product Name -->
+                <h5 class='card-title'>
+                  <?= $product['product_name'] ?>
+                </h5>
 
-                  <!-- Product Description -->
-                  <p class='card-text lead'>
-                    <?= $product['description'] ?>
-                  </p>
+                <!-- Product Description -->
+                <p class='card-text lead'>
+                  <?= $product['description'] ?>
+                </p>
 
-                  <!-- Product Price -->
-                  <p class='text-end fw-bold lead'>
-                    $
-                    <?= $product['price'] ?>
-                  </p>
+                <!-- Product Price -->
+                <p class='text-end fw-bold lead'>
+                  $
+                  <?= $product['price'] ?>
+                </p>
 
-                  <!-- Form to sent the request to the addd_to_cart page -->
-                  <form action="cart/add_to_cart.php" method="post">
-                    <input type="hidden" name="id" value="<?= $product['id'] ?>" />
-                    <input type="submit" class='btn btn-primary' value="ADD TO CART" name="add_to_cart" />
-                  </form>
-                </div>
+                <!-- Form to sent the request to the addd_to_cart page -->
+                <form action="cart/add_to_cart.php" method="post">
+                  <input type="hidden" name="id" value="<?= $product['id'] ?>" />
+                  <input type="submit" class='btn btn-primary' value="ADD TO CART" name="add_to_cart" />
+                </form>
               </div>
-              <!-- Product Card end-->
             </div>
+            <!-- Product Card end-->
+          </div>
         <?php } ?>
       </div>
     </div>
   </div>
 </div>
-<?php include 'includes/footer.php' ?>
+<?php include "includes/footer.php" ?>

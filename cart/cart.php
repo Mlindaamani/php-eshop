@@ -17,13 +17,31 @@ include '../models/CartItem.php';
 //Create Cartitem objects(instances)
 $CartItem = new CartItem(new Database);
 
-
-//Retrieve user_id from the session data.
+//Get userId from the session variable(super global)
 $userId = $_SESSION['user_id'];
 ?>
 
+<div>
+  <?php if (isset($_GET['stock'])) { ?>
+    <div class="alert alert-danger alert-dismissible  text-center fw-bold container mt-2" role="alert">
+      No Enough stock Quantity for the entered Quantity!
+      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+    </div>
+  <?php } ?>
+
+
+  <?php if (isset($_GET['updated'])) { ?>
+    <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
+      Quantity Updated!
+      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+    </div>
+  <?php } ?>
+
+</div>
+
 <!-- Shopping cart haeader -->
 <div class="container mt-3 bg-secondary-subtle p-4 col-md-8 border shadow">
+
   <!-- Display the Clear cart button. This button will be invisible when the cartItem is empty -->
   <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
     <form action="updatecart.php" method="post">
@@ -34,7 +52,6 @@ $userId = $_SESSION['user_id'];
 
   <h4 class="fw-bold text-center mb-3">Shopping Cart</h4>
   <table class="table table-responsive  border shadow">
-
     <!-- Display the table header if products exits in the table -->
     <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
       <thead>
@@ -72,15 +89,20 @@ $userId = $_SESSION['user_id'];
 
             <!--  Form to handle the product_quantity and product_id-->
             <form action="updatecart.php" method="post">
+
               <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
+
               <input type="hidden" name="cartItemId" value="<?= $product['id'] ?>" />
+
+              <!-- Product Quantity is Updated here -->
               <td style="text-align:center" class="custom">
-                <input type="number" min="1" max="20" value="<?= $product['quantity'] ?>" class=" my-5 ms-5 p-2"
+                <input type="number" min="1" value="<?= $product['quantity'] ?>" class=" my-5 ms-5 p-2"
                   name="product_quantity" />
               </td>
 
               <!-- Cart Total price -->
               <td style="text-align:center" class=" my-5 ms-5 ">
+                $
                 <?= $product['total_price'] ?>
               </td>
 
@@ -113,9 +135,10 @@ $userId = $_SESSION['user_id'];
 
       <!-- Display subtotal -->
       <button class="btn btn-primary fw-bold  border shadow">Subtotal: $
-        <?= $CartItem->subTotal($userId) ?>
+        <?= number_format($CartItem->subTotal($userId), 2) ?>
       </button>
       <a href="cart.php" class="btn btn-success float-end fw-bold  border shadow">Proceed to Checkout</a>
     </div>
   <?php } ?>
 </div>
+<?php include "../includes/script.php" ?>

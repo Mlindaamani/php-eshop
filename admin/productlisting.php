@@ -6,15 +6,10 @@ include "../actions/db_connection.php";
 if (isset($_POST['submit'])) {
 
   $product_name = $_POST['product_name'];
-
   $product_description = $_POST['pro_description'];
-
   $product_price = $_POST['product_price'];
-
   $stock_quantity = $_POST['stock_quantity'];
-
   $product_image = $_FILES['product_image']['name'];
-
   $product_temp_name = $_FILES['product_image']['tmp_name'];
 
   if (empty($product_name) || empty($product_description) || empty($product_price) || empty($stock_quantity)) {
@@ -25,12 +20,9 @@ if (isset($_POST['submit'])) {
   //Obtain the full path of the image directory.
   $admin_image_dir_path = realpath(__DIR__) . "/uploads/images/";
 
-
-  $sql_results = mysqli_query(databaseConnection(), "SELECT image_url, product_name FROM products WHERE product_name=' $product_name' OR image_url = '$product_image'");
-
-  $number_rows = mysqli_num_rows($sql_results);
-
-  if ($number_rows > 0) {
+  $stmt = databaseConnection()->prepare("SELECT product_name, image_url FROM products WHERE product_name = ? AND image_url = ?");
+  $results = $stmt->execute([$product_name, $product_image]);
+  if ($results) {
     header('Location: addproduct.php?prod');
     exit();
 
@@ -38,7 +30,6 @@ if (isset($_POST['submit'])) {
 
     // Move the aploaded image url into the images folder in aploads
     move_uploaded_file($product_temp_name, $admin_image_dir_path . $product_image);
-
     // Construct a query for adding the product to the database.
     $sql = "INSERT INTO products(
         product_name,
@@ -49,8 +40,7 @@ if (isset($_POST['submit'])) {
 
     // Excuted the sql statement
     $result = mysqli_query(databaseConnection(), $sql);
-
-    if ($result) {
+    if (isset($result)) {
       header('Location: addproduct.php?added');
       exit();
     }

@@ -2,7 +2,6 @@
 //Start session inorder to use the superglobal session.
 @session_start();
 
-
 //Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
 
@@ -66,8 +65,6 @@ function dbconnect()
 }
 
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -121,7 +118,7 @@ function dbconnect()
                   <!-- Calling display_budge function -->
                   <span><sup class="bg-danger p-1 rounded p-2 badge">
                       <!-- Display the badge -->
-                      <?= 3 ?>
+                      <?= 1 ?>
                     </sup></span>
                 </a>
               </button>

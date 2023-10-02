@@ -14,7 +14,7 @@ class CartItem {
 
 
 
-  public function addProductsToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
+  public function addProductToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
   {
     $stmt = $this->db->con->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, user_id, product_id, cart_id) 
 
@@ -72,6 +72,7 @@ class CartItem {
   {
     $stmt = $this->db->con->prepare("UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$quanity, $product_id, $user_id]);
+
   }
 
 

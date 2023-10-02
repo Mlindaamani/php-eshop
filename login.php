@@ -29,8 +29,8 @@
 
 <!-- login form -->
 <div class="container d-flex justify-content-center align-items-center mt-5">
-  <form method="POST" class="border shadow p-3 rounded w-25" action="actions/auth-user.php" novalidate>
-    <div class="mb-4">
+  <form method="POST" class="border shadow p-3 rounded w-25 mt-5" action="actions/auth-user.php">
+    <div class=" mb-4">
       <h5 class="text-center p-3">LOGIN</h5>
 
       <div class="mb-4">
@@ -56,4 +56,4 @@
   </form>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include 'includes/footer.php' ?>
+<?php include 'includes/script.php' ?>

@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     }
 
 
-    $sql_result = mysqli_query($con, "SELECT * FROM categories WHERE category_name = '$category'");
+    $sql_result = mysqli_query(dbconnect(), "SELECT * FROM categories WHERE category_name = '$category'");
 
     if (mysqli_num_rows($sql_result) > 0) {
         header('location: addcategory.php?present');
@@ -84,4 +84,5 @@ if (isset($_POST['submit'])) {
     </div>
 </div>
 </div>
-<?php include '../includes/footer.php' ?>
+<!-- Include the footer contents in the login page. -->
+<?php include '../includes/script.php' ?>

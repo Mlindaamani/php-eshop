@@ -25,4 +25,5 @@ access('admin'); ?>
   <!-- 10 columns layout -->
   <div class="col-md-10 mt-3 border shadow" style="height:100%"></div>
 </div>
-<?php include '../includes/footer.php' ?>
+<!-- Include the footer contents in the login page. -->
+<?php include '../includes/script.php' ?>
