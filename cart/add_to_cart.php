@@ -54,6 +54,7 @@ if (isset($_POST['add_to_cart'], $_SESSION['user_id'])) {
   //Add a product into the cart if the above conditions are true.
   $cartItem->addToCart($cart->getCartId($userId), $productId, 1, $userId);
 
+
   //Redirect the user to the same page with the message indicating the product has been added successfully!
   header('Location: ../index.php?newitem');
   exit;

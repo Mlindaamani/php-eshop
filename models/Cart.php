@@ -1,12 +1,12 @@
 <?php
-// include 'Database.php';
 class Cart {
 
-  private $db;
+  private $database;
 
-  public function __construct($db)
+
+  public function __construct(Database $database)
   {
-    $this->db = $db;
+    $this->database = $database;
   }
 
 
@@ -22,7 +22,7 @@ class Cart {
 
   public function isCartActive($userId)
   {
-    $stmt = $this->db->con->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = 0");
+    $stmt = $this->database->dbconnection()->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = 0");
     $stmt->execute([$userId]);
     $activeCartId = $stmt->fetch(PDO::FETCH_ASSOC);
     return isset($activeCartId['user_id']);
@@ -31,14 +31,14 @@ class Cart {
 
   function insertCartInfo($userId)
   {
-    $stmt = $this->db->con->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
+    $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
     $stmt->execute([$userId, 0, 0.00, 0]);
   }
 
 
   function getCartId($userId)
   {
-    $stmt = $this->db->con->prepare("SELECT id FROM carts WHERE user_id = ? AND checked_out = ?");
+    $stmt = $this->database->dbconnection()->prepare("SELECT id FROM carts WHERE user_id = ? AND checked_out = ?");
     $stmt->execute([$userId, 0]);
     $cart = $stmt->fetch(PDO::FETCH_ASSOC);
     return $cart['id'];
@@ -46,20 +46,37 @@ class Cart {
 
 
 
-
   function getUserCartInfo($userId)
   {
-    $stmt = $this->db->con->prepare("SELECT * FROM carts WHERE user_id = ?");
+    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM carts WHERE user_id = ?");
     $stmt->execute([$userId]);
     $userCartInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     return $userCartInfo;
   }
 
-
+  //RETURN A SUCCESSFULLY MESSAGE WHEN A CART IS CHECKED
   public function checkoutCart($cartId)
   {
-    $stmt = $this->db->con->prepare("UPDATE carts SET checked_out = 1 WHERE id = ?");
+    $stmt = $this->database->dbconnection()->prepare("UPDATE carts SET checked_out = 1 WHERE id = ?");
     $stmt->execute([$cartId]);
     return "Checked out successfully";
+  }
+
+
+  //CLEAR THE USER CART.
+  function clearCart($user_id)
+  {
+    $stmt = $this->database->dbconnection()->prepare("DELETE FROM carts WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+  }
+
+
+  function testTypeHinting()
+  {
+    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products");
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+
   }
 }
