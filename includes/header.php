@@ -122,15 +122,8 @@ function generateAlert($getKey, $message, $alertType)
               <!-- Signup link -->
               <?php display_signup() ?>
               <!-- Signup link -->
-              <button type="button" class="btn btn-primary">
-                <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'>
-                  <i class='bi bi-cart-fill fw-bold-semi-bold' style='font-size: 17px; color: #fff;'></i>
-                  <!-- Calling display_budge function -->
-                  <span><sup class="bg-danger p-1 rounded p-2 badge">
-                      <!-- Display the badge -->
-                      <?= 1 ?>
-                    </sup></span>
-                </a>
+              <button type="button" class="btn btn-primary mx-3 fw-bold">
+                <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'>Cart</a>
               </button>
             </div>
           </div>

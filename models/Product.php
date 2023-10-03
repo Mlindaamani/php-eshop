@@ -17,6 +17,7 @@ class Product {
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
+
   function getAllProducts()
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products ORDER BY RAND()");
@@ -31,18 +32,11 @@ class Product {
     $stmt->execute([$quantity, $productId]);
   }
 
-  public function getStockQuantity(int $product_id)
+
+  public function increaseStockQuantity($productId, $quantity)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT stock_quantity FROM products WHERE id = ?");
-    $stmt->execute([$product_id]);
-    return $stmt->fetchColumn();
+    $stmt = $this->database->dbconnection()->prepare("UPDATE products SET stock_quantity = stock_quantity + ? WHERE id = ?");
+    $stmt->execute([$quantity, $productId]);
   }
 
-
-
-  function isProductPresent($product_id)
-  {
-    $product = $this->getProductInfoById($product_id);
-    return isset($product['id']);
-  }
 }

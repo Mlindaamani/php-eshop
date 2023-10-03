@@ -3,10 +3,13 @@
 include('includes/header.php');
 //Include Prosuct class
 include 'models/Product.php';
+//Include Prosuct class
+include 'models/CartItem.php';
 //Include database class.
 include 'models/Database.php';
 //Create new instance of Produc class.
 $product = new Product(new Database);
+$cartItem = new CartItem(new Database);
 //Display a success message when user signs up successfully.
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
 // Display a successfully message when the product is added in the database 
@@ -16,6 +19,11 @@ generateAlert('newitem', '  Added To Cart!', 'success');
 
 <div class="container-fluid bg-secondary-subtle">
   <div class='row'>
+    <div class="container bg-primary text-end">
+      <span style="font-size: 17px; color: #fff;" class="text-light fw-bold bg-danger p-1 rounded p-2 badge my-3">
+        <?= $cartItem->getItemsCount($_SESSION['user_id']) ?>
+      </span>
+    </div>
     <!-- Create a sidebar for the product listing UI-->
     <div class='col-md-2 bg-dark-subtle p-0 text-center'>
       <ul class='navbar-nav me-auto'>
@@ -27,6 +35,8 @@ generateAlert('newitem', '  Added To Cart!', 'success');
 
     <!-- Product Listing Section -->
     <div class='col-md-10 rounded border shadow mt-5'>
+      <!-- Product exits in the cartitems table -->
+      <?= generateAlert('yes', 'Product already present in the cartItems', 'info'); ?>
       <div class="d-flex flex-wrap">
         <?php foreach ($product->getAllProducts() as $product) { ?>
           <!-- Loop through this column for all the product provided by getAllProducts() -->

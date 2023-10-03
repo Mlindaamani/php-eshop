@@ -14,56 +14,11 @@ class CartItem {
 
 
 
-  public function addProductToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
+  public function addToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, user_id, product_id, cart_id) 
-
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
-
+    $stmt = $this->database->dbconnection()->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id]);
-  }
-
-
-
-  function addToCart($cartId, $productId, $quantity, $user_id)
-  {
-    $productObject = new Product($this->database);
-    //Get Product info from the ProductClass for a $productId.
-    $productIdInfo = $productObject->getProductInfoById($productId);
-    //Get existing productInfo for a product with $productId.
-    $existingCartItemsProductInfo = $this->getCartItemProductInfoById($productId, $user_id);
-
-    if ($existingCartItemsProductInfo['product_id'] === $productId) {
-
-      if ($existingCartItemsProductInfo['quantity'] <= $productIdInfo['stock_quantity']) {
-
-        $newProductQuantity = $existingCartItemsProductInfo['quantity'] + $quantity;
-
-        $newProductTotalPrice = $existingCartItemsProductInfo['price'] * $newProductQuantity;
-
-        $productObject->decreaseStockQuantity($productId, $quantity);
-        exit();
-
-      } else {
-        echo "Sorry the selected product is out of stock.";
-      }
-
-    } else {
-
-      //Insert the product info for a $productId.
-      $this->insertProductIntoCartItems(
-        $cartId,
-        $productId,
-        1,
-        $productIdInfo['price'],
-        $productIdInfo['price'],
-        $productIdInfo['image_url'],
-        $productIdInfo['product_name'],
-        $user_id
-      );
-      $productObject->decreaseStockQuantity($productId, 1);
-    }
   }
 
 
@@ -83,16 +38,6 @@ class CartItem {
     $stmt->execute([$total_price, $product_id, $user_id]);
   }
 
-
-
-  //IS_PRODUCT_PRESENT():
-  public function isProductPresentInCartItems($product_id)
-  {
-    $stmt = $this->database->dbconnection()->prepare("SELECT product_id FROM cart_items WHERE product_id = ?");
-    $stmt->execute([$product_id]);
-    $product = $stmt->fetch(PDO::FETCH_ASSOC);
-    return isset($product);
-  }
 
 
   //GET_CART_ITEMS_INFO_BY_ID:
@@ -158,12 +103,4 @@ class CartItem {
     $stmt->execute([$user_id]);
   }
 
-
-
-  //INSERT_PRODUCTS_INTO_CARTITEMS_TABLE:
-  function insertProductIntoCartItems($cartId, $product_id, $quantity, $price, $total_price, $product_image, $product_name, $user_id)
-  {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO cart_items (cart_id, product_id, quantity, price, total_price, product_image,product_name, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$cartId, $product_id, $quantity, $price, $total_price, $product_image, $product_name, $user_id]);
-  }
 }
