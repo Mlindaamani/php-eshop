@@ -30,29 +30,13 @@ if (isset($_POST['remove'])) {
     <div class='col-md-10 border shadow mt-3' style="height:100%">
 
         <!-- Display the message when the category is deleted -->
-        <?php if (isset($_GET['catdeleted'])) { ?>
-            <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
-                Category removed Successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php } ?>
+        <?php generateAlert('catdeleted', ' Category removed Successfully!', 'info') ?>
 
         <!-- Display error message when a category is not selected -->
-        <?php if (isset($_GET['selectCat'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                Kindly select the category
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php } ?>
-
+        <?php generateAlert('selectCat', ' Kindly select the category!', 'danger') ?>
 
         <!-- Display the message when the added category is already present -->
-        <?php if (isset($_GET['present'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                Category is present!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php } ?>
+        <?php generateAlert('present', ' Category is present!', 'danger') ?>
 
 
         <!-- Display the form for removing the categories -->

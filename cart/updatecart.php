@@ -3,26 +3,18 @@
 session_start();
 // Include database connection class.
 include '../models/Database.php';
-
 // Include CartItem class and instantiate the CartItem class.
 include "../models/CartItem.php";
-
 // Include Product class and instantiate the Product class.
 include "../models/Product.php";
-
 // Include Cart class and instantiate the Cart class.
 include "../models/Cart.php";
-
 //Create a new instance of cartItem.
 $cartItem = new CartItem(new Database);
-
 //Create a new instance of cartItem.
 $product = new Product(new Database);
-
 //Create a new instance of Cart.
 $cart = new Cart(new Database);
-
-
 //Update the product_quantity
 if (isset($_POST['update'])) {
 

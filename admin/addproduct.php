@@ -9,22 +9,11 @@
 
   <!-- Include the 10 colums to display the forms-->
   <div class='col-md-10 border shadow mt-3'>
-    <!-- Display the error message whem the product is already Present -->
-    <?php if (isset($_GET['emptyProductField'])) { ?>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        Kindly fil all the fields
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <?php } ?>
-
-
     <!-- Display the succes message when the product is added Successfully-->
-    <?php if (isset($_GET['productadded'])) { ?>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Product inserted Successfully!
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><button>
-      </div>
-    <?php } ?>
+    <?php generateAlert('productadded', 'Product added Successfully!', 'success') ?>
+    <!-- Kindly fill all the fields -->
+    <?php generateAlert('emptyProductField', ' Kindly fill in the fields!', 'danger') ?>
+
 
 
     <div class='container d-flex justify-content-center align-items-center mb-3 w-75 h-80 mt-3 '>

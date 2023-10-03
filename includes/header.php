@@ -5,13 +5,11 @@
 //Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
 
-
 // Checks whether the user is logged in. Rerurn True on success and false on failure.
 function is_logged_in()
 {
   return isset($_SESSION['user_id']);
 }
-
 
 //CONDTIONAL RENDERING.
 // DisplY the logout button if the user is currently logged in.
@@ -65,7 +63,19 @@ function dbconnect()
 }
 
 
+function generateAlert($getKey, $message, $alertType)
+{
+  if (isset($_GET[$getKey])) {
+    echo '<div class="alert alert-' . $alertType . ' alert-dismissible fade show container mt-2" role="alert">';
+    echo $message;
+    echo '<button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+    echo '</div>';
+  }
+}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang='en'>
 

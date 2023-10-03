@@ -5,22 +5,16 @@ include '../models/Database.php';
 include '../models/CartItem.php';
 include '../models/Product.php';
 include '../models/Cart.php';
-
 //Create a new instance of cartItem.
 $cartItem = new CartItem(new Database);
-
 //Create a new instance of cartItem.
 $product = new Product(new Database);
-
 //Create a new instance of cartItem.
 $cart = new Cart(new Database);
-
 //Get the user_id from the session variable.
 $userId = $_SESSION['user_id'];
-
 //Get product id from the product listing form.
 $productId = $_POST['id'];
-
 // Cart_id
 $cartId = $cart->getCartId($userId);
 

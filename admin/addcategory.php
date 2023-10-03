@@ -36,33 +36,15 @@ if (isset($_POST['submit'])) {
 
     <!-- Display as 10 columns layout similar to admin-panel page -->
     <div class='col-md-10 border shadow mt-3' style="height:100%">
+
         <!-- Display the successful message when category is added -->
-        <?php if (isset($_GET['cat'])) { ?>
-            <div class="alert alert-success alert-dismissible fade show border shadow mt-2" role="alert">
-                Category added Successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        <?php } ?>
+        <?php generateAlert('cat', ' Category added Successfully!', 'success') ?>
 
         <!-- Display message for empty category field -->
-        <?php if (isset($_GET['emptyCategoryField'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show border shadow mt-2" role="alert">
-                Kindly fill in the category
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        <?php } ?>
+        <?php generateAlert('emptyCategoryField', ' Kindly fill in the category!', 'danger') ?>
 
-
-        <!-- Display the warning when the category is present -->
-        <?php if (isset($_GET['present'])) { ?>
-            <div class="alert alert-danger alert-dismissible fade show border shadow mt-2" role="alert">
-                Category is present!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        <?php } ?>
+        <!-- Display message when the selected category is present -->
+        <?php generateAlert('present', ' Category is present!', 'danger') ?>
 
         <!-- Form for adding categories -->
         <div class='container d-flex justify-content-center align-items-center'

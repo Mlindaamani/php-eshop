@@ -1,16 +1,12 @@
 <?php
 // Start the session if not already started here.
 @session_start();
-
 //Create an array that contains all the roles.
 $role = ['admin', 'customer'];
-
-
 $accessPermissions = [
   'admin' => isset($_SESSION['role']) && $_SESSION['role'] == 'admin',
   'customer' => isset($_SESSION['role']) && ($_SESSION['role'] == 'customer' || $_SESSION['role'] == 'admin')
 ];
-
 
 function access(string $role)
 {

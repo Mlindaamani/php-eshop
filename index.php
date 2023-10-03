@@ -1,34 +1,17 @@
 <?php
 // Include header contents
 include('includes/header.php');
-
 //Include Prosuct class
 include 'models/Product.php';
-
 //Include database class.
 include 'models/Database.php';
-
 //Create new instance of Produc class.
 $product = new Product(new Database);
+//Display a success message when user signs up successfully.
+generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
+// Display a successfully message when the product is added in the database 
+generateAlert('newitem', '  Added To Cart!', 'success');
 ?>
-
-<!-- Display a successfully message when a customer signs up -->
-<?php if (isset($_GET['success'])) { ?>
-  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
-    You have successfully signed up! Now you can explore more in Ebot!
-    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-  </div>
-<?php } ?>
-
-
-<!-- Display a successfully message when the product is added in the database -->
-<?php if (isset($_GET['newitem'])) { ?>
-  <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
-    Added To Cart!
-    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-  </div>
-<?php } ?>
-
 
 
 <div class="container-fluid bg-secondary-subtle">

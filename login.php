@@ -1,31 +1,15 @@
-<!-- Include the footer contents in the login page. -->
-<?php include('includes/header.php') ?>
+<?php
+// Include the header contents in the login page. -->
+include('includes/header.php');
+//Disply the error message when the password or email does not match. -->
+generateAlert('error', 'Invalid Email or password!', 'danger');
+// Disply error message when the fields are empty. -->
+generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger');
+//Display the error message when the user tries to add product in the cart_items table 
+generateAlert('login', 'Kindly login/signup to continue adding product to cart', 'info');
 
-<!-- Display the error message when the user tries to add product in the cart_items table -->
-<?php if (isset($_GET['login'])) { ?>
-  <div class="alert alert-info alert-dismissible fade show text-center container mt-2" role="alert">
-    Kindly login/signup to continue adding product to cart
-    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-  </div>
-<?php } ?>
+?>
 
-
-<!-- Disply the error message when the password or email does not match. -->
-<?php if (isset($_GET['error'])) { ?>
-  <div class="alert alert-danger alert-dismissible  fade show container mt-2" role="alert">
-    Invalid Email or password!
-    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-  </div>
-<?php } ?>
-
-
-<!-- Disply error message when the fields are empty. -->
-<?php if (isset($_GET['emptyfield'])) { ?>
-  <div class="alert alert-danger alert-dismissible  container mt-2 fade show" role="alert">
-    Kindly fill in all the required fields!
-    <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-  </div>
-<?php } ?>
 
 <!-- login form -->
 <div class="container d-flex justify-content-center align-items-center mt-5">

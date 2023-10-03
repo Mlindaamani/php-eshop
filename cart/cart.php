@@ -1,42 +1,25 @@
 <?php
 // Start session if not started.
 @session_start();
-
 //Disable unnessary error reporting
 error_reporting(0);
-
 //Include the header contents.
 include '../includes/header.php';
-
 //Include Database class contents.
 include '../models/Database.php';
-
 //Include the contents of CartsItems class and instantiate the CartItem class.
 include '../models/CartItem.php';
-
 //Create Cartitem objects(instances)
 $CartItem = new CartItem(new Database);
-
 //Get userId from the session variable(super global)
 $userId = $_SESSION['user_id'];
 ?>
 
 <div>
-  <?php if (isset($_GET['stock'])) { ?>
-    <div class="alert alert-danger alert-dismissible  text-center fw-bold container mt-2" role="alert">
-      No Enough stock Quantity for the entered Quantity!
-      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div>
-  <?php } ?>
-
-
-  <?php if (isset($_GET['updated'])) { ?>
-    <div class="alert alert-success alert-dismissible  text-center fw-bold container mt-2" role="alert">
-      Quantity Updated!
-      <button class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div>
-  <?php } ?>
-
+  <!-- Display a error message when no enogh stock Quantity for a selected product -->
+  <?php generateAlert('stock', ' No Enough stock Quantity for the entered Quantity!', 'danger') ?>
+  <!-- Display a success message when a Quantity is updated successfully -->
+  <?php generateAlert('updated', '  Quantity Updated!', 'success') ?>
 </div>
 
 <!-- Shopping cart haeader -->

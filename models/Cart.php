@@ -1,4 +1,5 @@
 <?php
+
 class Cart {
 
   private $database;
