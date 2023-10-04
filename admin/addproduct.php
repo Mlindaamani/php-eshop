@@ -1,6 +1,5 @@
 <!--  Include header contents  -->
 <?php include('../includes/header.php') ?>
-
 <!-- Include the sidebar -->
 <div class='row mt-3 gx-2'>
   <div class='col-md-2 border shadow mt-3'>
@@ -13,8 +12,6 @@
     <?php generateAlert('productadded', 'Product added Successfully!', 'success') ?>
     <!-- Kindly fill all the fields -->
     <?php generateAlert('emptyProductField', ' Kindly fill in the fields!', 'danger') ?>
-
-
 
     <div class='container d-flex justify-content-center align-items-center mb-3 w-75 h-80 mt-3 '>
       <!-- Product addition form -->

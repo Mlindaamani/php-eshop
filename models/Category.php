@@ -1,17 +1,12 @@
 <?php
-
-// include 'Database.php';
-
 class Category {
 
   private $database;
-
 
   public function __construct(Database $database)
   {
     $this->database = $database;
   }
-
 
   public function getAllCategories(): array
   {
@@ -33,7 +28,6 @@ class Category {
     $stmt->execute([$category_name]);
   }
 
-
   public function isCategoryPresent($category_name)
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT * FROM categories WHERE category_name = ?");
@@ -42,7 +36,3 @@ class Category {
     return isset($results['category_name']);
   }
 }
-
-// $category = new Category(new Database);
-
-// var_dump($category->isCategoryPresent('Nasa Computer'));

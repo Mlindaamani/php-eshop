@@ -9,7 +9,6 @@ generateAlert('datapresent', 'Entered records Already exit!', 'danger');
 generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger');
 ?>
 
-
 <!-- Signed up form -->
 <div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
   <form action="actions/signup.act.php" method="post" class="border shadow p-3 rounded w-50 ">

@@ -17,5 +17,4 @@ if (isset($_POST['remove'])) {
     header('Location: ../removecategory.php?catdeleted');
     exit();
   }
-
 }

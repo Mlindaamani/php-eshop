@@ -10,7 +10,6 @@ generateAlert('login', 'Kindly login/signup to continue adding product to cart',
 
 ?>
 
-
 <!-- login form -->
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <form method="POST" class="border shadow p-3 rounded w-25 mt-5" action="actions/auth-user.php">

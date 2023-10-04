@@ -1,7 +1,6 @@
 <?php
 //Start session inorder to use the superglobal session.
 @session_start();
-
 //Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
 
@@ -11,57 +10,32 @@ function is_logged_in()
   return isset($_SESSION['user_id']);
 }
 
-//CONDTIONAL RENDERING.
-// DisplY the logout button if the user is currently logged in.
+//Display logout button link
 function display_logout()
 {
   global $baseUrl;
-
   if (is_logged_in()) {
-    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none'
-  href=$baseUrl/logout.php>Logout</a>";
+    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none' href=$baseUrl/logout.php>Logout</a>";
   }
 }
-
 
 // Disply the login button-link if the user is currently not logged in
 function display_login()
 {
   global $baseUrl;
-
   if (!is_logged_in()) {
-    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none'
-    href=$baseUrl/login.php>Login</a>";
+    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none' href=$baseUrl/login.php>Login</a>";
   }
 }
-
-
 
 // Disply the signup  button-link if the user is currently not logged in
 function display_signup()
 {
   global $baseUrl;
   if (!is_logged_in()) {
-    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none'
-  href=$baseUrl/signup.php>Sign-up</a>";
+    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none' href=$baseUrl/signup.php>Sign-up</a>";
   }
 }
-
-
-//Obtain the connection to the database. Return a connection object
-function dbconnect()
-{
-  $server_name = 'localhost';
-  $db_user = 'root';
-  $db_password = '';
-  $db_name = 'ebotdb';
-  $con = mysqli_connect($server_name, $db_user, $db_password, $db_name);
-  if (!$con) {
-    echo "Could not connect!";
-  }
-  return $con;
-}
-
 
 function generateAlert($getKey, $message, $alertType)
 {
@@ -71,10 +45,7 @@ function generateAlert($getKey, $message, $alertType)
     echo '<button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
     echo '</div>';
   }
-}
-
-?>
-
+} ?>
 
 <!DOCTYPE html>
 <html lang='en'>
@@ -92,22 +63,17 @@ function generateAlert($getKey, $message, $alertType)
 <body>
   <nav class='navbar navbar-expand-lg bg-primary text-light sticky-top'>
     <div class='container-fluid p-1'>
-      <a class='navbar-brand text-light fw-bold text active mx-3' href='#'><span class="logo">E</span>BOT
-      </a>
-      <!-- &nbsp; -->
+      <a class='navbar-brand text-light fw-bold text active mx-3' href='#'><span class="logo">E</span>BOT </a>
       <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#nav-menu'>
         <span class='navbar-toggler-icon'></span>
       </button>
-
       <div class='collapse navbar-collapse ' id='nav-menu'>
         <ul class='navbar-nav me-auto  mb-lg-0'>
           <li class='nav-item'>
             <a href="<?= $baseUrl ?>" class='nav-link active fw-bold text-light'>Home
             </a>
           </li>
-          <!-- Logout link -->
           <?php display_logout() ?>
-          <!-- Logout link -->
         </ul>
         <div class="px-3 py-2 m-3 text-end">
           <div class="container d-flex flex-wrap justify-content-center">
@@ -115,13 +81,8 @@ function generateAlert($getKey, $message, $alertType)
               <input type="search" class="form-control" placeholder="Search...">
             </form>
             <div>
-              <!-- Login link -->
               <?php display_login() ?>
-              <!-- Login link -->
-
-              <!-- Signup link -->
               <?php display_signup() ?>
-              <!-- Signup link -->
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'>Cart</a>
               </button>

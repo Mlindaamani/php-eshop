@@ -7,7 +7,6 @@ class Database {
   private $databasePassword = "";
   private $databaseName = "ebotdb";
 
-
   public function __construct()
   {
     try {

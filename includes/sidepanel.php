@@ -1,6 +1,5 @@
 <!-- Sideber contents -->
 <?php $baseUrl = 'http://localhost:8000'; ?>
-
 <div class='border bg-dark-subtle mt-md-3 p-0 text-center rounded m-2 mb-5 border shadow'>
   <ul class='navbar-nav me-auto border shadow'>
     <li class='nav-item '>

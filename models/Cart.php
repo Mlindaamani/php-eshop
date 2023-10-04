@@ -1,15 +1,11 @@
 <?php
-
 class Cart {
-
   private $database;
-
 
   public function __construct(Database $database)
   {
     $this->database = $database;
   }
-
 
   public function createNewCart($userId)
   {
@@ -19,7 +15,6 @@ class Cart {
     }
   }
 
-
   public function isCartActive($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = ?");
@@ -28,13 +23,11 @@ class Cart {
     return isset($activeCartId['user_id']);
   }
 
-
   function insertDataIntoCart($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
     $stmt->execute([$userId, 0, 0.00, 0]);
   }
-
 
   function getCartId($userId)
   {
@@ -43,7 +36,6 @@ class Cart {
     $cart = $stmt->fetch(PDO::FETCH_ASSOC);
     return $cart['id'];
   }
-
 
   function getUserCartInfo($userId)
   {
@@ -60,7 +52,6 @@ class Cart {
     $stmt->execute([$cartId]);
     return "Checked out successfully";
   }
-
 
   //CLEAR THE USER CART.
   function clearCart($user_id)

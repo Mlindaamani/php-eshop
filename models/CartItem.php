@@ -1,17 +1,12 @@
 <?php
-// include "Database.php";
-// CartItem Model
 class CartItem {
 
-
   private $database;
-
 
   public function __construct(Database $database)
   {
     $this->database = $database;
   }
-
 
 
   public function addToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
@@ -37,7 +32,6 @@ class CartItem {
     $stmt = $this->database->dbconnection()->prepare("UPDATE cart_items SET  total_price = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$total_price, $product_id, $user_id]);
   }
-
 
 
   //GET_CART_ITEMS_INFO_BY_ID:
@@ -77,14 +71,12 @@ class CartItem {
   }
 
 
-
   //DELETE_INDIVIDUAL_CART_ITEM:
   function removeCartItem($cartItemId, $productId)
   {
     $stmt = $this->database->dbconnection()->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
     $stmt->execute([$cartItemId, $productId]);
   }
-
 
 
   //GET_ALL_CART_ITEMS_PRODUCT_INFO:
@@ -94,7 +86,6 @@ class CartItem {
     $stmt->execute([$user_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-
 
   //DELETE_ALL_CART_ITEMS:
   function clearCartItem($user_id)
