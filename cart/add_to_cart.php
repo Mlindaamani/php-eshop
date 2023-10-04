@@ -14,7 +14,7 @@ $cart = new Cart(new Database);
 
 
 
-if (isset($_POST['add_to_cart'])) {
+if (isset($_POST['add_to_cart'], $_SESSION['user_id'])) {
   // Existing productinfo for a product ID. Remember the existing product_id in this case is equal to the incommig productId.
   $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['id'], $_SESSION['user_id']);
   $existingProductId = $existingProductInfo['product_id'];
@@ -34,4 +34,6 @@ if (isset($_POST['add_to_cart'])) {
     header('Location: ../index.php?newitem');
     exit;
   }
+} else {
+  header('Location: ../login.php?login');
 }

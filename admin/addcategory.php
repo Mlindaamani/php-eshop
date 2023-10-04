@@ -1,33 +1,6 @@
 <?php
 include('../includes/header.php');
-
-if (isset($_POST['submit'])) {
-    $category = $_POST['category'];
-
-
-    if (empty($category)) {
-        header('Location: addcategory.php?emptyCategoryField');
-        exit;
-    }
-
-
-    $sql_result = mysqli_query(dbconnect(), "SELECT * FROM categories WHERE category_name = '$category'");
-
-    if (mysqli_num_rows($sql_result) > 0) {
-        header('location: addcategory.php?present');
-        exit();
-
-    } else {
-        $result = mysqli_query(dbconnect(), "INSERT INTO categories(category_name) VALUES('$category')");
-        if ($result) {
-            header('location: addcategory.php?cat');
-            exit();
-        }
-    }
-}
 ?>
-
-
 <div class='row mt-3'>
     <!-- Sidebar -->
     <div class='col-md-2 mt-3 shadow'>
@@ -51,12 +24,12 @@ if (isset($_POST['submit'])) {
             style='margin-top: 100px; margin-bottom: 300px;'>
 
             <!-- Sumit the form on the same page -->
-            <form method='post' class='border shadow p-3 rounded' action="">
+            <form method='post' class='border shadow p-3 rounded' action="categoryHandler/add_handler.php">
                 <h5 class='text-center p-3'>Add Categories</h5>
 
                 <div class='mb-3'>
                     <div class="form-floating">
-                        <input type='text' name='category' id='' class='form-control' placeholder="C">
+                        <input type='text' name='category_name' class='form-control' placeholder="C">
                         <label for='email' class='form-label'>Enter Category</label>
                     </div>
                 </div>

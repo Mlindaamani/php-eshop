@@ -15,22 +15,21 @@ class Cart {
   {
     // If no active cart create new cart.
     if (!$this->isCartActive($userId)) {
-      $this->insertCartInfo($userId);
-
+      $this->insertDataIntoCart($userId);
     }
   }
 
 
   public function isCartActive($userId)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = 0");
-    $stmt->execute([$userId]);
+    $stmt = $this->database->dbconnection()->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = ?");
+    $stmt->execute([$userId, 0]);
     $activeCartId = $stmt->fetch(PDO::FETCH_ASSOC);
     return isset($activeCartId['user_id']);
   }
 
 
-  function insertCartInfo($userId)
+  function insertDataIntoCart($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
     $stmt->execute([$userId, 0, 0.00, 0]);
@@ -44,7 +43,6 @@ class Cart {
     $cart = $stmt->fetch(PDO::FETCH_ASSOC);
     return $cart['id'];
   }
-
 
 
   function getUserCartInfo($userId)
@@ -71,13 +69,4 @@ class Cart {
     $stmt->execute([$user_id]);
   }
 
-
-  function testTypeHinting()
-  {
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products");
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $results;
-
-  }
 }

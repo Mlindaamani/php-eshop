@@ -1,6 +1,7 @@
 <?php
 // Include header contents
 include('includes/header.php');
+error_reporting(0);
 //Include Prosuct class
 include 'models/Product.php';
 //Include Prosuct class

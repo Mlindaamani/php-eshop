@@ -32,8 +32,6 @@ if (isset($_POST['update'])) {
     $cartItem->updateProductQuantity($_POST['product_quantity'], $_POST['product_id'], $_SESSION['user_id']);
     // Update the product total-Price
     $cartItem->updateCartItemTotalPrice($newTotalPrice, $_POST['product_id'], $_SESSION['user_id']);
-    //Decrease the stock quantity for the updated product.
-    $product->decreaseStockQuantity($_POST['product_id'], $_POST['product_quantity']);
     // Redirect the user to the cart.php when the quanity is updated successfully.
     header('Location:cart.php?updated');
     exit;

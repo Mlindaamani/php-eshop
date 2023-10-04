@@ -51,7 +51,7 @@ class CartItem {
 
 
   //GET_CART_SUB_TOTAL:
-  public function subTotal($user_id)
+  public function subTotal($user_id): float
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT SUM(total_price) FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
@@ -60,7 +60,7 @@ class CartItem {
 
 
   //SUM ALL PRODUCT QUANTITY FOR A AUTHENTICATED USER.
-  public function getTotalProductQuantity($user_id)
+  public function getTotalProductQuantity($user_id): int
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT SUM(quantity) FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);

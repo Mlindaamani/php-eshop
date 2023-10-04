@@ -25,14 +25,6 @@ $userId = $_SESSION['user_id'];
 <!-- Shopping cart haeader -->
 <div class="container mt-3 bg-secondary-subtle p-4 col-md-8 border shadow">
 
-  <!-- Display the Clear cart button. This button will be invisible when the cartItem is empty -->
-  <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)) { ?>
-    <form action="updatecart.php" method="post">
-      <button type="submit" class="btn btn-danger float-end fw-bold  border shadow" name="deleteCart">Clear Cart</button>
-    </form>
-  <?php } ?>
-
-
   <h4 class="fw-bold text-center mb-3">Shopping Cart</h4>
   <table class="table table-responsive  border shadow">
     <!-- Display the table header if products exits in the table -->
