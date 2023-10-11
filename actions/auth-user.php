@@ -1,7 +1,13 @@
 <?php
 session_start();
+
 //Get database connection object
 include 'db_connection.php';
+
+// spl_autoload_register(function ($class) {
+//     require __DIR__ . "/../models/$class.php";
+// });
+
 
 //Check if the submit button is clicked
 if (isset($_POST['submit'])) {

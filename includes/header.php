@@ -1,20 +1,20 @@
 <?php
 //Start session.
 @session_start();
+
+//Disable error reporting for unset user_id.
 error_reporting(0);
 
 //Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
 
-//Include all Models here.
-include __DIR__ . '/../models/Cart.php';
-include __DIR__ . '/../models/CartItem.php';
-include __DIR__ . '/../models/Category.php';
-include __DIR__ . '/../models/Database.php';
-include __DIR__ . '/../models/Product.php';
-include __DIR__ . '/../models/User.php';
-$cartItem = new CartItem(new Database);
+//Create the class autoloader function. This function will automatically load the class when a new instance of it is craeted.
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/../models/$class.php";
+});
 
+//Create new instance of CartItem class.
+$cartItem = new CartItem(new Database);
 
 // Checks whether the user is logged in. Rerurn True on success and false on failure.
 function is_logged_in()
@@ -49,6 +49,7 @@ function display_signup()
   }
 }
 
+//Create a custom method for handling different alerts in my app.
 function generateAlert($getKey, $message, $alertType)
 {
   if (isset($_GET[$getKey])) {
@@ -110,7 +111,6 @@ function generateAlert($getKey, $message, $alertType)
                     <?= $cartItem->getItemsCount($_SESSION['user_id']) ?>
                   </sup></a>
               </button>
-
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <span>Guest</span>
               </button>
@@ -120,3 +120,5 @@ function generateAlert($getKey, $message, $alertType)
       </div>
     </div>
   </nav>
+
+  <body>

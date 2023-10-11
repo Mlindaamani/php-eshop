@@ -1,10 +1,16 @@
 <?php
 // Include header contents
 include('includes/header.php');
+
+//Disable the error reporting for unset user_id
 error_reporting(0);
-//Create new instance of Produc class.
+
+//Create new instance of Product class.
 $product = new Product(new Database);
+
+//Create new instance of CartItem class.
 $cartItem = new CartItem(new Database);
+
 //Display a success message when user signs up successfully.
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
 ?>
