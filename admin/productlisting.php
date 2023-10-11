@@ -1,6 +1,8 @@
 <?php
 //Include database from the actions folder.
 include "../actions/db_connection.php";
+include '../models/Database.php';
+$database = new Database();
 
 //Handle Product submision
 if (isset($_POST['submit'])) {
@@ -18,10 +20,12 @@ if (isset($_POST['submit'])) {
   }
 
   //Obtain the full path of the image directory.
-  $admin_image_dir_path = realpath(__DIR__) . "/uploads/images/";
+  $admin_image_dir_path = __DIR__ . "/uploads/images/" . $product_name;
 
-  $stmt = databaseConnection()->prepare("SELECT product_name, image_url FROM products WHERE product_name = ? AND image_url = ?");
+
+  $stmt = $database->dbconnection()->prepare("SELECT product_name, image_url FROM products WHERE product_name = ? AND image_url = ?");
   $results = $stmt->execute([$product_name, $product_image]);
+
   if ($results) {
     header('Location: addproduct.php?prod');
     exit();
@@ -29,7 +33,7 @@ if (isset($_POST['submit'])) {
   } else {
 
     // Move the aploaded image url into the images folder in aploads
-    move_uploaded_file($product_temp_name, $admin_image_dir_path . $product_image);
+    move_uploaded_file($product_temp_name, $admin_image_dir_path);
     // Construct a query for adding the product to the database.
     $sql = "INSERT INTO products(
         product_name,

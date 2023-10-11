@@ -15,6 +15,7 @@ if (isset($_POST['submit'])) {
     if (empty($enteredEmail) || empty($enteredPassword)) {
         header('Location:../login.php?emptyfield');
         exit;
+
     }
 
     //Select user info with the provide email.
@@ -51,7 +52,7 @@ if (isset($_POST['submit'])) {
             //Redirect the user to the home login page when the entered password does not match with database records.
         } else {
             header('Location: ../login.php?error');
-            exit();
+            exit;
         }
 
         //Redirect the user to the signup page if their records are not present in the database.

@@ -1,13 +1,15 @@
 <?php
-include('../includes/header.php');
-?>
+//Include the header contents
+include('../includes/header.php') ?>
+
 <div class='row mt-3'>
     <!-- Sidebar -->
-    <div class='col-md-2 mt-3 shadow'>
+    <div class='col-md-2 mt-3 '>
         <?php include '../includes/sidepanel.php'; ?>
     </div>
+
     <!-- Display as 10 columns layout similar to admin-panel page -->
-    <div class='col-md-10 border shadow mt-3' style="height:100%">
+    <div class='col-md-10 mt-3' style="height:100%">
         <!-- Display the successful message when category is added -->
         <?php generateAlert('cat', ' Category added Successfully!', 'success') ?>
         <!-- Display message for empty category field -->

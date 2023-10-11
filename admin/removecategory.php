@@ -1,20 +1,19 @@
 <!-- Include the header contents -->
 <?php include '../includes/header.php';
-//Include Category class and instantiate it.
-include "../models/Category.php";
-//Include database class.
-include '../models/Database.php';
+//Create new instance of Category.
 $category = new Category(new Database);
 ?>
 <!-- Include the sidepanel -->
 <div class='row mt-3'>
-    <div class='col-md-2 border shadow mt-3'>
+    <!-- 2 Colums for the sidebar -->
+    <div class='col-md-2 mt-3'>
         <?php include '../includes/sidepanel.php' ?>
     </div>
-    <!-- Form for displaying categories -->
-    <div class='col-md-10 border shadow mt-3' style="height:100%">
+
+    <!-- 10 colums for Category listing -->
+    <div class='col-md-10 mt-3' style="height:100%">
         <!-- Display the message when the category is deleted -->
-        <?php generateAlert('catdeleted', ' Category removed Successfully!', 'info') ?>
+        <?php generateAlert('catdeleted', ' Category removed Successfully!', 'success') ?>
         <!-- Display error message when a category is not selected -->
         <?php generateAlert('selectCat', ' Kindly select the category!', 'danger') ?>
         <!-- Display the message when the added category is already present -->
@@ -24,13 +23,13 @@ $category = new Category(new Database);
             style='margin-top: 100px; margin-bottom: 300px;'>
             <form method='post' class='border shadow p-3 rounded' action="categoryHandler/remove_handler.php">
                 <div class=''>
-                    <h5 class='text-center p-3 '>Remove Category</h5>
+                    <h5 class='text-center p-3'>Remove Category</h5>
                     <div class='mb-3'>
                         <select name='category_id' class='form-select mb-3 bg-primary text-light p-4 border shadow'
                             style='cursor:pointer' class='custom-select' size="5">
-                            <?php foreach ($category->getAllCategories() as $cate): ?>
-                                <option value='<?= $cate['id'] ?>' class='text-start' name="category_id">
-                                    <?= $cate['category_name'] ?>
+                            <?php foreach ($category->getAllCategories() as $category): ?>
+                                <option value='<?= $category['id'] ?>' class='text-start' name="category_id">
+                                    <?= $category['category_name'] ?>
                                 </option>
                             <?php endforeach ?>
                         </select>

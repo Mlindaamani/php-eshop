@@ -1,13 +1,14 @@
 <!--  Include header contents  -->
-<?php include('../includes/header.php') ?>
+<?php include '../includes/header.php' ?>
+
 <!-- Include the sidebar -->
 <div class='row mt-3 gx-2'>
-  <div class='col-md-2 border shadow mt-3'>
+  <div class='col-md-2 mt-3'>
     <?php include '../includes/sidepanel.php' ?>
   </div>
 
   <!-- Include the 10 colums to display the forms-->
-  <div class='col-md-10 border shadow mt-3'>
+  <div class='col-md-10 mt-3'>
     <!-- Display the succes message when the product is added Successfully-->
     <?php generateAlert('productadded', 'Product added Successfully!', 'success') ?>
     <!-- Kindly fill all the fields -->

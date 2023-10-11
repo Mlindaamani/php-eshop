@@ -4,9 +4,9 @@ include('includes/header.php');
 //Disply the error message when the password or email does not match. -->
 generateAlert('error', 'Invalid Email or password!', 'danger');
 // Disply error message when the fields are empty. -->
-generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger');
+generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
 //Display the error message when the user tries to add product in the cart_items table 
-generateAlert('login', 'Kindly login/signup to continue adding product to cart', 'info');
+generateAlert('login', 'login/signup to add product to cart', 'info');
 
 ?>
 

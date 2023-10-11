@@ -1,19 +1,33 @@
 <?php
-// Start the session if not already started here.
 @session_start();
-//Create an array that contains all the roles.
-$role = ['admin', 'customer'];
-$accessPermissions = [
-  'admin' => isset($_SESSION['role']) && $_SESSION['role'] == 'admin',
-  'customer' => isset($_SESSION['role']) && ($_SESSION['role'] == 'customer' || $_SESSION['role'] == 'admin')
-];
 
 function access(string $role)
 {
-  global $accessPermissions;
-
-  if (isset($accessPermissions[$role]) && !$accessPermissions[$role]) {
+  $accessPermissions = ['admin' => $_SESSION['role'] == 'admin', 'customer' => $_SESSION['role'] == 'customer' || $_SESSION['role'] == 'admin'];
+  if (!$accessPermissions[$role]) {
     header('Location: http://localhost:8000/denied.php');
     exit;
   }
 }
+
+
+
+// function checkAccess(array $allowedRoles, string $file_path)
+// {
+
+
+//   if (isset($_SESSION['role'])) {
+
+//     $user_role = $_SESSION['role'];
+
+//     if (in_array($user_role, $allowedRoles)) {
+
+//       return true;
+//     }
+
+//   } else {
+
+//     header("Location: " . $file_path);
+//     exit();
+//   }
+// }

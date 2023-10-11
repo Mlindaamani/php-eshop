@@ -2,64 +2,55 @@
 // Include header contents
 include('includes/header.php');
 error_reporting(0);
-//Include Prosuct class
-include 'models/Product.php';
-//Include Prosuct class
-include 'models/CartItem.php';
-//Include database class.
-include 'models/Database.php';
 //Create new instance of Produc class.
 $product = new Product(new Database);
 $cartItem = new CartItem(new Database);
 //Display a success message when user signs up successfully.
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
-// Display a successfully message when the product is added in the database 
-generateAlert('newitem', '  Added To Cart!', 'success');
 ?>
 
-<div class="container-fluid bg-secondary-subtle">
-  <div class='row'>
-    <div class="container bg-primary text-end">
-      <span style="font-size: 17px; color: #fff;" class="text-light fw-bold bg-danger p-1 rounded p-2 badge my-3">
-        <?= $cartItem->getItemsCount($_SESSION['user_id']) ?>
-      </span>
+<!-- Create a sidebar for the product listing UI-->
+<div class='p-0 text-center' style="width:100px">
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header bg-primary-subtle text-light">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Ebot</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <!-- Create a sidebar for the product listing UI-->
-    <div class='col-md-2 bg-dark-subtle p-0 text-center'>
-      <ul class='navbar-nav me-auto'>
-        <li class='nav-item '>
-          <a href='admin/dashboard.php' class='nav-link text-primary'>Dashboard</a>
-        </li>
-      </ul>
+    <div class="offcanvas-body bg-primary">
+      <p>Categories.</p>
     </div>
+  </div>
+</div>
 
-    <div class='col-md-10 rounded border shadow mt-5'>
-      <?= generateAlert('yes', 'Product already present in the cartItems', 'info'); ?>
-      <div class="d-flex flex-wrap">
-        <?php foreach ($product->getAllProducts() as $product): ?>
-          <div class='col-md-3'>
-            <div class='card m-3 border shadow col-md-10'>
-              <img src='admin/uploads/images/<?= $product['image_url'] ?>' class='card-img-top border shadow' />
-              <div class='card-body'>
-                <h5 class='card-title'>
-                  <?= $product['product_name'] ?>
-                </h5>
-                <p class='card-text lead'>
-                  <?= $product['description'] ?>
-                </p>
-                <p class='text-end fw-bold lead'>$
-                  <?= $product['price'] ?>
-                </p>
-                <form action="cart/add_to_cart.php" method="post">
-                  <input type="hidden" name="id" value="<?= $product['id'] ?>" />
-                  <input type="submit" class='btn btn-primary' value="ADD TO CART" name="add_to_cart" />
-                </form>
-              </div>
-            </div>
+<!-- Didplay the message when the product is already added in the cart -->
+<?php generateAlert('yes', 'Product already added in the cart', 'info'); ?>
+<div class="container mt-5" style="margin-top:50px">
+  <div class=" row g-5">
+    <?php foreach ($product->getAllProducts() as $product): ?>
+      <div class="col-12 col-md-6 col-lg-4 mt-5">
+        <div class="card border shadow custom-card-style">
+          <div class="card-img rounded">
+            <img src="admin/uploads/images/<?= $product['image_url'] ?>" alt="">
           </div>
-        <?php endforeach ?>
+          <div class="card-body">
+            <h5 class="card-title">
+              <?= $product['product_name'] ?>
+            </h5>
+            <p class="card-text lead">
+              <?= $product['description'] ?>
+            </p>
+            <p class="card-text lead fw-bold" style="color: green;">$
+              <?= $product['price'] ?>
+            </p>
+            <form action="cart/cart_handler.php" method="post">
+              <input type="hidden" name="id" value="<?= $product['id'] ?>">
+              <button type="submit" class="btn btn-primary text-bottom" name="add">ADD TO CART</button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+    <?php endforeach; ?>
   </div>
 </div>
 <?php include "includes/footer.php" ?>

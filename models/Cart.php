@@ -1,12 +1,28 @@
 <?php
+/**
+ * Summary of Cart
+ */
 class Cart {
+  /**
+   * Summary of database
+   * @var 
+   */
   private $database;
 
+  /**
+   * Summary of __construct
+   * @param Database $database
+   */
   public function __construct(Database $database)
   {
     $this->database = $database;
   }
 
+  /**
+   * Summary of createNewCart
+   * @param mixed $userId
+   * @return void
+   */
   public function createNewCart($userId)
   {
     // If no active cart create new cart.
@@ -15,6 +31,11 @@ class Cart {
     }
   }
 
+  /**
+   * Summary of isCartActive
+   * @param mixed $userId
+   * @return bool
+   */
   public function isCartActive($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT user_id FROM carts WHERE user_id = ? AND checked_out = ?");
@@ -23,12 +44,22 @@ class Cart {
     return isset($activeCartId['user_id']);
   }
 
+  /**
+   * Summary of insertDataIntoCart
+   * @param mixed $userId
+   * @return void
+   */
   function insertDataIntoCart($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
     $stmt->execute([$userId, 0, 0.00, 0]);
   }
 
+  /**
+   * Summary of getCartId
+   * @param mixed $userId
+   * @return mixed
+   */
   function getCartId($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT id FROM carts WHERE user_id = ? AND checked_out = ?");
@@ -37,6 +68,11 @@ class Cart {
     return $cart['id'];
   }
 
+  /**
+   * Summary of getUserCartInfo
+   * @param mixed $userId
+   * @return mixed
+   */
   function getUserCartInfo($userId)
   {
     $stmt = $this->database->dbconnection()->prepare("SELECT * FROM carts WHERE user_id = ?");
@@ -46,18 +82,27 @@ class Cart {
   }
 
   //RETURN A SUCCESSFULLY MESSAGE WHEN A CART IS CHECKED
+  /**
+   * Summary of checkoutCart
+   * @param mixed $cartId
+   * @return string
+   */
   public function checkoutCart($cartId)
   {
-    $stmt = $this->database->dbconnection()->prepare("UPDATE carts SET checked_out = 1 WHERE id = ?");
-    $stmt->execute([$cartId]);
+    $stmt = $this->database->dbconnection()->prepare("UPDATE carts SET checked_out = ? WHERE id = ?");
+    $stmt->execute([0, $cartId]);
     return "Checked out successfully";
   }
 
   //CLEAR THE USER CART.
+  /**
+   * Summary of clearCart
+   * @param mixed $user_id
+   * @return void
+   */
   function clearCart($user_id)
   {
     $stmt = $this->database->dbconnection()->prepare("DELETE FROM carts WHERE user_id = ?");
     $stmt->execute([$user_id]);
   }
-
 }
