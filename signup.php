@@ -11,7 +11,7 @@ generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger')
 
 <!-- Signed up form -->
 <div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
-  <form action="actions/signup.act.php" method="post" class="border shadow p-3 rounded w-50 ">
+  <form action="actions/signup-handler.php" method="post" class="border shadow p-3 rounded w-50 ">
     <div class="mb-3">
       <h5 class="text-center p-3">SIGN UP</h5>
 
