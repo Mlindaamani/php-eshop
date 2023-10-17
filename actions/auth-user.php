@@ -5,7 +5,7 @@ session_start();
 include __DIR__ . '/../includes/functions.php';
 
 //Get database connection object
-include 'db_connection.php';
+include 'db-connection.php';
 
 spl_autoload_register(function ($class) {
     require __DIR__ . "/../models/$class.php";
