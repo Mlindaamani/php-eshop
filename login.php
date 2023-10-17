@@ -8,7 +8,6 @@ generateAlert('error', 'Invalid Email or password!', 'danger');
 generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
 //Display the error message when the user tries to add product in the cart_items table 
 generateAlert('login', 'login/signup to add product to cart', 'info');
-
 ?>
 
 <!-- login form -->
