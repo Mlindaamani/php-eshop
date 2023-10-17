@@ -11,7 +11,7 @@ $CartItem = new CartItem(new Database);
 $userId = $_SESSION['user_id'];
 ?>
 
-<!-- Display Alerts here -->
+<!-- Issue an error message when the entered Quantity is greater than the available Quantity -->
 <div>
   <?php generateAlert('stock', ' No Enough stock Quantity for the entered Quantity!', 'danger') ?>
 </div>
@@ -35,7 +35,7 @@ $userId = $_SESSION['user_id'];
           <?php foreach ($CartItem->getAllCartItems($userId) as $product): ?>
             <tr>
               <td class="text-center mt-3">
-                <img src="../admin/uploads/images/<?= $product['product_image'] ?>" alt="Product Image" width="80" />
+                <img src="../uploads/<?= $product['product_image'] ?>" alt="Product Image" width="80" />
               </td>
 
               <td class="text-center mt-3">
@@ -80,8 +80,8 @@ $userId = $_SESSION['user_id'];
         <a href="../index.php" class="btn btn-primary fw-bold text-light">Continue Shopping</a>
       </div>
       <div class="col-md-3 col-sm-12 mb-3 text-center">
-        <button class="btn btn-primary-subtle fw-bold">Subtotal:
-          <span style="color:green; font-size:20px" class="fw-bold">$
+        <button class="btn btn-primary-subtle fw-bold">
+          Total Amount: <span style="color:green; font-size:20px" class="fw-bold">$
             <?= number_format($CartItem->subTotal($userId), 2) ?>
           </span>
         </button>

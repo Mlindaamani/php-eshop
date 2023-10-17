@@ -38,6 +38,8 @@ class CartItem {
     $stmt->execute([$product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id]);
   }
 
+
+
   //UPDATE_CARTITEMS_QUANTITY.
   /**
    * Summary of updateProductQuantity
@@ -98,6 +100,7 @@ class CartItem {
   }
 
   //SUM ALL PRODUCT QUANTITY FOR A AUTHENTICATED USER.
+
   /**
    * Summary of getTotalProductQuantity
    * @param mixed $user_id

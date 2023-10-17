@@ -1,5 +1,5 @@
 <?php
-// Include the header contents in the login page. -->
+// Include the header contents in the login page.
 include('includes/header.php');
 // Display error if the records are not fouund for the user trying logging in 
 generateAlert('norecord', 'No records found for entered user. Kindly signup/login again!', 'danger');

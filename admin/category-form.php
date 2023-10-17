@@ -20,7 +20,7 @@ include('../includes/header.php') ?>
         <div class='container d-flex justify-content-center align-items-center'
             style='margin-top: 100px; margin-bottom: 300px;'>
             <!-- Sumit the form on the same page -->
-            <form method='post' class='border shadow p-3 rounded' action="categoryHandler/add_handler.php">
+            <form method='post' class='border shadow p-3 rounded' action="categoryHandler/add-handler.php">
                 <h5 class='text-center p-3'>Add Categories</h5>
                 <div class='mb-3'>
                     <div class="form-floating">

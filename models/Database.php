@@ -16,7 +16,8 @@ class Database {
 
     } catch (PDOException $e) {
 
-      die("Connection failed: " . $e->getMessage());
+      echo "<h1>SORRY THE SERVER IS CURRENTLY DOWN WE WILL FIX IT WITHIN NO TIME!</h1>";
+      exit;
     }
   }
 

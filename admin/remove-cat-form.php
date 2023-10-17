@@ -21,7 +21,7 @@ $category = new Category(new Database);
         <!-- Display the form for removing the categories -->
         <div class='container d-flex justify-content-center align-items-center w-100'
             style='margin-top: 100px; margin-bottom: 300px;'>
-            <form method='post' class='border shadow p-3 rounded' action="categoryHandler/remove_handler.php">
+            <form method='post' class='border shadow p-3 rounded' action="categoryHandler/remove-handler.php">
                 <div class=''>
                     <h5 class='text-center p-3'>Remove Category</h5>
                     <div class='mb-3'>

@@ -1,5 +1,9 @@
 <?php
+declare(strict_types=1);
 session_start();
+
+
+include __DIR__ . '/../includes/functions.php';
 
 //Get database connection object
 include 'db_connection.php';
@@ -19,12 +23,10 @@ if (isset($_POST['submit'])) {
 
     // Check whether the fields for password and email are filled with the message if empty.
     if (empty($enteredEmail) || empty($enteredPassword)) {
-        header('Location:../login.php?emptyfield');
-        exit;
-
+        redirectTo("../login.php", "emptyfield");
     }
 
-    //Select user info with the provide email.
+    //Select user info with the provide emails
     $result = mysqli_query(databaseConnection(), "SELECT * FROM users WHERE email = '$enteredEmail'");
 
 
@@ -46,23 +48,20 @@ if (isset($_POST['submit'])) {
 
             //Reddirect a user to admin page if their role is admin.
             if ($row['role'] == 'admin') {
-                header('Location: ../admin/dashboard.php?admin');
-                exit();
+                redirectTo("../admin/dashboard.php", "admin");
 
                 //Redirect the authenticated used to home page.
             } else {
-                header('Location: ../index.php');
-                exit();
+                redirectTo("../index.php");
             }
 
             //Redirect the user to the home login page when the entered password does not match with database records.
         } else {
-            header('Location: ../login.php?error');
-            exit;
+            redirectTo("../login.php", "error");
         }
 
         //Redirect the user to the signup page if their records are not present in the database.
     } else {
-        header('Location: ../signup.php?norecord');
+        redirectTo('../signup.php', 'norecord');
     }
 }

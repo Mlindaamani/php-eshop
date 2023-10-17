@@ -13,7 +13,6 @@ $cart = new Cart(new Database);
 if (isset($_POST['add'], $_SESSION['user_id'])) {
   // Existing productinfo for a product ID. Remember the existing product_id in this case is equal to the incommig productId from product listing page
   $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['id'], $_SESSION['user_id']);
-
   $existingProductId = $existingProductInfo['product_id'];
 
   //Check whether the product already added in the cart.

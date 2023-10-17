@@ -1,73 +1,112 @@
-<!-- Shopping cart haeader -->
-<div class="container mt-3 p-4 col-md-8">
-  <h4 class="fw-bold text-center mb-3"> Your Shopping Cart</h4>
-  <table class="table table-responsive  border shadow">
-    <!-- Display the table header if products exits in the table -->
-    <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)): ?>
-      <thead>
-        <tr>
-          <th style="text-align:center" class="bg-primary text-light">IMAGE</th>
-          <th style="text-align:center" class="bg-primary text-light">NAME</th>
-          <th style="text-align:center" class="bg-primary text-light">PRICE</th>
-          <th style="text-align:center" class="bg-primary text-light">QUANTITY</th>
-          <th style="text-align:center" class="bg-primary text-light">TOTAL PRICE</th>
-          <th class="table-actions bg-primary text-light" style="text-align:center" colspan="3">UPDATE/REMOVE
-          </th>
-        </tr>
-      </thead>
+<?php
+// session_start();
 
-      <!-- Shopping cart Body -->
-      <tbody>
-        <!-- PRODUCT DATA -->
-        <?php foreach ($CartItem->getAllCartItems($userId) as $product): ?>
-          <tr>
-            <td>
-              <img src="../admin/uploads/images/<?= $product['product_image'] ?>" alt="Product Image" width="80"
-                style="text-align: center" />
-            </td>
-            <td style="text-align:center" class=" my-5 ms-5 fw-bold lead">
-              <?= $product['product_name'] ?>
-            </td>
-            <td style="text-align:center;color:green" class=" my-5 ms-5 fw-bold lead">$
-              <?= $product['price'] ?>
-            </td>
-            <form action="updatecart.php" method="post">
-              <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
-              <input type="hidden" name="cartItemId" value="<?= $product['id'] ?>" />
-              <td style="text-align:center" class="custom">
-                <input type="number" min="1" value="<?= $product['quantity'] ?>" class=" my-5 ms-5 p-2"
-                  name="product_quantity" />
-              </td>
-              <td style="text-align:center; color:green;" class=" my-5 ms-5">$
-                <?= number_format($product['total_price'], 2) ?>
-              </td>
-              <td>
-                <button type="submit"
-                  class="btn btn-link btn-primary text-light fw-bold text-decoration-none my-5 ms-5 bg-primary  border shadow"
-                  name="update">UPDATE</button>
-                <button type="submit" class="btn btn-link text-decoration-none text-light fw-bold bg-danger  border shadow"
-                  name="remove"> REMOVE</button>
-            </form>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-        <!-- Display the message when there no more products in the cart -->
-      <?php else: ?>
-        <div class="alert alert-success alert-dismissible  border shadow" role="alert">Your Ebot Cart is empty!
-        </div>
-      <?php endif; ?>
-    </tbody>
-  </table>
-  <!-- Continue_shopping, subtotal and continue_shopping buttons -->
-  <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)): ?>
-    <div class="text-center  border shadow p-2">
-      <a href="../index.php" class="btn bg-primary fw-bold float-start text-light  border shadow">Continue Shopping</a>
-      <button class="btn btn-primary-subtle  border shadow lead fw-bold">Subtotal:
-        <span style="color:green; font-size:20px" class="fw-bold">$
-          <?= number_format($CartItem->subTotal($userId), 2) ?>
-        </span>
-      </button>
-      <a href="cart.php" class="btn btn-success float-end fw-bold  border shadow">Proceed to Checkout</a>
-    </div>
-  <?php endif; ?>
-</div>
+// include 'mlinda.php';
+
+// $data = [
+//   'name' => 'Don',
+//   'age' => 40
+// ];
+
+
+
+// foreach ($data as $key) {
+//   $yes = (array_key_exists('nahsme', $data)) ?? 'Amani';
+// }
+
+// echo $yes;
+
+// $first_name = $_POST['firstname'];
+
+// $last_name = $_POST['lastname'];
+// $email = $_POST['email'];
+
+//Check whether fielsd are empty.
+// if (check_empty_field($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password'])) {
+//   redirectTo("../signup.php", "emptyfield");
+// } else {
+//   echo "Hello world";
+// }
+
+
+
+//Verify first_name
+// if (!isFirstNameValid($_POST['$firstname'])) {
+//   isPasswordValid($_POST['$password']);
+//   redirectTo("../signup.php");
+// }
+
+// //Verify last_name
+// if (isLastNameValid($_POST['lastname']))
+//   isPasswordValid($_POST['$password']);
+
+// //Verify password
+// if (!isPasswordValid($_POST['$password']))
+//   redirectTo("../signup.php");
+
+
+// //Check Whether a user is present in the database.
+// if ($user->isUserPresent($_POST['email'])) {
+//   redirectTo("../signup.php", "datapresent");
+// }
+
+
+//Create a new accpount if the user info are not present in the database.
+// if (!$user->isUserPresent($_POST['email'])) {
+//   //Call register method.
+//   $user->register($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password'], 'customer');
+//   //Redirect to home page.
+//   redirectTo("../index.php", "success");
+// }
+// }
+
+
+
+
+// // Check whether the submit button is clicked.
+// if (isset($_POST['submit'])) {
+
+//   //Get the form input fields.
+//   $first_name = $_POST['firstname'];
+
+//   $last_name = $_POST['lastname'];
+
+//   $email = $_POST['email'];
+
+//   $password = $_POST['password'];
+
+//   // Hash the input password from the form using password_has() built-in password hash alogorithm
+//   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+
+//   //Ensure the fields are not empty when the form is submitted
+//   if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
+//     header('Location: ../signup.php?emptyfield');
+//     exit;
+//   }
+
+//   // Query the database for a email and firstname.
+//   $sql_query = "SELECT email, first_name FROM users WHERE email = '$email' AND first_name ='$first_name'";
+
+//   //Get user user data as an associative array.
+//   $userdata = mysqli_query(databaseConnection(), $sql_query);
+
+
+//   // Redirect the user to signup page if the provided credentials already present in the database.
+//   if (mysqli_num_rows($userdata) == 1) {
+//     header('Location: ../signup.php?datapresent');
+//     exit();
+
+//     // Insert the data into the database if the above conditionals are correct.
+//   } else {
+//     $sql = "INSERT INTO users(first_name,last_name, email, password) VALUES('$first_name','$last_name','$email', '$hashed_password')";
+
+//     // Excute the query
+//     $result = mysqli_query(databaseConnection(), $sql);
+
+//     //Redirect the user to product listing page with the success message
+//     if ($result) {
+//       header('Location: ../index.php?success');
+//       exit();
+//     }
+//   }

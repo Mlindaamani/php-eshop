@@ -51,8 +51,8 @@ class Cart {
    */
   function insertDataIntoCart($userId)
   {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, quantity, total_price, checked_out) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$userId, 0, 0.00, 0]);
+    $stmt = $this->database->dbconnection()->prepare("INSERT INTO carts (user_id, total_price, checked_out) VALUES (?, ?, ?)");
+    $stmt->execute([$userId, 0.00, 0]);
   }
 
   /**

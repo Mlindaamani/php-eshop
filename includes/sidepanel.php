@@ -6,19 +6,19 @@
       <h5 class='text-primary bg-info rounded-top text-light bg-primary'>MANAGE PRODUCTS</h5>
     </li>
     <li class='nav-item '>
-      <a href="<?php $baseUrl ?>/admin/addproduct.php" class='nav-link text-primary hover-text-decoration-underline'
+      <a href="<?php $baseUrl ?>/admin/product-form.php" class='nav-link text-primary hover-text-decoration-underline'
         id='insert_product'>Add product</a>
     </li>
     <li class='nav-item '>
       <a href="#" class='nav-link text-primary hover-text-decoration-underline'>Remove Products</a>
     </li>
     <li class='nav-item'>
-      <a href='<?php $baseUrl ?>/admin/addcategory.php'
+      <a href='<?php $baseUrl ?>/admin/category-form.php'
         class='nav-link text-primary hover-text-decoration-underline'>Add
         Categories </a>
     </li>
     <li class='nav-item '>
-      <a href='<?php $baseUrl ?>/admin/removecategory.php'
+      <a href='<?php $baseUrl ?>/admin/remove-cat-form.php'
         class='nav-link text-primary hover-text-decoration-underline'>Remove Categories</a>
     </li>
     <li class='nav-item '>

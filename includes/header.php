@@ -16,6 +16,10 @@ spl_autoload_register(function ($class) {
 //Create new instance of CartItem class.
 $cartItem = new CartItem(new Database);
 
+//Create a user object
+$user = new User(new Database);
+
+
 // Checks whether the user is logged in. Rerurn True on success and false on failure.
 function is_logged_in()
 {
@@ -112,7 +116,9 @@ function generateAlert($getKey, $message, $alertType)
                   </sup></a>
               </button>
               <button type="button" class="btn btn-primary mx-3 fw-bold">
-                <span>Guest</span>
+                <span>
+                  <?= is_null($_SESSION['user_id']) ? 'Guest' : $user->authUser($_SESSION['user_id']) ?>
+                </span>
               </button>
             </div>
           </div>

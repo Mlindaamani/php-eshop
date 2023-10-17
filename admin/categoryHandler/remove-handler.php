@@ -9,12 +9,12 @@ $category = new Category(new Database);
 if (isset($_POST['remove'])) {
 
   if (empty($_POST['category_id'])) {
-    header('Location: ../removecategory.php?selectCat');
+    header('Location: ../remove-cat-form.php?selectCat');
     exit;
 
   } else {
     $category->deleteCategory($_POST['category_id']);
-    header('Location: ../removecategory.php?catdeleted');
+    header('Location: ../remove-cat-form.php?catdeleted');
     exit();
   }
 }

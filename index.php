@@ -2,7 +2,7 @@
 // Include header contents
 include('includes/header.php');
 
-//Disable the error reporting for unset user_id
+// Disable the error reporting for unset user_id
 error_reporting(0);
 
 //Create new instance of Product class.
@@ -37,7 +37,7 @@ generateAlert('success', 'You have successfully signed up! Now you can explore m
       <div class="col-12 col-md-6 col-lg-4 mt-5">
         <div class="card border shadow custom-card-style">
           <div class="card-img rounded">
-            <img src="admin/uploads/images/<?= $product['image_url'] ?>" alt="">
+            <img src="uploads/<?= $product['image_url'] ?>" alt="">
           </div>
           <div class="card-body">
             <h5 class="card-title">

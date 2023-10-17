@@ -1,4 +1,6 @@
 <?php
+
+// require 'Database.php';
 /**
  * Summary of Product
  */
@@ -64,4 +66,41 @@ class Product {
     $stmt = $this->database->dbconnection()->prepare("UPDATE products SET stock_quantity = stock_quantity + ? WHERE id = ?");
     $stmt->execute([$quantity, $productId]);
   }
+
+
+  public function create($name, $image_path, $price, $desc, $stock_quantity)
+  {
+    $stmt = $this->database->dbconnection()->prepare("INSERT INTO products(product_name, description, price, stock_quantity, image_url) VALUES(?, ?, ?, ?, ?)");
+    $stmt->execute([$name, $desc, $price, $stock_quantity, $image_path]);
+  }
+
+  //Returns true if the product exist in the product table.
+  public function productExist($image_url)
+  {
+    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products WHERE image_url = ?");
+    $stmt->execute([$image_url]);
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $product != false;
+
+
+  }
+
+
+
+  public function delete($id)
+  {
+    $stmt = $this->database->dbconnection()->prepare("DELETE FROM products  WHERE id = ?");
+    $stmt->execute([$id]);
+
+  }
+
+  public function update($product_name, $image_url, $stock_quantity, $description, $price, $id)
+  {
+    $stmt = $this->database->dbconnection()->prepare("UPDATE products SET product_name = ?, image_url = ?, stock_quantity = ?, description, price = ? WHERE id = ?");
+    $stmt->execute([$product_name, $image_url, $stock_quantity, $description, $price, $id]);
+  }
 }
+
+
+// $product = new Product(new Database);
+// var_dump($product->productExist('img107.jpg'));
