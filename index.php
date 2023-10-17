@@ -1,14 +1,7 @@
 <?php
-// Include header contents
-include('includes/header.php');
-
-// Disable the error reporting for unset user_id
+require_once __DIR__ . '/includes/header.php';
 error_reporting(0);
-
-//Create new instance of Product class.
 $product = new Product(new Database);
-
-//Create new instance of CartItem class.
 $cartItem = new CartItem(new Database);
 
 //Display a success message when user signs up successfully.
@@ -49,7 +42,7 @@ generateAlert('success', 'You have successfully signed up! Now you can explore m
             <p class="card-text lead fw-bold" style="color: green;">$
               <?= $product['price'] ?>
             </p>
-            <form action="cart/cart_handler.php" method="post">
+            <form action="cart/cart-handler.php" method="post">
               <input type="hidden" name="id" value="<?= $product['id'] ?>">
               <button type="submit" class="btn btn-primary text-bottom" name="add">ADD TO CART</button>
             </form>
@@ -59,4 +52,4 @@ generateAlert('success', 'You have successfully signed up! Now you can explore m
     <?php endforeach; ?>
   </div>
 </div>
-<?php include "includes/footer.php" ?>
+<?php require_once __DIR__ . '/includes/footer.php' ?>

@@ -1,4 +1,4 @@
-<?php include 'includes/header.php' ?>
+<?php require_once __DIR__ . '/includes/header.php' ?>
 <div class="container-fluid mt-5">
   <div class="row  p-md-5">
     <div class="col-12">

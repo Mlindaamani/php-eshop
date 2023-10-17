@@ -1,10 +1,10 @@
 <!--  Include header contents  -->
-<?php include '../includes/header.php' ?>
+<?php require_once __DIR__ . '/../includes/header.php' ?>
 
 <!-- Include the sidebar -->
 <div class='row mt-3 gx-2'>
   <div class='col-md-2 mt-3'>
-    <?php include '../includes/sidepanel.php' ?>
+    <?php require_once __DIR__ . '/../includes/sidepanel.php' ?>
   </div>
 
   <!-- Include the 10 colums to display the forms-->
@@ -58,4 +58,4 @@
   </div>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include '../includes/script.php' ?>
+<?php require_once __DIR__ . '/../includes/script.php' ?>

@@ -1,20 +1,20 @@
 <?php
 //Include Category class and instantiate it.
-include "../../models/Category.php";
-//Include database class.
-include '../../models/Database.php';
+require_once __DIR__ . '/../../models/Category.php';
+require_once __DIR__ . '/../../models/Database.php';
+require_once __DIR__ . '/../../includes/functions.php';
+
 $category = new Category(new Database);
 
 // Delete categories with a given id 
 if (isset($_POST['remove'])) {
 
   if (empty($_POST['category_id'])) {
-    header('Location: ../remove-cat-form.php?selectCat');
-    exit;
+    redirectTo('../remove-cat-form', 'selectCat');
+
 
   } else {
     $category->deleteCategory($_POST['category_id']);
-    header('Location: ../remove-cat-form.php?catdeleted');
-    exit();
+    redirectTo('../remove-cat-form', 'catdeleted');
   }
 }

@@ -1,6 +1,6 @@
 <?php
 // Include the header contents in the login page.
-include('includes/header.php');
+require_once __DIR__ . '/includes/header.php';
 // Display error if the records are not fouund for the user trying logging in 
 generateAlert('norecord', 'No records found for entered user. Kindly signup/login again!', 'danger');
 // Display the message if the user records already exist in the database 
@@ -50,4 +50,4 @@ generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger')
   </form>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include 'includes/script.php' ?>
+<?php require_once __DIR__ . '/includes/script.php' ?>

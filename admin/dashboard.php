@@ -1,13 +1,12 @@
 <!-- Include the header contents -->
-<?php include '../includes/header.php';
-
+<?php
+require_once __DIR__ . '/../includes/header.php';
 
 // Include the accessibilty function
-include '../access.php';
+include_once __DIR__ . '/../access.php';
 
 // // Call the access() and pass string admin as a argument
 access('admin');
-// checkAccess(['admin'], '../index.php')
 ?>
 
 
@@ -16,11 +15,11 @@ access('admin');
 
   <!--Sidepanel -->
   <div class="col-md-2 mt-3">
-    <?php include '../includes/sidepanel.php'; ?>
+    <?php require_once __DIR__ . '/../includes/sidepanel.php' ?>
   </div>
 
   <!-- 10 columns layout -->
   <div class="col-md-10 mt-3 border shadow" style="height:100%"></div>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include '../includes/script.php'; ?>
+<?php require_once __DIR__ . '/../includes/script.php' ?>

@@ -1,6 +1,7 @@
 <?php
 // Include the header contents in the login page. -->
-include('includes/header.php');
+require_once __DIR__ . '/includes/header.php';
+
 //Disply the error message when the password or email does not match. -->
 generateAlert('error', 'Invalid Email or password!', 'danger');
 // Disply error message when the fields are empty. -->
@@ -39,4 +40,4 @@ generateAlert('login', 'login/signup to add product to cart', 'info');
   </form>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include 'includes/script.php' ?>
+<?php __DIR__ . '/includes/script.php' ?>

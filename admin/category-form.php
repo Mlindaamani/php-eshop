@@ -1,11 +1,12 @@
 <?php
 //Include the header contents
-include('../includes/header.php') ?>
+require_once __DIR__ . '/../includes/header.php' ?>
+
 
 <div class='row mt-3'>
     <!-- Sidebar -->
     <div class='col-md-2 mt-3 '>
-        <?php include '../includes/sidepanel.php'; ?>
+        <?php require_once __DIR__ . '/../includes/sidepanel.php' ?>
     </div>
 
     <!-- Display as 10 columns layout similar to admin-panel page -->
@@ -35,4 +36,4 @@ include('../includes/header.php') ?>
 </div>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include '../includes/script.php' ?>
+<?php require_once __DIR__ . '/../includes/script.php' ?>

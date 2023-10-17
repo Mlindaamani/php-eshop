@@ -86,7 +86,6 @@ class Product {
   }
 
 
-
   public function delete($id)
   {
     $stmt = $this->database->dbconnection()->prepare("DELETE FROM products  WHERE id = ?");
@@ -94,13 +93,10 @@ class Product {
 
   }
 
+
   public function update($product_name, $image_url, $stock_quantity, $description, $price, $id)
   {
     $stmt = $this->database->dbconnection()->prepare("UPDATE products SET product_name = ?, image_url = ?, stock_quantity = ?, description, price = ? WHERE id = ?");
     $stmt->execute([$product_name, $image_url, $stock_quantity, $description, $price, $id]);
   }
 }
-
-
-// $product = new Product(new Database);
-// var_dump($product->productExist('img107.jpg'));

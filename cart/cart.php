@@ -1,13 +1,9 @@
 <?php
-// Start session if not started.
 @session_start();
-//Disable unnessary error reporting
 error_reporting(0);
-//Include the header contents.
-include '../includes/header.php';
-//Create new instance of CartItem
+require_once __DIR__ . '/../includes/header.php';
+
 $CartItem = new CartItem(new Database);
-//Get userId from the session variable(super global)
 $userId = $_SESSION['user_id'];
 ?>
 
@@ -47,7 +43,7 @@ $userId = $_SESSION['user_id'];
               </td>
 
               <td class="text-center mt-3">
-                <form action="updatecart.php" method="post" class="d-flex justify-content-center align-items-center">
+                <form action="update-cart.php" method="post" class="d-flex justify-content-center align-items-center">
                   <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
                   <input type="hidden" name="cartItem_id" value="<?= $product['id'] ?>" />
                   <input type="number" min="1" value="<?= $product['quantity'] ?>" class="p-2 mr-2 mx-2"
@@ -92,4 +88,4 @@ $userId = $_SESSION['user_id'];
     </div>
   <?php endif; ?>
 </div>
-<?php include "../includes/script.php" ?>
+<?php require_once __DIR__ . '../includes/script.php' ?>

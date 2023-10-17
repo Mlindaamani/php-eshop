@@ -1,13 +1,13 @@
 <!-- Include the header contents -->
-<?php include '../includes/header.php';
-//Create new instance of Category.
-$category = new Category(new Database);
-?>
+<?php
+require_once __DIR__ . '/../includes/header.php';
+$category = new Category(new Database) ?>
+
 <!-- Include the sidepanel -->
 <div class='row mt-3'>
     <!-- 2 Colums for the sidebar -->
     <div class='col-md-2 mt-3'>
-        <?php include '../includes/sidepanel.php' ?>
+        <?php require_once __DIR__ . '/../includes/sidepanel.php' ?>
     </div>
 
     <!-- 10 colums for Category listing -->
@@ -40,4 +40,4 @@ $category = new Category(new Database);
     </div>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php include '../includes/script.php' ?>
+<?php require_once __DIR__ . '/../includes/script.php' ?>
