@@ -20,12 +20,6 @@
   color: rgba(0, 0, 0, 0.867);
 }
 
-/* Se the width and height of the card container*/
-.card {
-  width: 300px;
-  height: 200px;
-}
-
 /* Set the size of the image to occupy 100% of the availabe width of the image container */
 .card-img img {
   width: 100%;
