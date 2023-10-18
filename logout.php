@@ -15,7 +15,7 @@ function logout()
   session_destroy();
 
   //Redirect to login.php
-  redirectTo('login.php');
+  redirectTo('login.php', 'logout');
 }
 
 //Call the logout function.

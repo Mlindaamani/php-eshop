@@ -2,9 +2,8 @@
 session_start();
 
 require_once __DIR__ . '/../models/Database.php';
-require_once __DIR__ . '/../models/Database.php';
-require_once __DIR__ . '/../models/Database.php';
-require_once __DIR__ . '/../models/Database.php';
+require_once __DIR__ . '/../models/CartItem.php';
+require_once __DIR__ . '/../models/Cart.php';
 require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../includes/functions.php';
 

@@ -1,6 +1,8 @@
 <!-- Include the header contents -->
 <?php
 require_once __DIR__ . '/../includes/header.php';
+include_once __DIR__ . '/../access.php';
+access('admin');
 $category = new Category(new Database) ?>
 
 <!-- Include the sidepanel -->

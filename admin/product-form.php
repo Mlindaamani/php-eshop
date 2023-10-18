@@ -1,5 +1,8 @@
 <!--  Include header contents  -->
-<?php require_once __DIR__ . '/../includes/header.php' ?>
+<?php require_once __DIR__ . '/../includes/header.php';
+include_once __DIR__ . '/../access.php';
+access('admin');
+?>
 
 <!-- Include the sidebar -->
 <div class='row mt-3 gx-2'>

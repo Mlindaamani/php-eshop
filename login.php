@@ -8,6 +8,7 @@ generateAlert('error', 'Invalid Email or password!', 'danger');
 generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
 //Display the error message when the user tries to add product in the cart_items table 
 generateAlert('login', 'login/signup to add product to cart', 'info');
+generateAlert('logout', 'You have logged out please login again to continue using the app!', 'info');
 ?>
 
 <!-- login form -->
@@ -39,4 +40,4 @@ generateAlert('login', 'login/signup to add product to cart', 'info');
   </form>
 </div>
 <!-- Include the footer contents in the login page. -->
-<?php __DIR__ . '/includes/script.php' ?>
+<?php require_once __DIR__ . '/includes/script.php' ?>

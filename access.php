@@ -3,12 +3,18 @@
 
 function access(string $role)
 {
-  $accessPermissions = ['admin' => $_SESSION['role'] == 'admin', 'customer' => $_SESSION['role'] == 'customer' || $_SESSION['role'] == 'admin'];
+  $accessPermissions = [
+    'admin' => $_SESSION['role'] == 'admin',
+    'customer' => $_SESSION['role'] == 'customer' || $_SESSION['role'] == 'admin'
+  ];
+
+
   if (!$accessPermissions[$role]) {
     header('Location: http://localhost:8000/denied.php');
     exit;
   }
 }
+
 
 
 
