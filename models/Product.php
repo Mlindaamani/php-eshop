@@ -17,7 +17,7 @@ class Product {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database;
+    $this->database = $database->dbconnection();
   }
 
   /**
@@ -27,7 +27,7 @@ class Product {
    */
   public function getProductInfoById($product_id): array
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT product_name, price, stock_quantity, description, image_url FROM products WHERE id = ?");
+    $stmt = $this->database->prepare("SELECT product_name, price, stock_quantity, description, image_url FROM products WHERE id = ?");
     $stmt->execute([$product_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
@@ -38,7 +38,7 @@ class Product {
    */
   function getAllProducts()
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products ORDER BY RAND()");
+    $stmt = $this->database->prepare("SELECT * FROM products ORDER BY RAND()");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -51,7 +51,7 @@ class Product {
    */
   public function decreaseStockQuantity($productId, $quantity)
   {
-    $stmt = $this->database->dbconnection()->prepare("UPDATE products SET stock_quantity = stock_quantity- ? WHERE id = ?");
+    $stmt = $this->database->prepare("UPDATE products SET stock_quantity = stock_quantity- ? WHERE id = ?");
     $stmt->execute([$quantity, $productId]);
   }
 
@@ -63,21 +63,21 @@ class Product {
    */
   public function increaseStockQuantity($productId, $quantity)
   {
-    $stmt = $this->database->dbconnection()->prepare("UPDATE products SET stock_quantity = stock_quantity + ? WHERE id = ?");
+    $stmt = $this->database->prepare("UPDATE products SET stock_quantity = stock_quantity + ? WHERE id = ?");
     $stmt->execute([$quantity, $productId]);
   }
 
 
   public function create($name, $image_path, $price, $desc, $stock_quantity)
   {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO products(product_name, description, price, stock_quantity, image_url) VALUES(?, ?, ?, ?, ?)");
+    $stmt = $this->database->prepare("INSERT INTO products(product_name, description, price, stock_quantity, image_url) VALUES(?, ?, ?, ?, ?)");
     $stmt->execute([$name, $desc, $price, $stock_quantity, $image_path]);
   }
 
   //Returns true if the product exist in the product table.
   public function productExist($image_url)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM products WHERE image_url = ?");
+    $stmt = $this->database->prepare("SELECT * FROM products WHERE image_url = ?");
     $stmt->execute([$image_url]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     return $product != false;
@@ -88,7 +88,7 @@ class Product {
 
   public function delete($id)
   {
-    $stmt = $this->database->dbconnection()->prepare("DELETE FROM products  WHERE id = ?");
+    $stmt = $this->database->prepare("DELETE FROM products  WHERE id = ?");
     $stmt->execute([$id]);
 
   }
@@ -96,7 +96,7 @@ class Product {
 
   public function update($product_name, $image_url, $stock_quantity, $description, $price, $id)
   {
-    $stmt = $this->database->dbconnection()->prepare("UPDATE products SET product_name = ?, image_url = ?, stock_quantity = ?, description, price = ? WHERE id = ?");
+    $stmt = $this->database->prepare("UPDATE products SET product_name = ?, image_url = ?, stock_quantity = ?, description, price = ? WHERE id = ?");
     $stmt->execute([$product_name, $image_url, $stock_quantity, $description, $price, $id]);
   }
 }

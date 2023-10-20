@@ -1,20 +1,24 @@
 <?php
 session_start();
-// Include the classes needed for the adding to cart functionality.
-require_once __DIR__ . '/../models/Database.php';
-require_once __DIR__ . '/../models/CartItem.php';
-require_once __DIR__ . '/../models/Product.php';
-require_once __DIR__ . '/../models/Cart.php';
+
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/../models/$class.php";
+});
+
 require_once __DIR__ . '/../includes/functions.php';
 
 $cartItem = new CartItem(new Database);
+
 $product = new Product(new Database);
+
 $cart = new Cart(new Database);
 
-if (isset($_POST['add'], $_SESSION['user_id'])) {
+$userId = $_SESSION['user_id'];
+
+if (isset($_POST['add']) && isset($userId)) {
 
   // Existing productinfo for a product ID. Remember the existing product_id in this case is equal to the incommig productId from product listing page
-  $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['id'], $_SESSION['user_id']);
+  $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['id'], $userId);
 
   $existingProductId = $existingProductInfo['product_id'];
 
@@ -25,16 +29,16 @@ if (isset($_POST['add'], $_SESSION['user_id'])) {
 
   } else {
     //Create a new cart if user_id isset and the check_out id false.
-    $cart->createNewCart($_SESSION['user_id']);
+    $cart->createNewCart($userId);
 
     //Obtain a created cardId
-    $cartId = $cart->getCartId($_SESSION['user_id']);
+    $cartId = $cart->getCartId($userId);
 
     //Get product info from the product table for the product clicked from the product listing.
     $productInfo = $product->getProductInfoById($_POST['id']);
 
     //Add the products info into the cartItems table. Remember the initial quantity will be 1 because i dont allow mutiple selection of product.
-    $cartItem->addToCart($productInfo['product_name'], 1, $productInfo['image_url'], $productInfo['price'], $productInfo['price'], $_SESSION['user_id'], $_POST['id'], $cartId);
+    $cartItem->addToCart($productInfo['product_name'], 1, $productInfo['image_url'], $productInfo['price'], $productInfo['price'], $userId, $_POST['id'], $cartId);
 
     //Decrease the stock_quantity for a product with $_POST['id] by 1;
     $product->decreaseStockQuantity($_POST['id'], 1);

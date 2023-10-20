@@ -16,18 +16,18 @@ class Category {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database;
+    $this->database = $database->dbconnection();
   }
 
   /**
    * Summary of getAllCategories
    * @return void
    */
-  public function getAllCategories()
+  public function getAllCategories(): array
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM categories");
+    $stmt = $this->database->prepare("SELECT * FROM categories");
     $stmt->execute();
-    $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   /**
@@ -37,7 +37,7 @@ class Category {
    */
   public function deleteCategory($category_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("DELETE FROM categories WHERE id = ?");
+    $stmt = $this->database->prepare("DELETE FROM categories WHERE id = ?");
     $stmt->execute([$category_id]);
   }
 
@@ -48,7 +48,7 @@ class Category {
    */
   public function addCategory($category_name)
   {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO categories (category_name) VALUES (?)");
+    $stmt = $this->database->prepare("INSERT INTO categories (category_name) VALUES (?)");
     $stmt->execute([$category_name]);
   }
 
@@ -59,7 +59,7 @@ class Category {
    */
   public function isCategoryPresent($category_name)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT category_name FROM categories WHERE category_name = ?");
+    $stmt = $this->database->prepare("SELECT category_name FROM categories WHERE category_name = ?");
     $stmt->execute([$category_name]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result != false;

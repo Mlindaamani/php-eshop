@@ -21,7 +21,7 @@ class Database {
     }
   }
 
-  public function dbconnection()
+  public function dbconnection(): PDO
   {
     return $this->databaseConnection;
   }

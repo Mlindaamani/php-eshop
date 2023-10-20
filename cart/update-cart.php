@@ -1,23 +1,26 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../models/Database.php';
-require_once __DIR__ . '/../models/CartItem.php';
-require_once __DIR__ . '/../models/Cart.php';
-require_once __DIR__ . '/../models/Product.php';
+//Fuction to autoload class.
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/../models/$class.php";
+});
+
 require_once __DIR__ . '/../includes/functions.php';
 
 $cartItem = new CartItem(new Database);
+
 $product = new Product(new Database);
+
 $cart = new Cart(new Database);
 
-
+$userId = $_SESSION['user_id'];
 
 //Update the product_quantity
 if (isset($_POST['update'])) {
 
   // Get existing CartItems product Info.
-  $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['product_id'], $_SESSION['user_id']);
+  $existingProductInfo = $cartItem->getCartItemProductInfoById($_POST['product_id'], $userId);
   $existingPrice = $existingProductInfo['price'];
 
   // //Product info for a product ID from the products listings
@@ -30,10 +33,10 @@ if (isset($_POST['update'])) {
     $newTotalPrice = ($existingProductInfo['price'] * $_POST['product_quantity'] * 100) / 100;
 
     // Update the product  quantity
-    $cartItem->updateProductQuantity($_POST['product_quantity'], $_POST['product_id'], $_SESSION['user_id']);
+    $cartItem->updateProductQuantity($_POST['product_quantity'], $_POST['product_id'], $userId);
 
     // Update the product total-Price
-    $cartItem->updateCartItemTotalPrice($newTotalPrice, $_POST['product_id'], $_SESSION['user_id']);
+    $cartItem->updateCartItemTotalPrice($newTotalPrice, $_POST['product_id'], $userId);
 
     // Redirect the user to the cart.php when the quanity is updated successfully.
     redirectTo('cart.php');

@@ -1,7 +1,8 @@
 <?php
 //Include Category class and instantiate it.
-require_once __DIR__ . '/../../models/Category.php';
-require_once __DIR__ . '/../../models/Database.php';
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/../../models/$class.php";
+});
 require_once __DIR__ . '/../../includes/functions.php';
 
 $category = new Category(new Database);
@@ -10,11 +11,11 @@ $category = new Category(new Database);
 if (isset($_POST['remove'])) {
 
   if (empty($_POST['category_id'])) {
-    redirectTo('../remove-cat-form', 'selectCat');
+    redirectTo('../remove-cat-form.php', 'selectCat');
 
 
   } else {
     $category->deleteCategory($_POST['category_id']);
-    redirectTo('../remove-cat-form', 'catdeleted');
+    redirectTo('../remove-cat-form.php', 'catdeleted');
   }
 }

@@ -1,12 +1,12 @@
 <?php
-
-
-
 //Start session.
-@session_start();
-
+session_start();
 //Disable error reporting for unset user_id.
 error_reporting(0);
+
+//Session user_id.
+$userId = (int) $_SESSION['user_id'];
+
 
 //Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
 $baseUrl = 'http://localhost:8000';
@@ -28,6 +28,7 @@ function is_logged_in()
 {
   return isset($_SESSION['user_id']);
 }
+
 
 //Display logout button link
 function display_logout()
@@ -115,12 +116,12 @@ function generateAlert($getKey, $message, $alertType)
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'> Cart <sup
                     class="cart-count fw-bold">
-                    <?= $cartItem->getItemsCount($_SESSION['user_id']) ?>
+                    <?= $cartItem->getItemsCount($userId) ?>
                   </sup></a>
               </button>
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <span>
-                  <?= is_null($_SESSION['user_id']) ? 'Guest' : $user->authUser($_SESSION['user_id']) ?>
+                  <?= is_null($userId) ? 'Guest' : $user->authUser($userId) ?>
                 </span>
               </button>
             </div>

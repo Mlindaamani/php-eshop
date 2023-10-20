@@ -1,16 +1,22 @@
 <?php
 @session_start();
+
 error_reporting(0);
+
 require_once __DIR__ . '/../includes/header.php';
 
 $CartItem = new CartItem(new Database);
+
 $userId = $_SESSION['user_id'];
+
 ?>
 
 <!-- Issue an error message when the entered Quantity is greater than the available Quantity -->
 <div>
   <?php generateAlert('stock', ' No Enough stock Quantity for the entered Quantity!', 'danger') ?>
+  <?php generateAlert('check-out', 'Thank you for trading with Ebot. Your order on the way!', 'success') ?>
 </div>
+
 <div class="container mt-3 p-4 col-md-8">
   <h4 class="fw-bold text-center mb-3"> Your Shopping Cart</h4>
   <div class="table-responsive">
@@ -28,31 +34,31 @@ $userId = $_SESSION['user_id'];
         </thead>
         <tbody>
           <!-- Loop through all the cartItems products and display them on the table for a auth_user. -->
-          <?php foreach ($CartItem->getAllCartItems($userId) as $product): ?>
+          <?php foreach ($CartItem->getAllCartItems($userId) as $cartItem): ?>
             <tr>
               <td class="text-center mt-3">
-                <img src="../uploads/<?= $product['product_image'] ?>" alt="Product Image" width="80" />
+                <img src="../uploads/<?= $cartItem['product_image'] ?>" alt="Product Image" width="80" />
               </td>
 
               <td class="text-center mt-3">
-                <?= $product['product_name'] ?>
+                <?= $cartItem['product_name'] ?>
               </td>
 
               <td class="text-center mt-3" style="color:green">$
-                <?= $product['price'] ?>
+                <?= $cartItem['price'] ?>
               </td>
 
               <td class="text-center mt-3">
                 <form action="update-cart.php" method="post" class="d-flex justify-content-center align-items-center">
-                  <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
-                  <input type="hidden" name="cartItem_id" value="<?= $product['id'] ?>" />
-                  <input type="number" min="1" value="<?= $product['quantity'] ?>" class="p-2 mr-2 mx-2"
+                  <input type="hidden" name="product_id" value="<?= $cartItem['product_id'] ?>" />
+                  <input type="hidden" name="cartItem_id" value="<?= $cartItem['id'] ?>" />
+                  <input type="number" min="1" value="<?= $cartItem['quantity'] ?>" class="p-2 mr-2 mx-2"
                     name="product_quantity" />
                   <button type="submit" class="btn text-light btn-primary border shadow mx-2" name="update">UPDATE</button>
               </td>
 
               <td class="text-center mt-3" style="color:green">$
-                <?= number_format($product['total_price'], 2) ?>
+                <?= number_format($cartItem['total_price'], 2) ?>
               </td>
 
               <td class=" text-center mt-3">
@@ -82,9 +88,12 @@ $userId = $_SESSION['user_id'];
           </span>
         </button>
       </div>
-      <div class="col-md-3 col-sm-12 mb-3">
-        <a href="cart.php" class="btn btn-success fw-bold w-100">Proceed to Checkout</a>
-      </div>
+      <form action="check-out-handler.php" method="post">
+        <input type="hidden" name="cartId" value="<?= $cartItem['cart_id'] ?>">
+        <div class="col-md-3 col-sm-12 mb-3">
+          <button type="submit" class="btn btn-success fw-bold w-100" name="check-out">Proceed to Checkout</button>
+        </div>
+      </form>
     </div>
   <?php endif; ?>
 </div>

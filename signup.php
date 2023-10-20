@@ -1,4 +1,12 @@
 <?php
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/models/$class.php";
+});
+
+$validate = new FormValidator($_POST);
+
+
+
 // Include the header contents in the login page.
 require_once __DIR__ . '/includes/header.php';
 // Display error if the records are not fouund for the user trying logging in 
@@ -6,7 +14,8 @@ generateAlert('norecord', 'No records found for entered user. Kindly signup/logi
 // Display the message if the user records already exist in the database 
 generateAlert('datapresent', 'Entered records Already exit!', 'danger');
 //Display the error message if the form fields are empty
-generateAlert('emptyfield', 'Kindly fill in all the required fields!', 'danger');
+generateAlert('error', 'Kindly fill in all the required fields!', 'danger');
+generateAlert('firstname', 'Firstname is required!', 'danger');
 ?>
 
 <!-- Signed up form -->

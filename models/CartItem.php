@@ -16,7 +16,7 @@ class CartItem {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database;
+    $this->database = $database->dbconnection();
   }
 
   /**
@@ -33,7 +33,7 @@ class CartItem {
    */
   public function addToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
+    $stmt = $this->database->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id]);
   }
@@ -50,7 +50,7 @@ class CartItem {
    */
   public function updateProductQuantity($quantity, $product_id, $user_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?");
+    $stmt = $this->database->prepare("UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$quantity, $product_id, $user_id]);
 
   }
@@ -66,7 +66,7 @@ class CartItem {
   function updateCartItemTotalPrice($total_price, $product_id, $user_id)
   {
 
-    $stmt = $this->database->dbconnection()->prepare("UPDATE cart_items SET  total_price = ? WHERE product_id = ? AND user_id = ?");
+    $stmt = $this->database->prepare("UPDATE cart_items SET  total_price = ? WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$total_price, $product_id, $user_id]);
   }
 
@@ -81,7 +81,7 @@ class CartItem {
   function getCartItemProductInfoById($product_id, $user_id)
   {
 
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?");
+    $stmt = $this->database->prepare("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?");
     $stmt->execute([$product_id, $user_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
@@ -94,7 +94,7 @@ class CartItem {
    */
   public function subTotal($user_id): float
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT SUM(total_price) FROM cart_items WHERE user_id = ?");
+    $stmt = $this->database->prepare("SELECT SUM(total_price) FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetchColumn();
   }
@@ -108,7 +108,7 @@ class CartItem {
    */
   public function getTotalProductQuantity($user_id): int
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT SUM(quantity) FROM cart_items WHERE user_id = ?");
+    $stmt = $this->database->prepare("SELECT SUM(quantity) FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetchColumn();
   }
@@ -121,7 +121,7 @@ class CartItem {
    */
   public function getItemsCount($user_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT COUNT(*) FROM cart_items WHERE user_id = ?");
+    $stmt = $this->database->prepare("SELECT COUNT(*) FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetchColumn();
   }
@@ -135,7 +135,7 @@ class CartItem {
    */
   function removeCartItem($cartItemId, $productId)
   {
-    $stmt = $this->database->dbconnection()->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
+    $stmt = $this->database->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
     $stmt->execute([$cartItemId, $productId]);
   }
 
@@ -147,7 +147,7 @@ class CartItem {
    */
   function getAllCartItems($user_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("SELECT * FROM cart_items WHERE user_id = ?");
+    $stmt = $this->database->prepare("SELECT * FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -160,7 +160,7 @@ class CartItem {
    */
   function clearCartItem($user_id)
   {
-    $stmt = $this->database->dbconnection()->prepare("DELETE FROM cart_items WHERE user_id = ?");
+    $stmt = $this->database->prepare("DELETE FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
   }
 }

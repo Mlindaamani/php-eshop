@@ -1,7 +1,11 @@
 <?php
 
-
-
+/**
+ * Summary of redirectTo
+ * @param string $file_name
+ * @param string $get_variable
+ * @return never
+ */
 function redirectTo(string $file_name, string $get_variable = '')
 {
   if ($get_variable):
@@ -15,6 +19,11 @@ function redirectTo(string $file_name, string $get_variable = '')
 }
 
 
+
+/**
+ * Summary of getRequestMethod
+ * @return string
+ */
 function getRequestMethod(): string
 {
   return strtoupper($_SERVER['REQUEST_METHOD']);
