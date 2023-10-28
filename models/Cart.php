@@ -33,6 +33,7 @@ class Cart {
 
   /**
    * Summary of isCartActive
+   * Active cart is the cart with user_id and checked_out is equal to false.
    * @param mixed $userId
    * @return bool
    */

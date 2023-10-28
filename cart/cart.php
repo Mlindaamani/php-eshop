@@ -33,7 +33,8 @@ $userId = $_SESSION['user_id'];
           </tr>
         </thead>
         <tbody>
-          <!-- Loop through all the cartItems products and display them on the table for a auth_user. -->
+          <!-- Loop through all the cartItems products and display them on the Cart UI for a auth_user. -->
+          <!-- Call Dev_Steve -->
           <?php foreach ($CartItem->getAllCartItems($userId) as $cartItem): ?>
             <tr>
               <td class="text-center mt-3">
@@ -90,11 +91,11 @@ $userId = $_SESSION['user_id'];
       </div>
       <form action="check-out-handler.php" method="post">
         <input type="hidden" name="cartId" value="<?= $cartItem['cart_id'] ?>">
-        <div class="col-md-3 col-sm-12 mb-3">
+        <div class="col-md-12">
           <button type="submit" class="btn btn-success fw-bold w-100" name="check-out">Proceed to Checkout</button>
         </div>
       </form>
     </div>
-  <?php endif; ?>
+  <?php endif ?>
 </div>
 <?php require_once __DIR__ . '../includes/script.php' ?>

@@ -137,6 +137,7 @@ class CartItem {
   {
     $stmt = $this->database->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
     $stmt->execute([$cartItemId, $productId]);
+    $stmt = new CartItem(new Database);
   }
 
   //GET_ALL_CART_ITEMS_PRODUCT_INFO:
@@ -149,8 +150,15 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT * FROM cart_items WHERE user_id = ?");
     $stmt->execute([$user_id]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!count($result)) {
+      echo 'No products for a given user_id!';
+    }
+    return $result;
   }
+
 
   //DELETE_ALL_CART_ITEMS:
   /**

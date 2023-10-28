@@ -4,6 +4,8 @@ error_reporting(0);
 $product = new Product(new Database);
 $cartItem = new CartItem(new Database);
 
+$category = new Category(new Database);
+
 //Display a success message when user signs up successfully.
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
 ?>
@@ -13,17 +15,22 @@ generateAlert('success', 'You have successfully signed up! Now you can explore m
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header bg-primary-subtle text-light">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Ebot</h5>
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel bg-primary">Ebot</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body bg-primary">
-      <p>Categories.</p>
-    </div>
+    <?php foreach ($category->getAllCategories() as $category): ?>
+      <div class="offcanvas-body bg-primary">
+        <ul class="offcanvas-list">
+          <?= $category['category_name'] ?>
+        </ul>
+      </div>
+    <?php endforeach ?>
   </div>
 </div>
 
 <!-- Didplay the message when the product is already added in the cart -->
 <?php generateAlert('yes', 'Product already added in the cart', 'info'); ?>
+
 <div class="container mt-5" style="margin-top:50px">
   <div class=" row g-5">
     <?php foreach ($product->getAllProducts() as $product): ?>

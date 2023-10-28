@@ -1,5 +1,4 @@
 <?php
-
 // require 'Database.php';
 /**
  * Summary of Product
