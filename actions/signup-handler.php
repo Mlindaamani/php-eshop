@@ -1,6 +1,5 @@
 <?php
 
-
 spl_autoload_register(function ($class) {
   require __DIR__ . "/../models/$class.php";
 });
@@ -8,8 +7,6 @@ spl_autoload_register(function ($class) {
 
 $user = new User(new Database);
 require __DIR__ . '/../includes/functions.php';
-
-
 
 if (isset($_POST['submit']) && getRequestMethod() === "POST") {
 
@@ -24,8 +21,6 @@ if (isset($_POST['submit']) && getRequestMethod() === "POST") {
   if (count($error) == 4) {
     redirectTo('../signup.php', 'error');
   }
-
-
 
   if (count($error) == 0) {
     $user->register($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['email'], 'customer');

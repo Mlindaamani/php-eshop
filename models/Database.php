@@ -1,32 +1,49 @@
 <?php
-
+/**
+ * Summary of Database
+ */
 class Database {
+  /**
+   * Summary of databaseConnection
+   * @var 
+   */
   private $databaseConnection;
+  /**
+   * Summary of databaseHost
+   * @var string
+   */
   private $databaseHost = "localhost";
+  /**
+   * Summary of databaseUser
+   * @var string
+   */
   private $databaseUser = "root";
+  /**
+   * Summary of databasePassword
+   * @var string
+   */
   private $databasePassword = "";
+  /**
+   * Summary of databaseName
+   * @var string
+   */
   private $databaseName = "ebotdb";
 
 
 
+  /**
+   * Summary of __construct
+   */
   public function __construct()
   {
     try {
       $this->databaseConnection = new PDO("mysql:host=$this->databaseHost;dbname=$this->databaseName", $this->databaseUser, $this->databasePassword);
-
       $this->databaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     } catch (PDOException $e) {
       echo "Sorry Unexpected Error has occur: ";
       echo "<br>";
-      echo "<br>";
       print_r("Error: " . $e->errorInfo[2]);
-      echo "<br>";
-      echo "<br>";
-      echo "The error is on line: " . $e->getLine();
-      echo "<br>";
-      echo "<br>";
-      echo "File where the error has occured: " . $e->getFile();
     }
   }
 

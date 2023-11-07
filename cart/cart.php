@@ -79,9 +79,6 @@ $userId = $_SESSION['user_id'];
 
   <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)): ?>
     <div class="row justify-content-center mt-4">
-      <div class="col-md-3 col-sm-12 mb-3">
-        <a href="../index.php" class="btn btn-primary fw-bold text-light">Continue Shopping</a>
-      </div>
       <div class="col-md-3 col-sm-12 mb-3 text-center">
         <button class="btn btn-primary-subtle fw-bold">
           Total Amount: <span style="color:green; font-size:20px" class="fw-bold">$
@@ -92,7 +89,8 @@ $userId = $_SESSION['user_id'];
       <form action="check-out-handler.php" method="post">
         <input type="hidden" name="cartId" value="<?= $cartItem['cart_id'] ?>">
         <div class="col-md-12">
-          <button type="submit" class="btn btn-success fw-bold w-100" name="check-out">Proceed to Checkout</button>
+          <button type="submit" class="btn btn-success fw-bold w-100 p-2" name="check-out"
+            style="font-size: 30px;">Proceed to Checkout</button>
         </div>
       </form>
     </div>

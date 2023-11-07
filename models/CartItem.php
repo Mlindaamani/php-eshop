@@ -159,7 +159,6 @@ class CartItem {
     return $result;
   }
 
-
   //DELETE_ALL_CART_ITEMS:
   /**
    * Summary of clearCartItem

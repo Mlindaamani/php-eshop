@@ -18,8 +18,6 @@ function redirectTo(string $file_name, string $get_variable = '')
   endif;
 }
 
-
-
 /**
  * Summary of getRequestMethod
  * @return string
@@ -27,14 +25,4 @@ function redirectTo(string $file_name, string $get_variable = '')
 function getRequestMethod(): string
 {
   return strtoupper($_SERVER['REQUEST_METHOD']);
-}
-
-
-//DEV_STEVE.
-//Lets learn ternary operator.
-
-function checkStatuscCode(string $statusCode)
-{
-
-  return $statusCode == 200 ? require_once __DIR__ . '../index.php' : require_once __DIR__ . '../register.php';
 }

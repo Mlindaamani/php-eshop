@@ -1,18 +1,16 @@
 <?php
 session_start();
 
+require_once __DIR__ . '/../includes/functions.php';
+
 spl_autoload_register(function ($class) {
   require __DIR__ . "/../models/$class.php";
 });
 
-require_once __DIR__ . '/../includes/functions.php';
 
 $cartItem = new CartItem(new Database);
-
 $product = new Product(new Database);
-
 $cart = new Cart(new Database);
-
 $userId = $_SESSION['user_id'];
 
 if (isset($_POST['add']) && isset($userId)) {
