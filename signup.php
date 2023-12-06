@@ -3,9 +3,6 @@ spl_autoload_register(function ($class) {
   require __DIR__ . "/models/$class.php";
 });
 
-$validate = new FormValidator($_POST);
-
-
 
 // Include the header contents in the login page.
 require_once __DIR__ . '/includes/header.php';

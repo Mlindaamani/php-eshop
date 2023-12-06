@@ -8,18 +8,19 @@ generateAlert('error', 'Invalid Email or password!', 'danger');
 generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
 //Display the error message when the user tries to add product in the cart_items table 
 generateAlert('login', 'login/signup to add product to cart', 'info');
-generateAlert('logout', 'You have logged out please login again to continue using the app!', 'info');
+
 ?>
 
 <!-- login form -->
 <div class="container d-flex justify-content-center align-items-center mt-5">
-  <form method="POST" class="border shadow p-3 rounded w-25 mt-5" action="actions/auth-user.php">
+  <form method="POST" class="border shadow p-3 rounded w-25 mt-5" action="actions/login-handler.php">
     <div class=" mb-4">
       <h5 class="text-center p-3">LOGIN</h5>
 
       <div class="mb-4">
         <div class="form-floating">
-          <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Enter email"
+            value="<?= $_POST['email'] ?? " " ?>">
           <label for="email" class="form-label">Enter email</label>
         </div>
       </div>
@@ -32,7 +33,7 @@ generateAlert('logout', 'You have logged out please login again to continue usin
       </div>
 
       <div class="mb-3">
-        <button type="submit" name="submit" class="btn btn-primary w-100 mt-5 mb-3">Login</button>
+        <button type="submit" name="submit" class="btn btn-primary w-100 mt-5 mb-3" value="login">Login</button>
       </div>
       <div class="mt-2 form-group">
         <p>Don't have an account? <a href="signup.php">Register</a></p>

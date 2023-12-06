@@ -26,3 +26,11 @@ function getRequestMethod(): string
 {
   return strtoupper($_SERVER['REQUEST_METHOD']);
 }
+
+function validateInputs(string $data)
+{
+  $data = trim($data);
+  $data = htmlspecialchars($data);
+  $data = stripslashes($data);
+  return $data;
+}

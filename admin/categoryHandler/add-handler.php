@@ -12,7 +12,6 @@ if (isset($_POST['submit'])) {
   if (empty($_POST['category_name'])) {
     //Redirect with message
     redirectTo('../category-form.php', 'emptyCategoryField');
-
   }
 
   //Check whether the category is already present in categories table.

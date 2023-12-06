@@ -8,10 +8,12 @@ spl_autoload_register(function ($class) {
   require __DIR__ . "/../models/$class.php";
 });
 
-
 $cartItem = new CartItem(new Database);
+
 $product = new Product(new Database);
+
 $cart = new Cart(new Database);
+
 $userId = $_SESSION['user_id'];
 
 //Update the product_quantity
@@ -35,25 +37,16 @@ if (isset($_POST['update'])) {
 
     // Update the product total-Price
     $cartItem->updateCartItemTotalPrice($newTotalPrice, $_POST['product_id'], $userId);
-
-    // Redirect the user to the cart.php when the quanity is updated successfully.
     redirectTo('cart.php');
 
-    //Redirect the user to cartItems page with error message when the stock quantity is not enogh for the selected product.
   } else {
     redirectTo('cart.php', 'stock');
   }
 }
 
-
 //REMOVE FUNCTIONALITY.
 if (isset($_POST['remove'])) {
-  //Clear individul cart item.
   $cartItem->removeCartItem($_POST['cartItem_id'], $_POST['product_id']);
-
-  //Add the quantity deleted
   $product->increaseStockQuantity($_POST['product_id'], $_POST['product_quantity']);
-
-  //Redirect to cart.php page
   redirectTo('cart.php');
 }

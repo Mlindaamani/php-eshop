@@ -38,13 +38,18 @@ if (isset($_POST['submit'])) {
   }
 
   //Check Whether fields are empty.
-  if (empty($_POST['product_name']) || empty($_POST['pro_description']) || empty($_POST['product_price']) || empty($_POST['stock_quantity']) || empty($file_name)) {
+  if (
+    empty($_POST['product_name'])
+    || empty($_POST['pro_description'])
+    || empty($_POST['product_price'])
+    || empty($_POST['stock_quantity'])
+    || empty($file_name)
+  ) {
     redirectTo('../product-form.php', 'emptyProductField');
   }
 
   //Check the file size.
   if ($file_size > MAX_FILE_SIZE) {
-
     echo "The the file is larger than the maximum file upload file of 5MB";
     redirectTo('../product-form.php', 'larger_file');
   }
@@ -55,7 +60,13 @@ if (isset($_POST['submit'])) {
     move_uploaded_file($file_temp_name, __DIR__ . '/../../uploads/' . $file_name);
 
     //Create new Product by calling the create method.
-    $product->create($_POST['product_name'], $file_name, $_POST['product_price'], $_POST['pro_description'], $_POST['stock_quantity']);
+    $product->create(
+      $_POST['product_name'],
+      $file_name,
+      $_POST['product_price'],
+      $_POST['pro_description'],
+      $_POST['stock_quantity']
+    );
     redirectTo('../product-form.php', 'new-product');
 
   } else {

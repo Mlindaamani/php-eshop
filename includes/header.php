@@ -1,36 +1,38 @@
 <?php
 //Start session.
 session_start();
-//Disable error reporting for unset user_id.
+
 error_reporting(0);
 
-//Session user_id.
-$userId = (int) $_SESSION['user_id'];
+define("USER_DEFAULT", "Guest");
 
+define("CURRENT_USER", 'user_id');
 
-//Create a baseUrl with localhost as the name of the server and port 8000 as the default port for PHP x-debug
+define("EMPTY_CART_VALUE", "");
+
 $baseUrl = 'http://localhost:8000';
 
-//Create the class autoloader function. This function will automatically load the class when a new instance of it is craeted.
 spl_autoload_register(function ($class) {
   require __DIR__ . "/../models/$class.php";
 });
 
-//Create new instance of CartItem class.
 $cartItem = new CartItem(new Database);
 
-//Create a user object
 $user = new User(new Database);
 
-
-// Checks whether the user is logged in. Rerurn True on success and false on failure.
+/**
+ * Summary of is_logged_in
+ * @return bool
+ */
 function is_logged_in()
 {
-  return isset($_SESSION['user_id']);
+  return isset($_SESSION[CURRENT_USER]);
 }
 
-
-//Display logout button link
+/**
+ * Summary of display_logout
+ * @return void
+ */
 function display_logout()
 {
   global $baseUrl;
@@ -39,7 +41,10 @@ function display_logout()
   }
 }
 
-// Disply the login button-link if the user is currently not logged in
+/**
+ * Summary of display_login
+ * @return void
+ */
 function display_login()
 {
   global $baseUrl;
@@ -48,7 +53,18 @@ function display_login()
   }
 }
 
-// Disply the signup  button-link if the user is currently not logged in
+function displayDashboard(User $user)
+{
+  global $baseUrl;
+  if (is_logged_in() && $user->isAdmin($_SESSION[CURRENT_USER])) {
+    echo "<a class='btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3' href=$baseUrl/../admin/dashboard.php>Dashboard</a>";
+  }
+}
+
+/**
+ * Summary of display_signup
+ * @return void
+ */
 function display_signup()
 {
   global $baseUrl;
@@ -57,7 +73,18 @@ function display_signup()
   }
 }
 
-//Create a custom method for handling different alerts in my app.
+function displayCartQuantity(CartItem $cartItem)
+{
+  echo (!isset($_SESSION[CURRENT_USER])) ? EMPTY_CART_VALUE : $cartItem->getItemsCount($_SESSION[CURRENT_USER]);
+}
+
+/**
+ * Summary of generateAlert
+ * @param mixed $getKey
+ * @param mixed $message
+ * @param mixed $alertType
+ * @return void
+ */
 function generateAlert($getKey, $message, $alertType)
 {
   if (isset($_GET[$getKey])) {
@@ -66,7 +93,8 @@ function generateAlert($getKey, $message, $alertType)
     echo '<button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
     echo '</div>';
   }
-} ?>
+}
+?>
 
 <!DOCTYPE html>
 <html lang='en'>
@@ -113,15 +141,16 @@ function generateAlert($getKey, $message, $alertType)
             <div>
               <?php display_login() ?>
               <?php display_signup() ?>
+              <?php displayDashboard($user) ?>
               <button type="button" class="btn btn-primary mx-3 fw-bold">
-                <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'> Cart <sup
-                    class="cart-count fw-bold">
-                    <?= $cartItem->getItemsCount($userId) ?>
+                <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'> Cart
+                  <sup class="cart-count fw-bold">
+
                   </sup></a>
               </button>
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <span>
-                  <?= is_null($userId) ? 'Guest' : $user->authUser($userId) ?>
+                  <?= (!isset($_SESSION[CURRENT_USER])) ? USER_DEFAULT : $user->authUser($_SESSION[CURRENT_USER]) ?>
                 </span>
               </button>
             </div>

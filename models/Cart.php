@@ -1,24 +1,26 @@
 <?php
+
 /**
  * Summary of Cart
  */
 class Cart {
+
   /**
    * Summary of database
    * @var 
    */
   private $database;
 
+
   private const UNCHECKED_CART_STATUS = 0;
 
-  private const CHECHED_CART_STATUS = 1;
+  private const CHECKED_CART_STATUS = 1;
 
-  private const MY_DATA_FETCH_MODE = PDO::FETCH_ASSOC;
+  private const MY_CART_FETCH_MODE = PDO::FETCH_ASSOC;
 
-  private const TABLE_NAME = 'carts';
+  private const TABLE_NAME = "carts";
 
   private const INITIAL_TOTAL_PRICE = 0.00;
-
   /**
    * Summary of __construct
    * @param Database $database
@@ -27,6 +29,7 @@ class Cart {
   {
     $this->database = $database->dbconnection();
   }
+
 
   /**
    * Summary of createNewCart
@@ -43,21 +46,20 @@ class Cart {
 
   /**
    * Summary of isCartActive
-   * Active cart is the cart with user_id and checked_out is equal to false.
-   * @param mixed $userId
+   * @param int $userId
    * @return bool
    */
-  public function isCartActive($userId)
+  public function isCartActive(int $userId)
   {
     $stmt = $this->database->prepare("SELECT user_id FROM " . self::TABLE_NAME .
-      " WHERE user_id = :user_id AND checked_out = :unchecked_out_status");
+      " WHERE user_id = :user_id AND checked_out = :unchecked_cart_status");
     $stmt->execute([
-      'user_id' => $userId,
-      'checked_out_status' => self::UNCHECKED_CART_STATUS
+      "user_id" => $userId,
+      "unchecked_cart_status" => self::UNCHECKED_CART_STATUS
     ]);
-    $activeCartId = $stmt->fetch(self::MY_DATA_FETCH_MODE);
-    return isset($activeCartId['user_id']);
+    return $stmt->rowCount() == 1 ? true : false;
   }
+
 
   /**
    * Summary of insertDataIntoCart
@@ -67,11 +69,11 @@ class Cart {
   function insertDataIntoCart($userId)
   {
     $stmt = $this->database->prepare("INSERT INTO " . self::TABLE_NAME .
-      " (user_id, total_price, checked_out) VALUES (:user_id, :total_price, :unchecked_out_status)");
+      " (user_id, total_price, checked_out) VALUES (:user_id, :total_price, :unchecked_cart_status)");
     $stmt->execute([
-      'user_id' => $userId,
-      'total_price' => self::INITIAL_TOTAL_PRICE,
-      'checked_out_status' => self::UNCHECKED_CART_STATUS
+      "user_id" => $userId,
+      "total_price" => self::INITIAL_TOTAL_PRICE,
+      "unchecked_cart_status" => self::UNCHECKED_CART_STATUS
     ]);
   }
 
@@ -83,69 +85,45 @@ class Cart {
   function getCartId($userId)
   {
     $stmt = $this->database->prepare("SELECT id FROM " . self::TABLE_NAME .
-      " WHERE user_id = :user_id AND checked_out = :uncheched_out_status");
+      " WHERE user_id = :user_id AND checked_out = :unchecked_cart_status");
     $stmt->execute([
-      'cheched_out_status' => self::UNCHECKED_CART_STATUS,
-      'user_id' => $userId
+      "unchecked_cart_status" => self::UNCHECKED_CART_STATUS,
+      "user_id" => $userId
     ]);
-    $cart = $stmt->fetch(self::MY_DATA_FETCH_MODE);
-    return $cart['id'];
+    return $stmt->fetch(self::MY_CART_FETCH_MODE)['id'];
   }
-
-  /**
-   * Summary of getUserCartInfo
-   * @param mixed $userId
-   * @return mixed
-   */
-  function getUserCartInfo($userId)
-  {
-    $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
-      " WHERE user_id = :user_id");
-    $stmt->execute([
-      'user_id' => $userId
-    ]);
-    $userCartInfo = $stmt->fetch(self::MY_DATA_FETCH_MODE);
-    return $userCartInfo;
-  }
-
-  //RETURN A SUCCESSFULLY MESSAGE WHEN A CART IS CHECKED
 
   /**
    * Summary of checkoutCart
-   * @param mixed $cartId
+   * @param int $cartId
    * @return void
    */
-  public function checkoutCart($cartId)
+  public function checkoutCart(int $cartId)
   {
     $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
-      " SET checked_out = :cheched_out_status WHERE id = :cart_id");
+      " SET checked_out = :checked_cart_status WHERE id = :cart_id");
     $stmt->execute([
-      'cheched_out_status' => self::CHECHED_CART_STATUS,
-      'cart_id' => $cartId
+      "checked_cart_status" => self::CHECKED_CART_STATUS,
+      "cart_id" => $cartId
     ]);
   }
 
-  public function updateCartTotalPrice($totalPrice, $cartId, $userId)
-  {
-    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
-      "SET total_price = :total_price, user_id = :user_id WHERE id = :id");
-    $stmt->execute([
-      'id' => $cartId,
-      'total_price' => $totalPrice,
-      'user_id' => $userId
-    ]);
-  }
-
-  //CLEAR THE USER CART.
   /**
-   * Summary of clearCart
-   * @param mixed $user_id
+   * Summary of updateCartTotalPrice
+   * @param mixed $totalPrice
+   * @param mixed $cartId
+   * @param mixed $userId
    * @return void
    */
-  function clearCart($userId)
+  public function updateCartTotalPrice(float $totalPrice, int $cartId, int $userId)
   {
-    $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
-      " WHERE user_id = :user_id");
-    $stmt->execute(['user_id' => $userId]);
+    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
+      " SET total_price = :total_price, user_id = :user_id WHERE id = :id");
+    $stmt->execute([
+      "id" => $cartId,
+      "total_price" => $totalPrice,
+      "user_id" => $userId
+    ]);
   }
+
 }

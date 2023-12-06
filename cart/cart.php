@@ -1,27 +1,25 @@
 <?php
 @session_start();
-
 error_reporting(0);
-
 require_once __DIR__ . '/../includes/header.php';
-
 $CartItem = new CartItem(new Database);
-
-$userId = $_SESSION['user_id'];
-
+$user = new User(new Database);
+define("DEFAULT_DECIMAL_NUMBERS", 2);
 ?>
 
-<!-- Issue an error message when the entered Quantity is greater than the available Quantity -->
+
 <div>
-  <?php generateAlert('stock', ' No Enough stock Quantity for the entered Quantity!', 'danger') ?>
+  <?php generateAlert('stock', ' No Enough Stock Quantity for the entered Quantity!', 'danger') ?>
   <?php generateAlert('check-out', 'Thank you for trading with Ebot. Your order on the way!', 'success') ?>
 </div>
 
 <div class="container mt-3 p-4 col-md-8">
-  <h4 class="fw-bold text-center mb-3"> Your Shopping Cart</h4>
+  <h4 class="fw-bold text-center mb-3">
+    <?= $user->authUser($_SESSION[CURRENT_USER]) ?>'s Shopping Cart
+  </h4>
   <div class="table-responsive">
     <table class="table border shadow">
-      <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)): ?>
+      <?php if ($CartItem->getItemsCount($_SESSION[CURRENT_USER]) > 0 && isset($_SESSION[CURRENT_USER])): ?>
         <thead>
           <tr class="mt-5">
             <th class="bg-primary text-light text-center">IMAGE</th>
@@ -33,9 +31,7 @@ $userId = $_SESSION['user_id'];
           </tr>
         </thead>
         <tbody>
-          <!-- Loop through all the cartItems products and display them on the Cart UI for a auth_user. -->
-          <!-- Call Dev_Steve -->
-          <?php foreach ($CartItem->getAllCartItems($userId) as $cartItem): ?>
+          <?php foreach ($CartItem->getAllCartItems($_SESSION[CURRENT_USER]) as $cartItem): ?>
             <tr>
               <td class="text-center mt-3">
                 <img src="../uploads/<?= $cartItem['product_image'] ?>" alt="Product Image" width="80" />
@@ -59,7 +55,7 @@ $userId = $_SESSION['user_id'];
               </td>
 
               <td class="text-center mt-3" style="color:green">$
-                <?= number_format($cartItem['total_price'], 2) ?>
+                <?= number_format($cartItem['total_price'], DEFAULT_DECIMAL_NUMBERS) ?>
               </td>
 
               <td class=" text-center mt-3">
@@ -77,12 +73,12 @@ $userId = $_SESSION['user_id'];
     </table>
   </div>
 
-  <?php if ($CartItem->getItemsCount($userId) > 0 && isset($userId)): ?>
+  <?php if ($CartItem->getItemsCount($_SESSION[CURRENT_USER]) > 0 && isset($_SESSION[CURRENT_USER])): ?>
     <div class="row justify-content-center mt-4">
       <div class="col-md-3 col-sm-12 mb-3 text-center">
         <button class="btn btn-primary-subtle fw-bold">
           Total Amount: <span style="color:green; font-size:20px" class="fw-bold">$
-            <?= number_format($CartItem->subTotal($userId), 2) ?>
+            <?= number_format($CartItem->subTotal($_SESSION[CURRENT_USER]), DEFAULT_DECIMAL_NUMBERS) ?>
           </span>
         </button>
       </div>
@@ -96,4 +92,4 @@ $userId = $_SESSION['user_id'];
     </div>
   <?php endif ?>
 </div>
-<?php require_once __DIR__ . '../includes/script.php' ?>
+<?php require_once __DIR__ . "/../includes/script.php" ?>

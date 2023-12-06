@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Summary of Category
  */
@@ -9,6 +10,10 @@ class Category {
    * @var 
    */
   private $database;
+
+  private const TABLE_NAME = "categories";
+
+  private const CATEGORY_FETCH_MODE = PDO::FETCH_ASSOC;
 
   /**
    * Summary of __construct
@@ -25,9 +30,9 @@ class Category {
    */
   public function getAllCategories(): array
   {
-    $stmt = $this->database->prepare("SELECT * FROM categories");
+    $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(self::CATEGORY_FETCH_MODE);
   }
 
   /**
@@ -35,21 +40,23 @@ class Category {
    * @param mixed $category_id
    * @return void
    */
-  public function deleteCategory($category_id)
+  public function deleteCategory($categoryId)
   {
-    $stmt = $this->database->prepare("DELETE FROM categories WHERE id = ?");
-    $stmt->execute([$category_id]);
+    $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
+      " WHERE id = :id");
+    $stmt->execute(["id" => $categoryId]);
   }
 
-  /**
+  /*
    * Summary of addCategory
    * @param mixed $category_name
    * @return void
    */
-  public function addCategory($category_name)
+  public function addCategory($categoryName)
   {
-    $stmt = $this->database->prepare("INSERT INTO categories (category_name) VALUES (?)");
-    $stmt->execute([$category_name]);
+    $stmt = $this->database->prepare("INSERT INTO " . self::TABLE_NAME .
+      " (category_name) VALUES (:category_name)");
+    $stmt->execute(["category_name" => $categoryName]);
   }
 
   /**
@@ -57,11 +64,12 @@ class Category {
    * @param mixed $category_name
    * @return bool
    */
-  public function isCategoryPresent($category_name)
+  public function isCategoryPresent($categoryName)
   {
-    $stmt = $this->database->prepare("SELECT category_name FROM categories WHERE category_name = ?");
-    $stmt->execute([$category_name]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $this->database->prepare("SELECT category_name FROM " . self::TABLE_NAME .
+      " WHERE category_name = :category_name");
+    $stmt->execute(["category_name" => $categoryName]);
+    $result = $stmt->fetch(self::CATEGORY_FETCH_MODE);
     return $result != false;
   }
 }

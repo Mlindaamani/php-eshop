@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Summary of CartItem
  */
@@ -9,6 +10,12 @@ class CartItem {
    * @var 
    */
   private $database;
+
+
+  private const TABLE_NAME = "cart_items";
+  private const CART_ITEMS_FETCH_MODE = PDO::FETCH_ASSOC;
+
+  private const INITIAL_CARTITEMS_QUANTITY = 1;
 
   /**
    * Summary of __construct
@@ -21,26 +28,44 @@ class CartItem {
 
   /**
    * Summary of addToCart
-   * @param mixed $product_name
+   * @param string $productName
    * @param mixed $quantity
-   * @param mixed $product_image
+   * @param mixed $productImage
    * @param mixed $price
-   * @param mixed $total_price
-   * @param mixed $user_id
-   * @param mixed $product_id
-   * @param mixed $cart_id
+   * @param mixed $totalPrice
+   * @param mixed $userId
+   * @param mixed $productId
+   * @param mixed $cartId
    * @return void
    */
-  public function addToCart($product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id)
-  {
-    $stmt = $this->database->prepare("INSERT INTO cart_items (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$product_name, $quantity, $product_image, $price, $total_price, $user_id, $product_id, $cart_id]);
+  public function addToCart(
+    string $productName,
+    $quantity,
+    $productImage,
+    $price,
+    $totalPrice,
+    $userId,
+    $productId,
+    $cartId
+  ) {
+    $stmt = $this->database->prepare(
+      "INSERT INTO " . self::TABLE_NAME . " 
+    (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
+     VALUES (:product_name, :quantity, :product_image, :price, :total_price, :user_id, :product_id, :cart_id)"
+    );
+
+    $stmt->execute([
+      'product_name' => $productName,
+      'quantity' => $quantity,
+      'product_image' => $productImage,
+      'price' => $price,
+      'total_price' => $totalPrice,
+      'user_id' => $userId,
+      'product_id' => $productId,
+      'cart_id' => $cartId
+    ]);
   }
 
-
-
-  //UPDATE_CARTITEMS_QUANTITY.
   /**
    * Summary of updateProductQuantity
    * @param mixed $quantity
@@ -48,14 +73,17 @@ class CartItem {
    * @param mixed $user_id
    * @return void
    */
-  public function updateProductQuantity($quantity, $product_id, $user_id)
+  public function updateProductQuantity($quantity, $productId, $userId)
   {
-    $stmt = $this->database->prepare("UPDATE cart_items SET quantity = ? WHERE product_id = ? AND user_id = ?");
-    $stmt->execute([$quantity, $product_id, $user_id]);
-
+    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
+      " SET quantity = :quantity WHERE product_id = :product_id AND user_id = :user_id");
+    $stmt->execute([
+      'quantity' => $quantity,
+      'product_id' => $productId,
+      'user_id' => $userId
+    ]);
   }
 
-  //UPDATE_PRODUCT_QUANTITY_AND_TOTAL_PRICE:
   /**
    * Summary of updateCartItemTotalPrice
    * @param mixed $total_price
@@ -63,70 +91,79 @@ class CartItem {
    * @param mixed $user_id
    * @return void
    */
-  function updateCartItemTotalPrice($total_price, $product_id, $user_id)
+  function updateCartItemTotalPrice($totalPrice, $productId, $userId)
   {
-
-    $stmt = $this->database->prepare("UPDATE cart_items SET  total_price = ? WHERE product_id = ? AND user_id = ?");
-    $stmt->execute([$total_price, $product_id, $user_id]);
+    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
+      " SET  total_price = :total_price WHERE product_id = :product_id AND user_id = :user_id");
+    $stmt->execute([
+      'total_price' => $totalPrice,
+      'product_id' => $productId,
+      'user_id' => $userId
+    ]);
   }
 
 
-  //GET_CART_ITEMS_INFO_BY_ID:
   /**
    * Summary of getCartItemProductInfoById
-   * @param mixed $product_id
-   * @param mixed $user_id
+   * @param int $productId
+   * @param int $userId
    * @return mixed
    */
-  function getCartItemProductInfoById($product_id, $user_id)
+  function getCartItemProductInfoById(int $productId, int $userId)
   {
-
-    $stmt = $this->database->prepare("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?");
-    $stmt->execute([$product_id, $user_id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
+      " WHERE product_id = :product_id AND user_id = :user_id");
+    $stmt->execute([
+      'product_id' => $productId,
+      'user_id' => $userId
+    ]);
+    return $stmt->fetch(self::CART_ITEMS_FETCH_MODE);
   }
 
-  //GET_CART_SUB_TOTAL:
+
   /**
    * Summary of subTotal
-   * @param mixed $user_id
+   * @param int $userId
    * @return float
    */
-  public function subTotal($user_id): float
+  public function subTotal(int $userId): float
   {
-    $stmt = $this->database->prepare("SELECT SUM(total_price) FROM cart_items WHERE user_id = ?");
-    $stmt->execute([$user_id]);
+    $stmt = $this->database->prepare("SELECT SUM(total_price) FROM " . self::TABLE_NAME .
+      " WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $userId]);
     return $stmt->fetchColumn();
   }
 
-  //SUM ALL PRODUCT QUANTITY FOR A AUTHENTICATED USER.
 
   /**
    * Summary of getTotalProductQuantity
-   * @param mixed $user_id
+   * @param int $userId
    * @return int
    */
-  public function getTotalProductQuantity($user_id): int
+  public function getTotalProductQuantity(int $userId): int
   {
-    $stmt = $this->database->prepare("SELECT SUM(quantity) FROM cart_items WHERE user_id = ?");
-    $stmt->execute([$user_id]);
+    $stmt = $this->database->prepare("SELECT SUM(quantity) FROM " . self::TABLE_NAME .
+      " WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $userId]);
     return $stmt->fetchColumn();
   }
 
-  //GET_NUMBER_OF_RECORDS_IN_CARTITEMS_TABLE:
+
   /**
    * Summary of getItemsCount
-   * @param mixed $user_id
+   * @param int $userId
    * @return mixed
    */
-  public function getItemsCount($user_id)
+  public function getItemsCount(int $userId)
   {
-    $stmt = $this->database->prepare("SELECT COUNT(*) FROM cart_items WHERE user_id = ?");
-    $stmt->execute([$user_id]);
+    $stmt = $this->database->prepare("SELECT COUNT(*) FROM " . self::TABLE_NAME .
+      " WHERE user_id = :user_id");
+    $stmt->execute([
+      'user_id' => $userId
+    ]);
     return $stmt->fetchColumn();
   }
 
-  //DELETE_INDIVIDUAL_CART_ITEM:
   /**
    * Summary of removeCartItem
    * @param mixed $cartItemId
@@ -135,39 +172,27 @@ class CartItem {
    */
   function removeCartItem($cartItemId, $productId)
   {
-    $stmt = $this->database->prepare("DELETE FROM cart_items WHERE id = ? AND product_id = ?");
-    $stmt->execute([$cartItemId, $productId]);
-    $stmt = new CartItem(new Database);
+    $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
+      " WHERE id = :id AND product_id = :product_id");
+    $stmt->execute([
+      'id' => $cartItemId,
+      'product_id' => $productId
+    ]);
   }
 
-  //GET_ALL_CART_ITEMS_PRODUCT_INFO:
+
   /**
    * Summary of getAllCartItems
-   * @param mixed $user_id
+   * @param int $userId
    * @return array
    */
-  function getAllCartItems($user_id)
+  function getAllCartItems(int $userId)
   {
-    $stmt = $this->database->prepare("SELECT * FROM cart_items WHERE user_id = ?");
-    $stmt->execute([$user_id]);
-
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if (!count($result)) {
-      echo 'No products for a given user_id!';
-    }
-    return $result;
-  }
-
-  //DELETE_ALL_CART_ITEMS:
-  /**
-   * Summary of clearCartItem
-   * @param mixed $user_id
-   * @return void
-   */
-  function clearCartItem($user_id)
-  {
-    $stmt = $this->database->prepare("DELETE FROM cart_items WHERE user_id = ?");
-    $stmt->execute([$user_id]);
+    $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
+      " WHERE user_id = :user_id");
+    $stmt->execute([
+      'user_id' => $userId
+    ]);
+    return $stmt->fetchAll(self::CART_ITEMS_FETCH_MODE);
   }
 }

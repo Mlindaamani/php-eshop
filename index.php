@@ -3,11 +3,13 @@ require_once __DIR__ . '/includes/header.php';
 error_reporting(0);
 $product = new Product(new Database);
 $cartItem = new CartItem(new Database);
-
 $category = new Category(new Database);
 
 //Display a success message when user signs up successfully.
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
+
+generateAlert('guest', 'You are now browsing as guest!', 'success');
+
 ?>
 
 <!-- Create a sidebar for the product listing UI-->

@@ -1,29 +1,36 @@
 <?php
+define("DEFAULT_SYSTEM_USER", 'customer');
 
 spl_autoload_register(function ($class) {
   require __DIR__ . "/../models/$class.php";
 });
 
-
-$user = new User(new Database);
 require __DIR__ . '/../includes/functions.php';
 
-if (isset($_POST['submit']) && getRequestMethod() === "POST") {
+$user = new User(new Database);
 
-  $validateUser = new FormValidator($_POST);
+//Validate user inputs.
+$email = validateInputs($_POST['email']);
 
-  $error = $validateUser->validate_form();
+$password = validateInputs($_POST['password']);
 
-  if ($error['firstname']) {
-    redirectTo('../signup.php', 'firstname');
-  }
+$firstname = validateInputs($_POST['firstname']);
 
-  if (count($error) == 4) {
-    redirectTo('../signup.php', 'error');
-  }
+$lastname = validateInputs($_POST['lastname']);
 
-  if (count($error) == 0) {
-    $user->register($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['email'], 'customer');
+//Validate fields.
+if (
+  empty($email) || empty($password) || empty($firstname) || empty($lastname)
+) {
+  redirectTo('../signup.php', 'error');
+}
+
+//Register.
+if (getRequestMethod() === "POST") {
+  if (!$user->isUserPresent($email)) {
+    $user->register($firstname, $lastname, $email, $password, DEFAULT_SYSTEM_USER);
     redirectTo('../index.php', 'success');
+  } else {
+    redirectTo('../signup.php', 'datapresent');
   }
 }
