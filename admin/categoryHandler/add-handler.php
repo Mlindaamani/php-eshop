@@ -4,6 +4,7 @@ spl_autoload_register(function ($class) {
 });
 
 require_once __DIR__ . '/../../includes/functions.php';
+
 $category = new Category(new Database);
 
 if (isset($_POST['submit'])) {

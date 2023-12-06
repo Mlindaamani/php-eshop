@@ -73,10 +73,6 @@ function display_signup()
   }
 }
 
-function displayCartQuantity(CartItem $cartItem)
-{
-  echo (!isset($_SESSION[CURRENT_USER])) ? EMPTY_CART_VALUE : $cartItem->getItemsCount($_SESSION[CURRENT_USER]);
-}
 
 /**
  * Summary of generateAlert
@@ -145,7 +141,7 @@ function generateAlert($getKey, $message, $alertType)
               <button type="button" class="btn btn-primary mx-3 fw-bold">
                 <a class='nav-link fw-bold-semi-bold text-light' href='<?php $baseUrl ?>cart/cart.php'> Cart
                   <sup class="cart-count fw-bold">
-
+                    <?= (!isset($_SESSION[CURRENT_USER])) ? EMPTY_CART_VALUE : $cartItem->getItemsCount($_SESSION[CURRENT_USER]) ?>
                   </sup></a>
               </button>
               <button type="button" class="btn btn-primary mx-3 fw-bold">

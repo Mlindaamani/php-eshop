@@ -1,8 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../../models/Database.php';
-require_once __DIR__ . '/../../models/Product.php';
 require_once __DIR__ . '/../../includes/functions.php';
+
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/../../models/$class.php";
+});
+
+
 
 if (isset($_POST['submit'])) {
   //Create new instance of product class.
