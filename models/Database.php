@@ -15,12 +15,12 @@ class Database {
    * Summary of databaseHost
    * @var string
    */
-  private $databaseHost = "localhost";
+  private $databaseHost = 'localhost';
   /**
    * Summary of databaseUser
    * @var string
    */
-  private $databaseUser = "root";
+  private $databaseUser = 'root';
   /**
    * Summary of databasePassword
    * @var string
@@ -30,7 +30,7 @@ class Database {
    * Summary of databaseName
    * @var string
    */
-  private $databaseName = "ebotdb";
+  private $databaseName = 'ebotdb';
 
 
 

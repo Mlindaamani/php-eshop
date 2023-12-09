@@ -1,5 +1,9 @@
 <!-- Include the header contents -->
 <?php
+require_once __DIR__ . "/../config/app-config.php";
+
+$title = DASHBOARD;
+
 require_once __DIR__ . '/../includes/header.php';
 
 // Include the accessibilty function

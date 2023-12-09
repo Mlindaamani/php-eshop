@@ -1,5 +1,6 @@
 <!-- Include the header contents -->
 <?php
+$title = "Remove Category";
 require_once __DIR__ . '/../includes/header.php';
 include_once __DIR__ . '/../access.php';
 access('admin');

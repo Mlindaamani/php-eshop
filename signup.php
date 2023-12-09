@@ -3,7 +3,7 @@ spl_autoload_register(function ($class) {
   require __DIR__ . "/models/$class.php";
 });
 
-
+$title = "Signup";
 // Include the header contents in the login page.
 require_once __DIR__ . '/includes/header.php';
 // Display error if the records are not fouund for the user trying logging in 

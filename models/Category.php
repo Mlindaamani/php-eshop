@@ -59,17 +59,19 @@ class Category {
     $stmt->execute(["category_name" => $categoryName]);
   }
 
+
   /**
    * Summary of isCategoryPresent
-   * @param mixed $category_name
+   * @param mixed $categoryName
    * @return bool
    */
   public function isCategoryPresent($categoryName)
   {
     $stmt = $this->database->prepare("SELECT category_name FROM " . self::TABLE_NAME .
       " WHERE category_name = :category_name");
+
     $stmt->execute(["category_name" => $categoryName]);
-    $result = $stmt->fetch(self::CATEGORY_FETCH_MODE);
-    return $result != false;
+
+    return ($stmt->rowCount() > 0) ? true : false;
   }
 }

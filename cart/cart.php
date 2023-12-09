@@ -1,10 +1,18 @@
 <?php
 @session_start();
+
 error_reporting(0);
+
+require_once __DIR__ . "/../config/app-config.php";
+
+$title = CART;
+
 require_once __DIR__ . '/../includes/header.php';
+
 $CartItem = new CartItem(new Database);
+
 $user = new User(new Database);
-define("DEFAULT_DECIMAL_NUMBERS", 2);
+
 ?>
 
 
@@ -19,7 +27,7 @@ define("DEFAULT_DECIMAL_NUMBERS", 2);
   </h4>
   <div class="table-responsive">
     <table class="table border shadow">
-      <?php if ($CartItem->getItemsCount($_SESSION[CURRENT_USER]) > 0 && isset($_SESSION[CURRENT_USER])): ?>
+      <?php if (!$CartItem->isCartItemEmpty($user, $_SESSION[CURRENT_USER])): ?>
         <thead>
           <tr class="mt-5">
             <th class="bg-primary text-light text-center">IMAGE</th>
@@ -30,6 +38,7 @@ define("DEFAULT_DECIMAL_NUMBERS", 2);
             <th class="bg-primary text-light text-center">REMOVE</th>
           </tr>
         </thead>
+
         <tbody>
           <?php foreach ($CartItem->getAllCartItems($_SESSION[CURRENT_USER]) as $cartItem): ?>
             <tr>
@@ -55,7 +64,7 @@ define("DEFAULT_DECIMAL_NUMBERS", 2);
               </td>
 
               <td class="text-center mt-3" style="color:green">$
-                <?= number_format($cartItem['total_price'], DEFAULT_DECIMAL_NUMBERS) ?>
+                <?= number_format($cartItem['total_price'], DEFAULT_DECIMAL_NUMBER) ?>
               </td>
 
               <td class=" text-center mt-3">
@@ -64,21 +73,21 @@ define("DEFAULT_DECIMAL_NUMBERS", 2);
               </td>
               </form>
             </tr>
-          <?php endforeach; ?>
+          <?php endforeach ?>
         <?php else: ?>
           <div class="alert alert-success alert-dismissible  border shadow" role="alert">Your Ebot Cart is empty!
           </div>
-        <?php endif; ?>
+        <?php endif ?>
       </tbody>
     </table>
   </div>
 
-  <?php if ($CartItem->getItemsCount($_SESSION[CURRENT_USER]) > 0 && isset($_SESSION[CURRENT_USER])): ?>
+  <?php if (!$CartItem->isCartItemEmpty($user, $_SESSION[CURRENT_USER])): ?>
     <div class="row justify-content-center mt-4">
       <div class="col-md-3 col-sm-12 mb-3 text-center">
         <button class="btn btn-primary-subtle fw-bold">
           Total Amount: <span style="color:green; font-size:20px" class="fw-bold">$
-            <?= number_format($CartItem->subTotal($_SESSION[CURRENT_USER]), DEFAULT_DECIMAL_NUMBERS) ?>
+            <?= number_format($CartItem->subTotal($_SESSION[CURRENT_USER]), DEFAULT_DECIMAL_NUMBER) ?>
           </span>
         </button>
       </div>

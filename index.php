@@ -1,15 +1,23 @@
 <?php
+require_once __DIR__ . "/config/app-config.php";
+
+$title = HOME;
+
 require_once __DIR__ . '/includes/header.php';
+
 error_reporting(0);
+
 $product = new Product(new Database);
+
 $cartItem = new CartItem(new Database);
+
 $category = new Category(new Database);
 
-//Display a success message when user signs up successfully.
+$user = new User(new Database);
+
+
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
-
 generateAlert('guest', 'You are now browsing as guest!', 'success');
-
 ?>
 
 <!-- Create a sidebar for the product listing UI-->
@@ -17,7 +25,9 @@ generateAlert('guest', 'You are now browsing as guest!', 'success');
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header bg-primary-subtle text-light">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel bg-primary">Ebot</h5>
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel bg-primary">
+        <?= SIDE_BAR ?>
+      </h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <?php foreach ($category->getAllCategories() as $category): ?>
@@ -58,7 +68,7 @@ generateAlert('guest', 'You are now browsing as guest!', 'success');
           </div>
         </div>
       </div>
-    <?php endforeach; ?>
+    <?php endforeach ?>
   </div>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php' ?>

@@ -27,6 +27,11 @@ function getRequestMethod(): string
   return strtoupper($_SERVER['REQUEST_METHOD']);
 }
 
+/**
+ * Summary of validateInputs
+ * @param string $data
+ * @return string
+ */
 function validateInputs(string $data)
 {
   $data = trim($data);

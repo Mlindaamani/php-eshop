@@ -102,7 +102,6 @@ class CartItem {
     ]);
   }
 
-
   /**
    * Summary of getCartItemProductInfoById
    * @param int $productId
@@ -113,13 +112,11 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE product_id = :product_id AND user_id = :user_id");
-    $stmt->execute([
-      'product_id' => $productId,
-      'user_id' => $userId
-    ]);
+
+    $stmt->execute(['product_id' => $productId, 'user_id' => $userId]);
+
     return $stmt->fetch(self::CART_ITEMS_FETCH_MODE);
   }
-
 
   /**
    * Summary of subTotal
@@ -130,10 +127,11 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT SUM(total_price) FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
+
     $stmt->execute(['user_id' => $userId]);
+
     return $stmt->fetchColumn();
   }
-
 
   /**
    * Summary of getTotalProductQuantity
@@ -144,10 +142,11 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT SUM(quantity) FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
+
     $stmt->execute(['user_id' => $userId]);
+
     return $stmt->fetchColumn();
   }
-
 
   /**
    * Summary of getItemsCount
@@ -158,9 +157,9 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT COUNT(*) FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
-    $stmt->execute([
-      'user_id' => $userId
-    ]);
+
+    $stmt->execute(['user_id' => $userId]);
+
     return $stmt->fetchColumn();
   }
 
@@ -174,10 +173,8 @@ class CartItem {
   {
     $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
       " WHERE id = :id AND product_id = :product_id");
-    $stmt->execute([
-      'id' => $cartItemId,
-      'product_id' => $productId
-    ]);
+
+    $stmt->execute(['id' => $cartItemId, 'product_id' => $productId]);
   }
 
 
@@ -190,9 +187,31 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
-    $stmt->execute([
-      'user_id' => $userId
-    ]);
+
+    $stmt->execute(['user_id' => $userId]);
+
     return $stmt->fetchAll(self::CART_ITEMS_FETCH_MODE);
+  }
+
+  /**
+   * Summary of isCartItemEmpty
+   * @param User $user
+   * @param int $userId
+   * @return bool
+   */
+  public function isCartItemEmpty(User $user, int $userId)
+  {
+    return ($user->isLoggedIn() && $this->getItemsCount($userId) > 0) ? false : true;
+  }
+
+  /**
+   * Summary of deleteCartItem
+   * @param int $userId
+   * @return void
+   */
+  public function deleteCartItem(int $userId)
+  {
+    $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME . " WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $userId]);
   }
 }

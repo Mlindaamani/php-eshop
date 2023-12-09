@@ -1,4 +1,6 @@
 <?php
+define("LOGGED_IN", 'user_id');
+define("AUTH_USSER", 'user_id');
 
 class User {
   private $database;
@@ -8,8 +10,9 @@ class User {
   private const DEFAULT_ROLE = 'customer';
   private const ROLE_SESSION = 'role';
   private const USER_SESSION = 'user_id';
-
   private const USER_FETCH_MODE = PDO::FETCH_ASSOC;
+
+
 
   /**
    * Summary of __construct
@@ -30,13 +33,6 @@ class User {
     $stmt = $this->database->prepare("SELECT email FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
     return ($stmt->rowCount() === 1) ? true : false;
-  }
-
-  public function getUserByFirstName(string $first_name)
-  {
-    $stmt = $this->database->prepare("SELECT * FROM users WHERE first_name = :first_name");
-    $stmt->execute(['first_name' => $first_name]);
-    return $stmt->fetch(self::USER_FETCH_MODE);
   }
 
   /**
@@ -142,6 +138,7 @@ class User {
    * @param string $role
    * @return void
    */
+
   public function setRoleSession(string $role)
   {
     $_SESSION[self::ROLE_SESSION] = $role;
@@ -158,5 +155,33 @@ class User {
     $stmt->execute(['user_id' => $userId]);
     $user = $stmt->fetch(self::USER_FETCH_MODE);
     return ($user[self::ROLE_SESSION] === self::ADMIN_ROLE) ? true : false;
+  }
+
+  /**
+   * Summary of isLoggedIn
+   * @return bool
+   */
+  public function isLoggedIn()
+  {
+    return isset($_SESSION[LOGGED_IN]);
+  }
+
+  /**
+   * Summary of logout
+   * @return bool
+   */
+  public static function logout()
+  {
+    session_start();
+
+    //Redigenerate the session ID when user logs out
+    session_regenerate_id(true);
+
+    //Unset session variable.
+    session_unset();
+
+    //Destroy the entire session.
+    session_destroy();
+    return true;
   }
 }

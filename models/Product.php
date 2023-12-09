@@ -34,9 +34,7 @@ class Product {
   {
     $stmt = $this->database->prepare("SELECT product_name, price, stock_quantity, description, image_url FROM " . self::TABLE_NAME .
       " WHERE id = :id");
-    $stmt->execute([
-      "id" => $productId
-    ]);
+    $stmt->execute(["id" => $productId]);
 
     return $stmt->fetch(self::PRODUCTS_FETCH_MODE);
   }
@@ -63,10 +61,7 @@ class Product {
   {
     $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
       " SET stock_quantity = stock_quantity- :stock_quantity WHERE id = :id");
-    $stmt->execute([
-      'stock_quantity' => $quantity,
-      'id' => $productId
-    ]);
+    $stmt->execute(['stock_quantity' => $quantity, 'id' => $productId]);
   }
 
   /**
@@ -79,10 +74,7 @@ class Product {
   {
     $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
       " SET stock_quantity = stock_quantity + :quantity WHERE id = :id");
-    $stmt->execute([
-      'quantity' => $quantity,
-      'id' => $productId
-    ]);
+    $stmt->execute(['quantity' => $quantity, 'id' => $productId]);
   }
 
   /**
@@ -109,7 +101,6 @@ class Product {
     ]);
   }
 
-
   /**
    * Summary of productExist
    * @param string $image_url
@@ -119,13 +110,9 @@ class Product {
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE image_url = :image_url");
-    $stmt->execute([
-      'image_url' => $imageUrl
-    ]);
-
+    $stmt->execute(['image_url' => $imageUrl]);
     return ($stmt->rowCount() == 1) ? true : false;
   }
-
 
   /**
    * Summary of update

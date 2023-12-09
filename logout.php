@@ -1,22 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-function logout()
-{
-  session_start();
+spl_autoload_register(function ($class) {
+  require __DIR__ . "/models/$class.php";
+});
 
-  //Redigenerate the session ID when user logs out
-  session_regenerate_id(true);
-
-  //Unset session variable.
-  session_unset();
-
-  //Destroy the entire session.
-  session_destroy();
-
-  //Redirect to login.php
+if (User::logout()) {
   redirectTo('index.php', 'guest');
 }
-
-//Call the logout function.
-logout();

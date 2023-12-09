@@ -1,6 +1,11 @@
 <?php
 //Include the header contents
-require_once __DIR__ . '/../includes/header.php' ?>
+require_once __DIR__ . "/../config/app-config.php";
+$title = CATEGORY;
+require_once __DIR__ . '/../includes/header.php'
+    ?>
+
+
 
 
 <div class='row mt-3'>

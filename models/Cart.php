@@ -36,10 +36,10 @@ class Cart {
    * @param mixed $userId
    * @return void
    */
-  public function createNewCart($userId)
+  public function createCart($userId)
   {
-    // If no active cart create new cart.
     if (!$this->isCartActive($userId)) {
+
       $this->insertDataIntoCart($userId);
     }
   }
@@ -53,10 +53,7 @@ class Cart {
   {
     $stmt = $this->database->prepare("SELECT user_id FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id AND checked_out = :unchecked_cart_status");
-    $stmt->execute([
-      "user_id" => $userId,
-      "unchecked_cart_status" => self::UNCHECKED_CART_STATUS
-    ]);
+    $stmt->execute(["user_id" => $userId, "unchecked_cart_status" => self::UNCHECKED_CART_STATUS]);
     return $stmt->rowCount() == 1 ? true : false;
   }
 

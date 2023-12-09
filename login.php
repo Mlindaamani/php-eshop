@@ -1,14 +1,15 @@
 <?php
+
 // Include the header contents in the login page. -->
+require_once __DIR__ . "/config/app-config.php";
+$title = LOGIN;
 require_once __DIR__ . '/includes/header.php';
 
-//Disply the error message when the password or email does not match. -->
 generateAlert('error', 'Invalid Email or password!', 'danger');
-// Disply error message when the fields are empty. -->
-generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
-//Display the error message when the user tries to add product in the cart_items table 
-generateAlert('login', 'login/signup to add product to cart', 'info');
 
+generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
+
+generateAlert('login', 'login/signup to add product to cart', 'info');
 ?>
 
 <!-- login form -->
@@ -19,8 +20,7 @@ generateAlert('login', 'login/signup to add product to cart', 'info');
 
       <div class="mb-4">
         <div class="form-floating">
-          <input type="email" name="email" id="email" class="form-control" placeholder="Enter email"
-            value="<?= $_POST['email'] ?? " " ?>">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
           <label for="email" class="form-label">Enter email</label>
         </div>
       </div>
