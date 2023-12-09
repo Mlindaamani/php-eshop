@@ -1,6 +1,6 @@
 <?php
 //Include the header contents
-require_once __DIR__ . "/../config/app-config.php";
+require_once __DIR__ . "/../config/config.php";
 $title = CATEGORY;
 require_once __DIR__ . '/../includes/header.php'
     ?>

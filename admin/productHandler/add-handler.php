@@ -1,79 +1,72 @@
 <?php
 
-require_once __DIR__ . '/../../includes/functions.php';
+require_once __DIR__ . "/../../includes/functions.php";
+
+
+require_once __DIR__ . "/../../config/config.php";
 
 spl_autoload_register(function ($class) {
   require __DIR__ . "/../../models/$class.php";
 });
 
 
+//Create new instance of product class.
+$product = new Product(new Database);
 
-if (isset($_POST['submit'])) {
-  //Create new instance of product class.
-  $product = new Product(new Database);
+$file = $_FILES['file'];
 
-  $file = $_FILES['file'];
+$file_name = $file['name'];
 
-  $file_name = $file['name'];
+$file_size = $file['size'];
 
-  $file_size = $file['size'];
+$temp_folder = $file['tmp_name'];
 
-  $file_temp_name = $file['tmp_name'];
+$file_type = $file['type'];
 
-  $file_type = $file['type'];
+$file_error = $file['error'];
 
-  $file_error = $file['error'];
+$upload_folder = require_once __DIR__ . "/../../uploads/{$file_name}";
 
-  define('MAX_FILE_SIZE', 5 * 2040 * 2040);
+//Allowed mime types
+$mime_types = [
+  'image/png' => 'png',
+  'image/jpeg' => 'jpeg',
+  'images/gif' => 'gif',
+  'image/apng' => 'apng',
+  'image/avif' => 'avif'
+];
 
-  //Allowed mime types
-  $mime_types = [
-    'image/png' => 'png',
-    'image/jpeg' => 'jpeg',
-    'images/gif' => 'gif',
-    'image/apng' => 'apng',
-    'image/avif' => 'avif'
-  ];
+// Check for a mime type for a uploaded files,
+if (!array_key_exists($file_type, $mime_types)) {
+  redirectTo('../product-form.php', 'mime_type');
+}
 
+//Check Whether fields are empty.
+if (
+  empty($_POST['product_name'])
+  || empty($_POST['pro_description'])
+  || empty($_POST['product_price'])
+  || empty($_POST['stock_quantity'])
+  || empty($file_name)
+) {
+  redirectTo('../product-form.php', 'emptyProductField');
+}
 
-  // Check for a mime type for a uploaded files,
-  if (!array_key_exists($file_type, $mime_types)) {
-    redirectTo('../product-form.php', 'mime_type');
-  }
+//Check the file size.
+if ($file_size > MAX_FILE_SIZE) {
+  FILE_SIZE_ERROR_FLASH_MESSAGE;
+  redirectTo('../product-form.php', 'larger_file');
+}
 
-  //Check Whether fields are empty.
-  if (
-    empty($_POST['product_name'])
-    || empty($_POST['pro_description'])
-    || empty($_POST['product_price'])
-    || empty($_POST['stock_quantity'])
-    || empty($file_name)
-  ) {
-    redirectTo('../product-form.php', 'emptyProductField');
-  }
+//Insert the product if the product does not exist
+if (!$product->productExist($file_name)) {
 
-  //Check the file size.
-  if ($file_size > MAX_FILE_SIZE) {
-    echo "The the file is larger than the maximum file upload file of 5MB";
-    redirectTo('../product-form.php', 'larger_file');
-  }
+  $product->create($_POST['product_name'], $file_name, $_POST['product_price'], $_POST['pro_description'], $_POST['stock_quantity']);
 
-  //Insert the product if the product does not exist
-  if (!$product->productExist($file_name)) {
+  move_uploaded_file($temp_folder, $upload_folder);
 
-    move_uploaded_file($file_temp_name, __DIR__ . '/../../uploads/' . $file_name);
+  redirectTo('../product-form.php', 'new-product');
 
-    //Create new Product by calling the create method.
-    $product->create(
-      $_POST['product_name'],
-      $file_name,
-      $_POST['product_price'],
-      $_POST['pro_description'],
-      $_POST['stock_quantity']
-    );
-    redirectTo('../product-form.php', 'new-product');
-
-  } else {
-    redirectTo('../product-form.php', 'product_exist');
-  }
+} else {
+  redirectTo('../product-form.php', 'product_exist');
 }

@@ -3,7 +3,7 @@
 
 error_reporting(0);
 
-require_once __DIR__ . "/../config/app-config.php";
+require_once __DIR__ . "/../config/config.php";
 
 $title = CART;
 

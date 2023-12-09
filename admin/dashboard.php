@@ -1,6 +1,6 @@
 <!-- Include the header contents -->
 <?php
-require_once __DIR__ . "/../config/app-config.php";
+require_once __DIR__ . "/../config/config.php";
 
 $title = DASHBOARD;
 
