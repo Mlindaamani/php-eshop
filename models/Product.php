@@ -25,12 +25,13 @@ class Product {
     $this->database = $database->dbconnection();
   }
 
+
   /**
    * Summary of getProductInfoById
-   * @param mixed $product_id
+   * @param int $productId
    * @return array
    */
-  public function getProductInfoById($productId): array
+  public function getProductInfoById(int $productId): array
   {
     $stmt = $this->database->prepare("SELECT product_name, price, stock_quantity, description, image_url FROM " . self::TABLE_NAME .
       " WHERE id = :id");
@@ -40,10 +41,10 @@ class Product {
   }
 
   /**
-   * Summary of getAllProducts
+   * Summary of products
    * @return array
    */
-  function getAllProducts()
+  function products()
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " ORDER BY RAND()");
@@ -101,12 +102,13 @@ class Product {
     ]);
   }
 
+
   /**
-   * Summary of productExist
-   * @param string $image_url
+   * Summary of isPresent
+   * @param string $imageUrl
    * @return bool
    */
-  public function productExist(string $imageUrl)
+  public function isPresent(string $imageUrl)
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE image_url = :image_url");
@@ -144,5 +146,29 @@ class Product {
       'price' => $price,
       'id' => $productId
     ]);
+  }
+
+  /**
+   * Summary of getStockQuantity
+   * @param int $id
+   * @return mixed
+   */
+  public function getStockQuantity(int $id)
+  {
+    $stmt = $this->database->prepare("SELECT stock_quantity FROM products WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    return ($stmt->rowCount() == 1) ? $stmt->fetch(PDO::FETCH_COLUMN) : null;
+  }
+
+  /**
+   * Summary of getProductId
+   * @param int $id
+   * @return mixed
+   */
+  public function getProductId(int $id)
+  {
+    $stmt = $this->database->prepare("SELECT id FROM products WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    return ($stmt->rowCount() == 1) ? $stmt->fetch(PDO::FETCH_COLUMN) : null;
   }
 }

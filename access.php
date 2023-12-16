@@ -10,12 +10,11 @@ function access(string $role)
 
 
   if (!$accessPermissions[$role]) {
-    header('Location: http://localhost:8000/denied.php');
-    exit;
+    // header('Location: http://localhost:8000/denied.php');
+    // exit;
+    redirectTo(BASE_URL);
   }
 }
-
-
 
 
 // function checkAccess(array $allowedRoles, string $file_path)

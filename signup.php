@@ -1,21 +1,18 @@
 <?php
-spl_autoload_register(function ($class) {
-  require __DIR__ . "/models/$class.php";
-});
 
 $title = "Signup";
-// Include the header contents in the login page.
+
 require_once __DIR__ . '/includes/header.php';
-// Display error if the records are not fouund for the user trying logging in 
+
 generateAlert('norecord', 'No records found for entered user. Kindly signup/login again!', 'danger');
-// Display the message if the user records already exist in the database 
+
 generateAlert('datapresent', 'Entered records Already exit!', 'danger');
-//Display the error message if the form fields are empty
+
 generateAlert('error', 'Kindly fill in all the required fields!', 'danger');
+
 generateAlert('firstname', 'Firstname is required!', 'danger');
 ?>
 
-<!-- Signed up form -->
 <div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
   <form action="actions/signup-handler.php" method="post" class="border shadow p-3 rounded w-50 ">
     <div class="mb-3">
@@ -55,5 +52,4 @@ generateAlert('firstname', 'Firstname is required!', 'danger');
       </div>
   </form>
 </div>
-<!-- Include the footer contents in the login page. -->
 <?php require_once __DIR__ . '/includes/script.php' ?>

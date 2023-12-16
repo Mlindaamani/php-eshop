@@ -9,7 +9,7 @@ class Category {
    * Summary of database
    * @var 
    */
-  private $database;
+  private static $database;
 
   private const TABLE_NAME = "categories";
 
@@ -25,10 +25,10 @@ class Category {
   }
 
   /**
-   * Summary of getAllCategories
+   * Summary of categories
    * @return void
    */
-  public function getAllCategories(): array
+  public function categories(): array
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME);
     $stmt->execute();

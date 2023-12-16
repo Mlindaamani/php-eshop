@@ -1,6 +1,4 @@
 <?php
-define("LOGGED_IN", 'user_id');
-define("AUTH_USSER", 'user_id');
 
 class User {
   private $database;
@@ -9,8 +7,9 @@ class User {
   private const ADMIN_ROLE = 'admin';
   private const DEFAULT_ROLE = 'customer';
   private const ROLE_SESSION = 'role';
-  private const USER_SESSION = 'user_id';
+  private const LOGGED_IN_USER = 'user_id';
   private const USER_FETCH_MODE = PDO::FETCH_ASSOC;
+  private const DEFAULT_SYSTEM_USER = 'guest';
 
 
 
@@ -59,7 +58,7 @@ class User {
       'first_name' => $first_name,
       'last_name' => $last_name,
       'email' => $email,
-      'password' => password_hash($password, PASSWORD_DEFAULT),
+      'password' => self::hashPassword($password),
       'role' => self::DEFAULT_ROLE
     ]);
   }
@@ -85,9 +84,7 @@ class User {
   public function getUserByEmail(string $email): array|bool
   {
     $stmt = $this->database->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->execute([
-      'email' => $email
-    ]);
+    $stmt->execute(['email' => $email]);
     return ($stmt->rowCount() == 1) ? $stmt->fetch(self::USER_FETCH_MODE) : false;
   }
 
@@ -103,13 +100,23 @@ class User {
 
     if ($user) {
 
-      if ($this->verifyHashedPassword($password, $user['password'])) {
-        $this->setUserSession($user['id']);
-        $this->setRoleSession($user['role']);
+      if (self::verifyHashedPassword($password, $user['password'])) {
+        self::setUserSession($this->getUserByEmail($email)['id']);
+        self::setRoleSession($this->getUserByEmail($email)['role']);
         return $user;
       }
     }
     return false;
+  }
+
+  /**
+   * Summary of hashPassword
+   * @param string $password
+   * @return string
+   */
+  public static function hashPassword(string $password)
+  {
+    return (password_hash($password, PASSWORD_DEFAULT));
   }
 
   /**
@@ -118,7 +125,7 @@ class User {
    * @param mixed $storedPassword
    * @return bool
    */
-  public function verifyHashedPassword($enteredPassword, $storedPassword)
+  public static function verifyHashedPassword($enteredPassword, $storedPassword)
   {
     return password_verify($enteredPassword, $storedPassword);
   }
@@ -128,9 +135,9 @@ class User {
    * @param int $userId
    * @return void
    */
-  public function setUserSession(int $userId)
+  public static function setUserSession(int $userId)
   {
-    $_SESSION[self::USER_SESSION] = $userId;
+    $_SESSION[self::LOGGED_IN_USER] = $userId;
   }
 
   /**
@@ -139,7 +146,7 @@ class User {
    * @return void
    */
 
-  public function setRoleSession(string $role)
+  public static function setRoleSession(string $role)
   {
     $_SESSION[self::ROLE_SESSION] = $role;
   }
@@ -161,9 +168,28 @@ class User {
    * Summary of isLoggedIn
    * @return bool
    */
-  public function isLoggedIn()
+  public static function isLoggedIn()
   {
-    return isset($_SESSION[LOGGED_IN]);
+    return isset($_SESSION[self::LOGGED_IN_USER]);
+  }
+
+
+  /**
+   * Summary of id
+   * @return int|null
+   */
+  public static function id(): int|null
+  {
+    return isset($_SESSION[self::LOGGED_IN_USER]) ? $_SESSION[self::LOGGED_IN_USER] : null;
+  }
+
+  /**
+   * Summary of role
+   * @return string|null
+   */
+  public static function role(): string|null
+  {
+    return isset($_SESSION[self::ROLE_SESSION]) ? $_SESSION[self::ROLE_SESSION] : self::DEFAULT_SYSTEM_USER;
   }
 
   /**
@@ -173,14 +199,8 @@ class User {
   public static function logout()
   {
     session_start();
-
-    //Redigenerate the session ID when user logs out
     session_regenerate_id(true);
-
-    //Unset session variable.
     session_unset();
-
-    //Destroy the entire session.
     session_destroy();
     return true;
   }

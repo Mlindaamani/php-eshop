@@ -1,30 +1,24 @@
 <?php
 //Start session.
 session_start();
-
 error_reporting(0);
-
 require_once __DIR__ . "/../config/config.php";
-
-spl_autoload_register(function ($class) {
-  require __DIR__ . "/../models/$class.php";
-});
+spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
 
 $cartItem = new CartItem(new Database);
-
 $user = new User(new Database);
 
 /**
  * Summary of display_logout
- * @param User $user
+ * @param mixed $baseUrl
  * @return void
  */
-function display_logout(User $user, $baseUrl)
+function display_logout(string $baseUrl)
 {
-  if ($user->isLoggedIn()):
+  if (User::isLoggedIn()):
     ?>
     <a class="btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3"
-      href="<?= $baseUrl ?>/logout.php">Logout</a>
+      href="<?= htmlspecialchars($baseUrl) ?>/logout.php">Logout</a>
     <?php
   endif;
 }
@@ -32,15 +26,15 @@ function display_logout(User $user, $baseUrl)
 
 /**
  * Summary of display_login
- * @param User $user
+ * @param mixed $baseUrl
  * @return void
  */
-function display_login(User $user, $baseUrl)
+function display_login(string $baseUrl)
 {
-  if (!$user->isLoggedIn()):
+  if (!User::isLoggedIn()):
     ?>
     <a class="btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3"
-      href="<?= $baseUrl ?>/login.php">Login</a>
+      href="<?= htmlspecialchars($baseUrl) ?>/login.php">Login</a>
     <?php
   endif;
 }
@@ -50,12 +44,12 @@ function display_login(User $user, $baseUrl)
  * @param User $user
  * @return void
  */
-function displayDashboard(User $user, $baseUrl)
+function displayDashboard(User $user, string $baseUrl)
 {
-  if ($user->isLoggedIn() && $user->isAdmin($_SESSION[CURRENT_USER])):
+  if (User::isLoggedIn() && $user->isAdmin(User::id())):
     ?>
     <a class="btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3"
-      href="<?= $baseUrl ?>/../admin/dashboard.php">Dashboard</a>
+      href="<?= htmlspecialchars($baseUrl) ?>/../admin/dashboard.php">Dashboard</a>
     <?php
   endif;
 }
@@ -65,47 +59,45 @@ function displayDashboard(User $user, $baseUrl)
  * @param User $user
  * @return void
  */
-function displayProfile(User $user, $baseUrl)
+function displayProfile(User $user, string $baseUrl)
 {
-  global $baseUrl;
-  if ($user->isLoggedIn() && !$user->isAdmin($_SESSION[CURRENT_USER])):
+
+  if (User::isLoggedIn() && !$user->isAdmin(User::id())):
     ?>
     <a class="btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3"
-      href="<?= $baseUrl ?>/profile.php">Profile</a>
+      href="<?= htmlspecialchars($baseUrl) ?>/profile.php">Profile</a>
     <?php
   endif;
 }
-
 
 /**
  * Summary of display_signup
- * @param User $user
+ * @param string $baseUrl
  * @return void
  */
-function display_signup(User $user, $baseUrl)
+function display_signup(string $baseUrl)
 {
-  if (!$user->isLoggedIn()):
+  if (!User::isLoggedIn()):
     ?>
     <a class="btn btn-primary text-light me-1 fw-bold btn-link text-decoration-none mx-3"
-      href="<?= $baseUrl ?>/signup.php">Sign-up</a>
+      href="<?= htmlspecialchars($baseUrl) ?>/signup.php">Sign-up</a>
     <?php
   endif;
 }
 
-
 /**
  * Summary of generateAlert
- * @param mixed $getKey
- * @param mixed $message
- * @param mixed $alertType
+ * @param string $getKey
+ * @param string $message
+ * @param string $alertType
  * @return void
  */
-function generateAlert($getKey, $message, $alertType)
+function generateAlert(string $getKey, string $message, string $alertType)
 {
   if (isset($_GET[$getKey])):
     ?>
-    <div class="container alert alert-<?= $alertType ?> alert-dismissible fade show  mt-2" role="alert">
-      <?= $message ?>
+    <div class="container alert alert-<?= htmlspecialchars($alertType) ?> alert-dismissible fade show  mt-2" role="alert">
+      <?= htmlspecialchars($message) ?>
       <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <?php
@@ -116,22 +108,30 @@ function generateAlert($getKey, $message, $alertType)
  * Summary of displayCart
  * @param CartItem $cartItem
  * @param User $user
- * @param mixed $baseUrl
+ * @param string $baseUrl
  * @return void
  */
-function displayCart(CartItem $cartItem, User $user, $baseUrl)
+function displayCart(CartItem $cartItem, User $user, string $baseUrl)
+{
+  if (User::isLoggedIn()):
+    ?>
+    <button type="button" class="btn btn-primary mx-3 fw-bold">
+      <a class="nav-link fw-bold-semi-bold text-light" href="<?= htmlspecialchars($baseUrl) ?>/cart/cart.php"> Cart
+        <sup class=" cart-count fw-bold">
+          <?= (is_null(User::id())) ? EMPTY_CART_VALUE : $cartItem->getItemsCount(User::id()) ?>
+        </sup>
+      </a>
+    </button>
+    <?php
+  endif;
+}
+
+function displayGuest(User $user)
 {
   ?>
   <button type="button" class="btn btn-primary mx-3 fw-bold">
-    <a class="nav-link fw-bold-semi-bold text-light" href="<?= $baseUrl ?>/cart/cart.php"> Cart
-      <sup class=" cart-count fw-bold">
-        <?= (!isset($_SESSION[CURRENT_USER])) ? EMPTY_CART_VALUE : $cartItem->getItemsCount($_SESSION[CURRENT_USER]) ?>
-      </sup>
-    </a>
-  </button>
-  <button type="button" class="btn btn-primary mx-3 fw-bold">
     <span>
-      <?= (!isset($_SESSION[CURRENT_USER])) ? USER_DEFAULT : $user->authUser($_SESSION[CURRENT_USER]) ?>
+      <?= (is_null(User::id())) ? USER_DEFAULT : $user->authUser(User::id()) ?>
     </span>
   </button>
   <?php
@@ -146,7 +146,7 @@ function displayCart(CartItem $cartItem, User $user, $baseUrl)
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    <?= $title ?? "" ?>
+    <?= htmlspecialchars($title) ?? "" ?>
   </title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
@@ -157,7 +157,7 @@ function displayCart(CartItem $cartItem, User $user, $baseUrl)
   <nav class="navbar navbar-expand-lg bg-primary text-light sticky-top">
     <div class="container-fluid p-1">
       <a class="navbar-brand text-light fw-bold text active mx-3 mt-1 logo" href="/">
-        <?= APP_NAME ?>
+        <?= htmlspecialchars(APP_NAME) ?>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu">
@@ -166,7 +166,7 @@ function displayCart(CartItem $cartItem, User $user, $baseUrl)
       <div class="collapse navbar-collapse " id="nav-menu">
         <ul class="navbar-nav me-auto  mb-lg-0">
           <li class="nav-item">
-            <a href="<?= BASE_URL ?>" class="nav-link active fw-bold text-light">Home
+            <a href="<?= htmlspecialchars(BASE_URL) ?>" class="nav-link active fw-bold text-light">Home
             </a>
           </li>
 
@@ -181,12 +181,13 @@ function displayCart(CartItem $cartItem, User $user, $baseUrl)
               <input type="search" class="form-control" placeholder="Search...">
             </form>
             <div>
-              <?php display_logout($user, BASE_URL) ?>
-              <?php display_login($user, BASE_URL) ?>
-              <?php display_signup($user, BASE_URL) ?>
+              <?php display_logout(BASE_URL) ?>
+              <?php display_login(BASE_URL) ?>
+              <?php display_signup(BASE_URL) ?>
               <?php displayDashboard($user, BASE_URL) ?>
               <?php displayProfile($user, BASE_URL) ?>
               <?php displayCart($cartItem, $user, BASE_URL) ?>
+              <?php displayGuest($user) ?>
             </div>
           </div>
         </div>

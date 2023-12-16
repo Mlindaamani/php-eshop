@@ -1,30 +1,21 @@
 <?php
 
 /**
- * Summary of redirectTo
- * @param string $file_name
- * @param string $get_variable
- * @return never
+ * Summary of isRequestMethodPost
+ * @return bool
  */
-function redirectTo(string $file_name, string $get_variable = '')
+function isRequestMethodPost()
 {
-  if ($get_variable):
-    header("Location: " . $file_name . "?" . $get_variable);
-    exit();
-
-  else:
-    header("Location: " . $file_name);
-    exit;
-  endif;
+  return strtoupper($_SERVER['REQUEST_METHOD']) === "POST";
 }
 
 /**
- * Summary of getRequestMethod
- * @return string
+ * Summary of isRequestMethodGet
+ * @return bool
  */
-function getRequestMethod(): string
+function isRequestMethodGet()
 {
-  return strtoupper($_SERVER['REQUEST_METHOD']);
+  return strtoupper($_SERVER['REQUEST_METHOD']) === "GET";
 }
 
 /**
@@ -38,4 +29,25 @@ function validateInputs(string $data)
   $data = htmlspecialchars($data);
   $data = stripslashes($data);
   return $data;
+}
+
+/**
+ * Summary of redirect_with
+ * @param string $url
+ * @return void
+ */
+function redirectTo(string $url)
+{
+  header("Location: $url");
+  exit();
+}
+
+/**
+ * Summary of escapeChars
+ * @param mixed $data
+ * @return string
+ */
+function escapeChars($data)
+{
+  return htmlspecialchars($data);
 }

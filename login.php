@@ -1,8 +1,8 @@
 <?php
-
-// Include the header contents in the login page. -->
 require_once __DIR__ . "/config/config.php";
+
 $title = LOGIN;
+
 require_once __DIR__ . '/includes/header.php';
 
 generateAlert('error', 'Invalid Email or password!', 'danger');
@@ -12,7 +12,6 @@ generateAlert('emptyfield', 'Fill in all the required fields!', 'danger');
 generateAlert('login', 'login/signup to add product to cart', 'info');
 ?>
 
-<!-- login form -->
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <form method="POST" class="border shadow p-3 rounded w-25 mt-5" action="actions/login-handler.php">
     <div class=" mb-4">
@@ -40,5 +39,4 @@ generateAlert('login', 'login/signup to add product to cart', 'info');
         </di>
   </form>
 </div>
-<!-- Include the footer contents in the login page. -->
 <?php require_once __DIR__ . '/includes/script.php' ?>
