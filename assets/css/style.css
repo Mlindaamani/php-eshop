@@ -17,7 +17,7 @@
   font-size: 16px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color: rgba(0, 0, 0, 0.867);
+  color: rgba(66, 239, 9, 0.867);
 }
 
 /* Set the size of the image to occupy 100% of the availabe width of the image container */
@@ -31,3 +31,4 @@
 body {
   overflow-x: hidden;
 }
+

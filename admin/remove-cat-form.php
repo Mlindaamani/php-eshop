@@ -33,9 +33,9 @@ $category = new Category(new Database) ?>
             style='margin-top: 100px; margin-bottom: 300px;'>
             <form method='post' class='border shadow p-3 rounded' action="categoryHandler/remove-handler.php">
                 <div class=''>
-                    <h5 class='text-center p-3'>Remove Category</h5>
+                    <h5 class='text-center p-3 text-success fw-bold'>REMOVE CATEGORY</h5>
                     <div class='mb-3'>
-                        <select name='category_id' class='form-select mb-3 bg-primary text-light p-4 border shadow'
+                        <select name='category_id' class='form-select mb-3 bg-success text-light p-4 border shadow'
                             style='cursor:pointer' class='custom-select' size="5">
                             <?php foreach ($category->categories() as $category): ?>
                                 <option value='<?= $category['id'] ?>' class='text-start' name="category_id">
@@ -44,7 +44,7 @@ $category = new Category(new Database) ?>
                             <?php endforeach ?>
                         </select>
                     </div>
-                    <button type='submit' class='btn btn-primary w-100 border shadow' name='remove'>Remove</button>
+                    <button type='submit' class='btn btn-success w-100 border shadow fw-bold' name='remove'>Remove</button>
             </form>
         </div>
     </div>

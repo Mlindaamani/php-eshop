@@ -11,7 +11,7 @@ $file_size = $file['size'];
 $temp_folder = $file['tmp_name'];
 $file_type = $file['type'];
 $file_error = $file['error'];
-$destination = __DIR__ . "/../../uploads/{$file_name}";
+$destination = __DIR__ . "/../uploads/{$file_name}";
 
 // Allowed mime types
 $mime_types = [

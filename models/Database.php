@@ -42,6 +42,7 @@ class Database {
     try {
       $this->databaseConnection = new PDO("mysql:host=$this->databaseHost;dbname=$this->databaseName", $this->databaseUser, $this->databasePassword);
       $this->databaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     } catch (PDOException $e) {
       echo "Error: " . $e->errorInfo[2];
       echo "\n";

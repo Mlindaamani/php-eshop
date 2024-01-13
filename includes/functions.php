@@ -1,5 +1,19 @@
 <?php
 
+function checkAccess(array $allowedRoles, string $url)
+{
+
+  if (!is_null(User::role())) {
+
+    if (in_array(User::role(), $allowedRoles)) {
+
+      return true;
+    }
+  } else {
+    redirectTo($url);
+  }
+}
+
 /**
  * Summary of isRequestMethodPost
  * @return bool
@@ -32,9 +46,9 @@ function validateInputs(string $data)
 }
 
 /**
- * Summary of redirect_with
+ * Summary of redirectTo
  * @param string $url
- * @return void
+ * @return never
  */
 function redirectTo(string $url)
 {

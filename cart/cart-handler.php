@@ -18,9 +18,9 @@ if (User::isLoggedIn()) {
   } else {
     $cartItem->addToCart(User::id(), $product, $cart, $_POST[CURRENT_PRODUCT_ID]);
     $product->decreaseStockQuantity($_POST[CURRENT_PRODUCT_ID], INITIAL_PRODUCT_QUANTITY);
-    redirectTo("../index.php?added");
+    redirectTo("../index.php");
   }
-  
+
 } else {
   redirectTo("../login.php?login");
 }

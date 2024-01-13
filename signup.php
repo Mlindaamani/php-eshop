@@ -16,39 +16,39 @@ generateAlert('firstname', 'Firstname is required!', 'danger');
 <div class="container d-flex justify-content-center align-items-center" style="width: 50%; height:90vh">
   <form action="actions/signup-handler.php" method="post" class="border shadow p-3 rounded w-50 ">
     <div class="mb-3">
-      <h5 class="text-center p-3">SIGN UP</h5>
+      <h5 class="text-center p-3 fw-bold text-success">SIGN UP</h5>
 
       <div class="mb-3">
         <div class="form-floating">
-          <input type="text" name="firstname" id="firstname" class="form-control" placeholder="F">
+          <input type="text" name="firstname" id="firstname" class="form-control text-success" placeholder="F">
           <label for="firstname" class="form-label">Enter first name</label>
         </div>
       </div>
 
       <div class="mb-3">
         <div class="form-floating">
-          <input type="text" name="lastname" id="lastname" class="form-control" placeholder="L">
+          <input type="text" name="lastname" id="lastname" class="form-control text-success" placeholder="L">
           <label for="lastname" class="form-label">Enter last name</label>
         </div>
       </div>
 
       <div class="mb-3">
         <div class="form-floating">
-          <input type="email" name="email" id="" class="form-control" placeholder="E">
+          <input type="email" name="email" id="" class="form-control text-success" placeholder="E">
           <label for="email" class="form-label is-valid">Enter email</label>
         </div>
       </div>
 
       <div class="mb-3">
         <div class="form-floating">
-          <input type="password" name="password" id="" class="form-control" placeholder="P">
+          <input type="password" name="password" id="" class="form-control text-success" placeholder="P">
           <label for="password" class="form-label">Enter password</label>
         </div>
       </div>
 
       <div class="mb-3">
-        <button type="submit" class="btn btn-primary w-100 mb-2" name="submit">Sign up</button>
-        <p class="mt-2">Already have an account? <a href="login.php">Login</a></p>
+        <button type="submit" class="btn btn-success w-100 mb-2" name="submit">Sign up</button>
+        <p class="mt-2 text-success">Already have an account? <a href="login.php" class="text-success">Login</a></p>
       </div>
   </form>
 </div>

@@ -5,7 +5,7 @@ require_once __DIR__ . "/../config/config.php";
 $title = CART;
 require_once __DIR__ . '/../includes/header.php';
 
-$CartItem = new CartItem(new Database);
+$cartitem = new CartItem(new Database);
 $user = new User(new Database);
 ?>
 
@@ -20,30 +20,28 @@ $user = new User(new Database);
   </h4>
   <div class="table-responsive">
     <table class="table border shadow">
-      <?php if (!$CartItem->isCartItemEmpty($user, User::id())): ?>
-        <thead>
-          <tr class="mt-5">
-            <th class="bg-primary text-light text-center">IMAGE</th>
-            <th class="bg-primary text-light text-center">NAME</th>
-            <th class="bg-primary text-light text-center">PRICE</th>
-            <th class="bg-primary text-light text-center">QUANTITY</th>
-            <th class="bg-primary text-light text-center">TOTAL PRICE</th>
-            <th class="bg-primary text-light text-center">REMOVE</th>
-          </tr>
-        </thead>
+      <?php if (!$cartitem->isCartItemEmpty()): ?>
+        <tr class="mt-5">
+          <th class="bg-success text-light text-center">IMAGE</th>
+          <th class="bg-success text-light text-center">NAME</th>
+          <th class="bg-success text-light text-center">PRICE</th>
+          <th class="bg-success text-light text-center">QUANTITY</th>
+          <th class="bg-success text-light text-center">TOTAL PRICE</th>
+          <th class="bg-success text-light text-center">REMOVE</th>
+        </tr>
 
         <tbody>
-          <?php foreach ($CartItem->cartItems(User::id()) as $item): ?>
+          <?php foreach ($cartitem->cartItems(User::id()) as $item): ?>
             <tr>
               <td class="text-center mt-3">
-                <img src="../uploads/<?= $item['product_image'] ?>" alt="Product Image" width="80" />
+                <img src="../admin/uploads/<?= $item['product_image'] ?>" alt="Product Image" width="80" />
               </td>
 
-              <td class="text-center mt-3">
+              <td class="text-center mt-3 text-success fw-bold">
                 <?= $item['product_name'] ?>
               </td>
 
-              <td class="text-center mt-3" style="color:green">$
+              <td class="text-center mt-3 text-success fw-bold">$
                 <?= $item['price'] ?>
               </td>
 
@@ -56,12 +54,12 @@ $user = new User(new Database);
                   <button type="submit" class="btn text-light btn-primary border shadow mx-2" name="update">UPDATE</button>
               </td>
 
-              <td class="text-center mt-3" style="color:green">$
+              <td class="text-center mt-3 text-success fw-bold">$
                 <?= number_format($item['total_price'], DEFAULT_DECIMAL_NUMBER) ?>
               </td>
 
               <td class=" text-center mt-3">
-                <button type="submit" class="btn text-light btn-danger border shadow mx-2" name="remove">
+                <button type="submit" class="btn text-light btn-danger border shadow mx-2 " name="remove">
                   REMOVE</button>
               </td>
               </form>
@@ -75,12 +73,11 @@ $user = new User(new Database);
     </table>
   </div>
 
-  <?php if (!$CartItem->isCartItemEmpty($user, User::id())): ?>
+  <?php if (!$cartitem->isCartItemEmpty()): ?>
     <div class="row justify-content-center mt-4">
       <div class="col-md-3 col-sm-12 mb-3 text-center">
-        <button class="btn btn-primary-subtle fw-bold">
-          Total Amount: <span style="color:green; font-size:20px" class="fw-bold">$
-            <?= number_format($CartItem->subTotal(User::id()), DEFAULT_DECIMAL_NUMBER) ?>
+        <button class="btn btn-primary-subtle fw-bold"> SUBTOTAL: <span class="fw-bold text-success">$
+            <?= number_format($cartitem->subTotal(User::id()), DEFAULT_DECIMAL_NUMBER) ?>
           </span>
         </button>
       </div>

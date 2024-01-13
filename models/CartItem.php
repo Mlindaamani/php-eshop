@@ -37,8 +37,11 @@ class CartItem {
   public function addToCart(int $userId, Product $product, Cart $cart, int $productId)
   {
     $this->database->beginTransaction();
+    
+    //Create a cart
     $cart->createCart($userId);
 
+    //Add item into a cart.
     $stmt = $this->database->prepare(
       "INSERT INTO " . self::TABLE_NAME . " 
       (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
@@ -56,7 +59,9 @@ class CartItem {
       'cart_id' => $cart->getCartId($userId),
     ]);
 
+    //Commit transaction.
     $this->database->commit();
+
   }
 
   /**
@@ -104,9 +109,7 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT SUM(total_price) FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
-
     $stmt->execute(['user_id' => $userId]);
-
     return $stmt->fetchColumn();
   }
 
@@ -119,9 +122,7 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT COUNT(*) FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
-
     $stmt->execute(['user_id' => $userId]);
-
     return $stmt->fetchColumn();
   }
 
@@ -135,7 +136,6 @@ class CartItem {
   {
     $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
       " WHERE id = :id AND product_id = :product_id");
-
     $stmt->execute(['id' => $cartItemId, 'product_id' => $productId]);
   }
 
@@ -148,9 +148,7 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE user_id = :user_id");
-
     $stmt->execute(['user_id' => $userId]);
-
     return $stmt->fetchAll(self::CART_ITEMS_FETCH_MODE);
   }
 
@@ -160,9 +158,10 @@ class CartItem {
    * @param int $userId
    * @return bool
    */
-  public function isCartItemEmpty(User $user, int $userId)
+  public function isCartItemEmpty()
   {
-    return ($user->isLoggedIn() && $this->getItemsCount($userId) > 0) ? false : true;
+
+    return ($this->getItemsCount(User::id()) === 0);
   }
 
   /**
@@ -170,6 +169,7 @@ class CartItem {
    * @param int $userId
    * @return void
    */
+
   public function deleteCartItem(int $userId)
   {
     $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME . " WHERE user_id = :user_id");
@@ -180,7 +180,7 @@ class CartItem {
   {
     $stmt = $this->database->prepare("SELECT product_id, user_id FROM " . self::TABLE_NAME . " WHERE user_id = :user_id AND product_id = :product_id");
     $stmt->execute(['user_id' => $userId, 'product_id' => $productId]);
-    return ($stmt->rowCount() == 1) ? true : false;
+    return $stmt->rowCount() == 1 ? true : false;
   }
 
   /**
@@ -207,8 +207,15 @@ class CartItem {
     return ($stmt->fetch(PDO::FETCH_COLUMN));
   }
 
+  /**
+   * Summary of isStockEnough
+   * @param int $productId
+   * @param int $quantity
+   * @param Product $product
+   * @return bool
+   */
   public static function isStockEnough(int $productId, int $quantity, Product $product)
   {
-    return $product->getStockQuantity($productId) >= $quantity ? true : false;
+    return $product->getStockQuantity($productId) >= $quantity;
   }
 }

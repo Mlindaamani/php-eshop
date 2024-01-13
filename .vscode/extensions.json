@@ -1,5 +1,3 @@
-// {
-//   "recommendations": [
-//     "akamud.vscode-theme-onedark"
-//   ]
-// }
+{
+  "recommendations": ["akamud.vscode-theme-onedark"]
+}

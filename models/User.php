@@ -6,8 +6,8 @@ class User {
   private const TABLE_NAME = 'users';
   private const ADMIN_ROLE = 'admin';
   private const DEFAULT_ROLE = 'customer';
-  private const ROLE_SESSION = 'role';
-  private const LOGGED_IN_USER = 'user_id';
+  private const ROLE = 'role';
+  private const CURRENT_USER = 'user_id';
   private const USER_FETCH_MODE = PDO::FETCH_ASSOC;
   private const DEFAULT_SYSTEM_USER = 'guest';
 
@@ -31,7 +31,7 @@ class User {
   {
     $stmt = $this->database->prepare("SELECT email FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
-    return ($stmt->rowCount() === 1) ? true : false;
+    return ($stmt->rowCount() === 1);
   }
 
   /**
@@ -137,7 +137,7 @@ class User {
    */
   public static function setUserSession(int $userId)
   {
-    $_SESSION[self::LOGGED_IN_USER] = $userId;
+    $_SESSION[self::CURRENT_USER] = $userId;
   }
 
   /**
@@ -148,20 +148,16 @@ class User {
 
   public static function setRoleSession(string $role)
   {
-    $_SESSION[self::ROLE_SESSION] = $role;
+    $_SESSION[self::ROLE] = $role;
   }
 
   /**
-   * Summary of getUserRole
-   * @param int $userId
+   * Summary of isAdmin
    * @return bool
    */
-  public function isAdmin(int $userId)
+  public static function isAdmin()
   {
-    $stmt = $this->database->prepare("SELECT role FROM users WHERE id = :user_id");
-    $stmt->execute(['user_id' => $userId]);
-    $user = $stmt->fetch(self::USER_FETCH_MODE);
-    return ($user[self::ROLE_SESSION] === self::ADMIN_ROLE) ? true : false;
+    return self::role() === self::ADMIN_ROLE;
   }
 
   /**
@@ -170,7 +166,7 @@ class User {
    */
   public static function isLoggedIn()
   {
-    return isset($_SESSION[self::LOGGED_IN_USER]);
+    return isset($_SESSION[self::CURRENT_USER]);
   }
 
 
@@ -180,7 +176,7 @@ class User {
    */
   public static function id(): int|null
   {
-    return isset($_SESSION[self::LOGGED_IN_USER]) ? $_SESSION[self::LOGGED_IN_USER] : null;
+    return isset($_SESSION[self::CURRENT_USER]) ? $_SESSION[self::CURRENT_USER] : null;
   }
 
   /**
@@ -189,7 +185,7 @@ class User {
    */
   public static function role(): string|null
   {
-    return isset($_SESSION[self::ROLE_SESSION]) ? $_SESSION[self::ROLE_SESSION] : self::DEFAULT_SYSTEM_USER;
+    return isset($_SESSION[self::ROLE]) ? $_SESSION[self::ROLE] : self::DEFAULT_SYSTEM_USER;
   }
 
   /**

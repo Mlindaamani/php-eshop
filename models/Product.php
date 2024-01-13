@@ -41,7 +41,7 @@ class Product {
   }
 
   /**
-   * Summary of products
+   * Summary of products 
    * @return array
    */
   function products()
@@ -126,27 +126,7 @@ class Product {
    * @param mixed $productId
    * @return void
    */
-  public function update($productName, $imageUrl, $stockQuantity, $description, $price, $productId)
-  {
-    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME . " SET 
-    product_name = :product_name, 
-    image_url = :image_url, 
-    stock_quantity = :stock_quantity, 
-    description = :description,
-    price = :price
-    WHERE 
-    id = :id
-    ");
 
-    $stmt->execute([
-      'product_name' => $productName,
-      'image_url' => $imageUrl,
-      'stock_quantity' => $stockQuantity,
-      'description' => $description,
-      'price' => $price,
-      'id' => $productId
-    ]);
-  }
 
   /**
    * Summary of getStockQuantity
@@ -160,15 +140,4 @@ class Product {
     return ($stmt->rowCount() == 1) ? $stmt->fetch(PDO::FETCH_COLUMN) : null;
   }
 
-  /**
-   * Summary of getProductId
-   * @param int $id
-   * @return mixed
-   */
-  public function getProductId(int $id)
-  {
-    $stmt = $this->database->prepare("SELECT id FROM products WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-    return ($stmt->rowCount() == 1) ? $stmt->fetch(PDO::FETCH_COLUMN) : null;
-  }
 }

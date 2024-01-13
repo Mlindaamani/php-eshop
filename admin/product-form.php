@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/header.php';
       <form action='productHandler/add-handler.php' method='post' class='border shadow p-3 rounded w-50'
         enctype='multipart/form-data'>
         <div class='mb-3'>
-          <h5 class='text-center p-3'>Add Products</h5>
+          <h5 class='text-center p-3 text-success fw-bold'>ADD PRODUCT</h5>
 
           <label class='form-label'>Enter product name</label>
           <input type='text' name='product_name' class='form-control'>
@@ -57,7 +57,7 @@ require_once __DIR__ . '/../includes/header.php';
           <input type='file' name='file' class='form-control'>
 
           <div class='mb-3 mt-3'>
-            <button type='submit' class='btn btn-primary w-100 mb-2 border shadow' name='submit'>Add</button>
+            <button type='submit' class='btn btn-success w-100 mb-2 border shadow fw-bold' name='submit'>Add</button>
           </div>
       </form>
     </div>

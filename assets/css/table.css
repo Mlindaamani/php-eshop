@@ -17,6 +17,11 @@ tr input {
   border: none;
 }
 
+table {
+  text-align: center;
+  margin: 0 auto;
+}
+
 body {
   background-color: rgba(128, 128, 128, 0.164);
 }
@@ -33,5 +38,3 @@ tr td {
 tr img {
   margin-top: 40px;
 }
-
-

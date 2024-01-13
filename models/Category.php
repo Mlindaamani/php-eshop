@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Summary of Category
  */
@@ -24,15 +23,11 @@ class Category {
     $this->database = $database->dbconnection();
   }
 
-  /**
-   * Summary of categories
-   * @return void
-   */
   public function categories(): array
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME);
     $stmt->execute();
-    return $stmt->fetchAll(self::CATEGORY_FETCH_MODE);
+   return $stmt->fetchAll(self::CATEGORY_FETCH_MODE);
   }
 
   /**

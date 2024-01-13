@@ -57,7 +57,6 @@ class Cart {
     return $stmt->rowCount() == 1 ? true : false;
   }
 
-
   /**
    * Summary of insertDataIntoCart
    * @param mixed $userId
@@ -123,4 +122,18 @@ class Cart {
     ]);
   }
 
+  public function checkedOutCarts(int $userId)
+  {
+
+    $stmt = $this->database->prepare("SELECT checked_out FROM carts WHERE checked_out = :checked_out AND user_id = :user_id");
+    $stmt->execute(['checked_out' => self::CHECKED_CART_STATUS, 'user_id' => $userId]);
+    return count($stmt->fetchAll());
+  }
+
+  public function uncheckedCarts(int $userId)
+  {
+    $stmt = $this->database->prepare("SELECT checked_out FROM carts WHERE checked_out = :unchecked_carts AND user_id = :user_id");
+    $stmt->execute(['checked_out' => self::UNCHECKED_CART_STATUS, 'user_id' => $userId]);
+    return count($stmt->fetchAll()) > 0 ? count($stmt->fetchAll()) : 0;
+  }
 }
