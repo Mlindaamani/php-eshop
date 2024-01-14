@@ -7,9 +7,6 @@ require_once __DIR__ . '/../includes/header.php';
 
 require_once __DIR__ . "/../config/config.php";
 
-include_once __DIR__ . '/../access.php';
-
-access('admin');
 
 $category = new Category(new Database) ?>
 

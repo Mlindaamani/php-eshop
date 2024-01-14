@@ -2,17 +2,13 @@
 
 function checkAccess(array $allowedRoles, string $url)
 {
-
-  if (!is_null(User::role())) {
-
-    if (in_array(User::role(), $allowedRoles)) {
-
-      return true;
-    }
+  if (in_array(User::role(), $allowedRoles) && !is_null(User::role())) {
+    return true;
   } else {
-    redirectTo($url);
+    redirectTo("$url");
   }
 }
+
 
 /**
  * Summary of isRequestMethodPost

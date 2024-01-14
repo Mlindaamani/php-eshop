@@ -31,7 +31,7 @@ class User {
   {
     $stmt = $this->database->prepare("SELECT email FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
-    return ($stmt->rowCount() === 1);
+    return ($stmt->rowCount() > 0);
   }
 
   /**
@@ -72,7 +72,8 @@ class User {
   {
     $stmt = $this->database->prepare("SELECT first_name FROM users WHERE id = :user_id");
     $stmt->execute(['user_id' => $userId]);
-    return $stmt->fetch(self::USER_FETCH_MODE)['first_name'] ?? false;
+    return $stmt->fetch(PDO::FETCH_OBJ)->first_name ?? false;
+
   }
 
   /**
@@ -85,7 +86,7 @@ class User {
   {
     $stmt = $this->database->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
-    return ($stmt->rowCount() == 1) ? $stmt->fetch(self::USER_FETCH_MODE) : false;
+    return ($stmt->rowCount() > 0) ? $stmt->fetch(self::USER_FETCH_MODE) : false;
   }
 
   /**
