@@ -54,7 +54,7 @@ INSTALLATIONS
 ``````
            CONTACT INFO
       Email: mlindaadolf@gmail.com
-      Twitter: @steveCode369
+      X: @SteveCode36
    ```````
 
                        Thanks!
