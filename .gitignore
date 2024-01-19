@@ -1,3 +1,5 @@
 
 config/database.php
-
+assets/*.js
+assets/*.map
+assets/*.css
