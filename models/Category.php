@@ -8,7 +8,7 @@ class Category {
    * Summary of database
    * @var 
    */
-  private static $database;
+  private $database;
 
   private const TABLE_NAME = "categories";
 
@@ -27,7 +27,7 @@ class Category {
   {
     $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME);
     $stmt->execute();
-   return $stmt->fetchAll(self::CATEGORY_FETCH_MODE);
+    return $stmt->fetchAll(self::CATEGORY_FETCH_MODE);
   }
 
   /**

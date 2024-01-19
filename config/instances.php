@@ -1,6 +1,5 @@
 <?php
 
-
 $product = new Product(new Database);
 
 $cart = new Cart(new Database);

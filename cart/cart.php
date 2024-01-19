@@ -1,5 +1,4 @@
 <?php
-@session_start();
 error_reporting(0);
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../config/autoloader.php";
@@ -19,7 +18,7 @@ require_once __DIR__ . '/../includes/header.php';
   </h4>
   <div class="table-responsive">
     <table class="table border shadow">
-      <?php if (!$cartitem->isCartItemEmpty()): ?>
+      <?php if (!$cartItem->isCartItemEmpty()): ?>
         <tr class="mt-5">
           <th class="bg-success text-light text-center">IMAGE</th>
           <th class="bg-success text-light text-center">NAME</th>
@@ -30,7 +29,7 @@ require_once __DIR__ . '/../includes/header.php';
         </tr>
 
         <tbody>
-          <?php foreach ($cartitem->cartItems(User::id()) as $item): ?>
+          <?php foreach ($cartItem->cartItems(User::id()) as $item): ?>
             <tr>
               <td class="text-center mt-3">
                 <img src="../admin/uploads/<?= $item['product_image'] ?>" alt="Product Image" width="80" />
@@ -72,11 +71,11 @@ require_once __DIR__ . '/../includes/header.php';
     </table>
   </div>
 
-  <?php if (!$cartitem->isCartItemEmpty()): ?>
+  <?php if (!$cartItem->isCartItemEmpty()): ?>
     <div class="row justify-content-center mt-4">
       <div class="col-md-3 col-sm-12 mb-3 text-center">
         <button class="btn btn-primary-subtle fw-bold"> SUBTOTAL: <span class="fw-bold text-success">$
-            <?= number_format($cartitem->subTotal(User::id()), DEFAULT_DECIMAL_NUMBER) ?>
+            <?= number_format($cartItem->subTotal(User::id()), DEFAULT_DECIMAL_NUMBER) ?>
           </span>
         </button>
       </div>

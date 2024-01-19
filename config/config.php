@@ -35,3 +35,4 @@ define('MAX_FILE_SIZE', 5 * 2040 * 2040);
 define("FILE_SIZE_ERROR_FLASH_MESSAGE", "The the file is larger than the maximum file upload file of 5MB");
 
 define("SUCCESS", "success");
+
