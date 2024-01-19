@@ -1,15 +1,9 @@
 <?php
-
 $title = "Signup";
-
 require_once __DIR__ . '/includes/header.php';
-
 generateAlert('norecord', 'No records found for entered user. Kindly signup/login again!', 'danger');
-
 generateAlert('datapresent', 'Entered records Already exit!', 'danger');
-
 generateAlert('error', 'Kindly fill in all the required fields!', 'danger');
-
 generateAlert('firstname', 'Firstname is required!', 'danger');
 ?>
 

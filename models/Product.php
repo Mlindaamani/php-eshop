@@ -140,4 +140,6 @@ class Product {
     return ($stmt->rowCount() == 1) ? $stmt->fetch(PDO::FETCH_COLUMN) : null;
   }
 
+
+  
 }

@@ -1,12 +1,11 @@
 <?php
 //Start session.
-session_start();  
+session_start();
 error_reporting(0);
 require_once __DIR__ . "/../config/config.php";
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
 
-$cartItem = new CartItem(new Database);
-$user = new User(new Database);
 
 /**
  * Summary of display_logout
@@ -146,7 +145,7 @@ function display_guest(User $user)
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="refresh"content= "30">
+  <meta http-equiv="refresh" content="30">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     <?= htmlspecialchars($title) ?? "" ?>

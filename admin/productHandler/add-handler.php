@@ -2,8 +2,10 @@
 
 require_once __DIR__ . "/../../includes/functions.php";
 require_once __DIR__ . "/../../config/config.php";
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../../models/{$class}.php");
-$product = new Product(new Database);
+require_once __DIR__ . "/../../config/autoloader.php";
+require_once __DIR__ . "/../../config/instances.php";
+
+
 
 $file = $_FILES['file'];
 $file_name = $file['name'];

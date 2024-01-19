@@ -37,7 +37,7 @@ class CartItem {
   public function addToCart(int $userId, Product $product, Cart $cart, int $productId)
   {
     $this->database->beginTransaction();
-    
+
     //Create a cart
     $cart->createCart($userId);
 
@@ -165,7 +165,7 @@ class CartItem {
   }
 
   /**
-   * Summary of deleteCartItem
+   * Summary of deleteCartItem  
    * @param int $userId
    * @return void
    */
@@ -217,5 +217,14 @@ class CartItem {
   public static function isStockEnough(int $productId, int $quantity, Product $product)
   {
     return $product->getStockQuantity($productId) >= $quantity;
+  }
+
+  public function increaseQuantity(int $productId, int $user_id)
+  {
+    $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME . " SET quantity = (quantity + 1) WHERE product_id = :product_id AND user_id = :user_id");
+    $stmt->execute([
+      'product_id' => $productId,
+      'user_id' => $user_id,
+    ]);
   }
 }

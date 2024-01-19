@@ -1,10 +1,9 @@
 <?php
 session_start();
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . "/../config/config.php";
-$cartItem = new CartItem(new Database);
-$cart = new Cart(new Database);
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
 
 $total = $cartItem->subTotal(User::id());
 $cart->checkoutCart($_POST['cartId']);

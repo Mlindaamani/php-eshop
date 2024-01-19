@@ -4,8 +4,6 @@
   style="position:absolute; right:0; width: 100%; left:0;">
   Copyright &copy; 2023 EBOT
 </div>
-
-
 </body>
 
 </html>

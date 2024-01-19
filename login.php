@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . "/config/config.php";
-
 $title = LOGIN;
-
 require_once __DIR__ . '/includes/header.php';
 
 generateAlert('error', 'Invalid Email or password!', 'danger');

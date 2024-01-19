@@ -1,14 +1,9 @@
 <?php
 require_once __DIR__ . "/../config/config.php";
-
 $title = DASHBOARD;
-
 require_once __DIR__ . '/../includes/header.php';
-
 require_once __DIR__ . "/../includes/functions.php";
-
 checkAccess(["admin", "mod"], "../denied.php");
-
 ?>
 
 <div class="row mt-3">

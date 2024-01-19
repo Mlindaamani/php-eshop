@@ -44,8 +44,7 @@ class Database {
       $this->databaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     } catch (PDOException $e) {
-      echo "Error: " . $e->errorInfo[2];
-      echo "\n";
+      echo "Erroe: {$e->getMessage()}";
     }
   }
 
@@ -58,3 +57,5 @@ class Database {
     return $this->databaseConnection;
   }
 }
+
+// print_r(dbconnection());

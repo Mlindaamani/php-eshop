@@ -1,13 +1,11 @@
 <?php
 require_once __DIR__ . "/config/config.php";
 $title = HOME;
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . "/includes/header.php";
 require_once __DIR__ . "/includes/functions.php";
+require_once __DIR__ . "/config/autoloader.php";
+require_once __DIR__ . "/config/instances.php";
 error_reporting(0);
-$product = new Product(new Database);
-$cartItem = new CartItem(new Database);
-$category = new Category(new Database);
-$user = new User(new Database);
 
 generateAlert('success', 'You have successfully signed up! Now you can explore more in Ebot!', 'success');
 generateAlert('guest', 'You are now browsing as guest!', 'success');
@@ -34,14 +32,14 @@ generateAlert('guest', 'You are now browsing as guest!', 'success');
   </div>
 </div>
 
-<?php generateAlert('yes', 'Product already added in the cart', 'info'); ?>
+<?php generateAlert('yes', 'Product already added in the cart Quantity updated!', 'info'); ?>
 <div class="container mt-5" style="margin-top:50px">
   <div class=" row g-5">
     <?php foreach ($product->products() as $product): ?>
       <div class="col-12 col-md-6 col-lg-4 mt-5">
         <div class="card border shadow custom-card-style">
           <div class="card-img rounded">
-            <img src="admin/uploads/<?= escapeChars($product['image_url']) ?>" alt="Product">
+            <img src="admin/uploads/<?= escapeChars($product['image_url']) ?>" alt="Ebot product images">
           </div>
           <div class="card-body">
             <h5 class="card-title text-success fw-bold">
@@ -55,13 +53,12 @@ generateAlert('guest', 'You are now browsing as guest!', 'success');
             </p>
             <form action="cart/cart-handler.php" method="post">
               <input type="hidden" name="id" value="<?= escapeChars($product['id']) ?>" />
-              <button type="submit" class="btn btn-success fw-bold" name="add">ADD TO CART</button>
+              <button class="btn btn-success fw-bold">ADD TO CART</button>
             </form>
           </div>
         </div>
       </div>
     <?php endforeach ?>
-
   </div>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php' ?>

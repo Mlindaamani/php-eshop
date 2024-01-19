@@ -201,4 +201,11 @@ class User {
     session_destroy();
     return true;
   }
+
+  // public static function get_user_info_by_id(string $id) {
+  //   $user = self::isAdmin();
+
+  //   if($user->id() === $id) {
+  //     echo "The user exist in the database";
+  // }
 }

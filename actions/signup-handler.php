@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . "/../config/config.php";
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
-require __DIR__ . '/../includes/functions.php';
-$user = new User(new Database);
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
+require_once __DIR__ . '/../includes/functions.php';
+
 
 
 $email = validateInputs($_POST['email']);

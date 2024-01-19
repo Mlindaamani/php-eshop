@@ -2,11 +2,10 @@
 @session_start();
 error_reporting(0);
 require_once __DIR__ . "/../config/config.php";
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
 $title = CART;
 require_once __DIR__ . '/../includes/header.php';
-
-$cartitem = new CartItem(new Database);
-$user = new User(new Database);
 ?>
 
 <div>

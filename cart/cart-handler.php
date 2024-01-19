@@ -1,18 +1,15 @@
 <?php
-
 session_start();
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . "/../config/config.php";
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
 
-$cartItem = new CartItem(new Database);
-$product = new Product(new Database);
-$cart = new Cart(new Database);
-$user = new User(new Database);
 
 if (User::isLoggedIn()) {
 
   if ($cartItem->isCartItemPresent($_POST[CURRENT_PRODUCT_ID], User::id())) {
+    $cartItem->increaseQuantity($_POST[CURRENT_PRODUCT_ID], User::id());
     redirectTo("../index.php?yes");
 
   } else {
@@ -24,3 +21,4 @@ if (User::isLoggedIn()) {
 } else {
   redirectTo("../login.php?login");
 }
+

@@ -2,13 +2,11 @@
 session_start();
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . "/../config/config.php";
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../models/{$class}.php");
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
 
-$cartItem = new CartItem(new Database);
-$product = new Product(new Database);
-$cart = new Cart(new Database);
 
-if(isset($_POST['update'])) {
+if (isset($_POST['update'])) {
 
   if (CartItem::isStockEnough($_POST['product_id'], $_POST['product_quantity'], $product)) {
     $cartProductPrice = $cartItem->getCartItemPrice($_POST['product_id'], User::id());

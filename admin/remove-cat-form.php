@@ -1,14 +1,12 @@
 <!-- Include the header contents -->
 <?php
-
 $title = "Remove Category";
-
 require_once __DIR__ . '/../includes/header.php';
-
 require_once __DIR__ . "/../config/config.php";
-
-
-$category = new Category(new Database) ?>
+require_once __DIR__ . "/../includes/functions.php";
+require_once __DIR__ . "/../config/autoloader.php";
+require_once __DIR__ . "/../config/instances.php";
+?>
 
 <!-- Include the sidepanel -->
 <div class='row mt-3'>
@@ -41,7 +39,8 @@ $category = new Category(new Database) ?>
                             <?php endforeach ?>
                         </select>
                     </div>
-                    <button type='submit' class='btn btn-success w-100 border shadow fw-bold' name='remove'>Remove</button>
+                    <button type='submit' class='btn btn-success w-100 border shadow fw-bold'
+                        name='remove'>Remove</button>
             </form>
         </div>
     </div>
