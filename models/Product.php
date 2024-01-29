@@ -22,7 +22,7 @@ class Product {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database->dbconnection();
+    $this->database = $database;
   }
 
 
@@ -33,7 +33,7 @@ class Product {
    */
   public function getProductInfoById(int $productId): array
   {
-    $stmt = $this->database->prepare("SELECT product_name, price, stock_quantity, description, image_url FROM " . self::TABLE_NAME .
+    $stmt = $this->database->prepare("SELECT * FROM " . self::TABLE_NAME .
       " WHERE id = :id");
     $stmt->execute(["id" => $productId]);
 
@@ -141,5 +141,5 @@ class Product {
   }
 
 
-  
+
 }

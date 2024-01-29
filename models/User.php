@@ -3,7 +3,7 @@
 class User {
   private $database;
 
-  private const TABLE_NAME = 'users';
+  // private const TABLE_NAME = 'users';
   private const ADMIN_ROLE = 'admin';
   private const DEFAULT_ROLE = 'customer';
   private const ROLE = 'role';
@@ -19,7 +19,7 @@ class User {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database->dbconnection();
+    $this->database = $database;
   }
 
   /**
@@ -201,11 +201,4 @@ class User {
     session_destroy();
     return true;
   }
-
-  // public static function get_user_info_by_id(string $id) {
-  //   $user = self::isAdmin();
-
-  //   if($user->id() === $id) {
-  //     echo "The user exist in the database";
-  // }
 }

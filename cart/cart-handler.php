@@ -6,6 +6,7 @@ require_once __DIR__ . "/../config/autoloader.php";
 require_once __DIR__ . "/../config/instances.php";
 
 
+
 if (User::isLoggedIn()) {
 
   if ($cartItem->isCartItemPresent($_POST[CURRENT_PRODUCT_ID], User::id())) {

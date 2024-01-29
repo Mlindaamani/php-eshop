@@ -45,10 +45,10 @@ require_once __DIR__ . '/../includes/header.php';
 
               <td class="text-center mt-3">
                 <form action="update-cart.php" method="post" class="d-flex justify-content-center align-items-center">
-                  <input type="hidden" name="product_id" value="<?= $item['product_id'] ?>" />
-                  <input type="hidden" name="cartItem_id" value="<?= $item['id'] ?>" />
-                  <input type="number" min="1" value="<?= $item['quantity'] ?>" class="p-2 mr-2 mx-2"
+                  <input type="number" min="1" value="<?= $item["quantity"] ?>" class="p-2 mr-2 mx-2"
                     name="product_quantity" />
+                  <input type="hidden" name="cartItem_id" value="<?= $item["id"] ?>" />
+                  <input type="hidden" name="product_id" value="<?= $item["product_id"] ?>" />
                   <button type="submit" class="btn text-light btn-primary border shadow mx-2" name="update">UPDATE</button>
               </td>
 

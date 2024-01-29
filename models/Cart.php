@@ -27,7 +27,7 @@ class Cart {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database->dbconnection();
+    $this->database = $database;
   }
 
 

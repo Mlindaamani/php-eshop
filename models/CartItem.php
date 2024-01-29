@@ -23,7 +23,7 @@ class CartItem {
    */
   public function __construct(Database $database)
   {
-    $this->database = $database->dbconnection();
+    $this->database = $database;
   }
 
   /**
@@ -38,31 +38,38 @@ class CartItem {
   {
     $this->database->beginTransaction();
 
-    //Create a cart
     $cart->createCart($userId);
 
-    //Add item into a cart.
+    $productInfo = $product->getProductInfoById($productId);
+
+    $this->insertCartItem($userId, $productInfo, $cart->getCartId($userId));
+
+    $this->database->commit();
+  }
+
+
+  private function insertCartItem(int $userId, array $productInfo, int $cartId)
+  {
     $stmt = $this->database->prepare(
       "INSERT INTO " . self::TABLE_NAME . " 
       (product_name, quantity, product_image, price, total_price, user_id, product_id, cart_id)
       VALUES (:product_name, :quantity, :product_image, :price, :total_price, :user_id, :product_id, :cart_id)"
     );
 
-    $stmt->execute([
-      'product_name' => $product->getProductInfoById($productId)['product_name'],
+    $params = [
+      'product_name' => $productInfo['product_name'],
       'quantity' => self::INITIAL_CARTITEMS_QUANTITY,
-      'product_image' => $product->getProductInfoById($productId)['image_url'],
-      'price' => $product->getProductInfoById($productId)['price'],
-      'total_price' => $product->getProductInfoById($productId)['price'],
+      'product_image' => $productInfo['image_url'],
+      'price' => $productInfo['price'],
+      'total_price' => $productInfo['price'],
       'user_id' => $userId,
-      'product_id' => $productId,
-      'cart_id' => $cart->getCartId($userId),
-    ]);
+      'product_id' => $productInfo['id'],
+      'cart_id' => $cartId,
+    ];
 
-    //Commit transaction.
-    $this->database->commit();
-
+    $this->database->execute($params, $stmt);
   }
+
 
   /**
    * Summary of updateProductQuantity
@@ -84,20 +91,28 @@ class CartItem {
 
   /**
    * Summary of updateCartItemTotalPrice
+   * 
    * @param mixed $total_price
    * @param mixed $product_id
    * @param mixed $user_id
    * @return void
    */
-  function updateCartItemTotalPrice($totalPrice, $productId, $userId)
+  function updateCartItemTotalPrice(int $productId, int $userId, int $quantity)
   {
+    $cartProductPrice = $this->getCartItemPrice($productId, $userId);
+
+    $totalPrice = self::calculateTotalPrice($cartProductPrice, $quantity);
+
+    $this->updateProductQuantity($quantity, $productId, $userId);
+
     $stmt = $this->database->prepare("UPDATE " . self::TABLE_NAME .
       " SET  total_price = :total_price WHERE product_id = :product_id AND user_id = :user_id");
-    $stmt->execute([
+    $params = [
       'total_price' => $totalPrice,
       'product_id' => $productId,
       'user_id' => $userId
-    ]);
+    ];
+    $this->database->execute($params, $stmt);
   }
 
   /**
@@ -132,11 +147,12 @@ class CartItem {
    * @param mixed $productId
    * @return void
    */
-  function removeCartItem($cartItemId, $productId)
+  function removeCartItem($cartItemId, $productId, int $quantity, Product $product)
   {
     $stmt = $this->database->prepare("DELETE FROM " . self::TABLE_NAME .
       " WHERE id = :id AND product_id = :product_id");
     $stmt->execute(['id' => $cartItemId, 'product_id' => $productId]);
+    $product->increaseStockQuantity($productId, $quantity);
   }
 
   /**
@@ -160,7 +176,6 @@ class CartItem {
    */
   public function isCartItemEmpty()
   {
-
     return ($this->getItemsCount(User::id()) === 0);
   }
 
@@ -191,7 +206,7 @@ class CartItem {
    */
   public static function calculateTotalPrice(float $price, int $quantity)
   {
-    return ($price * $quantity * 100) / 100;
+    return round($price * $quantity, 2);
   }
 
   /**
@@ -228,3 +243,4 @@ class CartItem {
     ]);
   }
 }
+
